@@ -1,0 +1,16 @@
+GET http://localhost:3001/api/projects
+
+###
+
+POST http://localhost:3001/api/projects
+Content-Type: application/json
+
+{
+    "id": 2,
+    "projectNo": 2,
+    "title": "Second Project",
+    "description": "This is my second project",
+    "tech_stacks": "javascript",
+    "image": "should image be stored in db?",
+    "important": true
+}
