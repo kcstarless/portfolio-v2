@@ -1,7 +1,9 @@
+// Get all projects
 GET http://localhost:3001/api/projects
 
 ###
 
+// Add a project
 POST http://localhost:3001/api/projects
 Content-Type: application/json
 

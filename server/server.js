@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+const requestLogger = require('./middleware/morgan')
+
 app.use(express.json())
 
 let projects = [
@@ -15,14 +17,37 @@ let projects = [
   },
 ]
 
-app.post('/api/projects', (request, response) => {
-  const project = request.body
-  console.log(project)
-  response.json(project)
-})
+app.use(requestLogger)
 
 app.get('/', (request, response) => {
   response.send('<h2>Hello World</h2>')
+})
+
+app.get('/info', (request, response) => {
+  response.send(`<h1>Portfolio has ${projects.length} projects</h1>`)
+})
+
+app.post('/api/projects', (request, response) => {
+  const body = request.body
+
+  if (!body.id) {
+    return response.status(400).json({ 
+      error: 'content missing' 
+    })
+  }
+
+  const project = {
+    id: body.id,
+    projectNo: body.projectNo,
+    title: body.title,
+    description: body.description,
+    tech_stacks: body.tech_stacks,
+    image: body.image,
+    important: body.important || false
+  }
+
+  projects = projects.concat(project)
+  response.json(project)
 })
 
 app.get('/api/projects', (request, response) => {
@@ -47,6 +72,12 @@ app.delete('/api/projects/:id', (request, response) => {
 
   response.status(204).end()
 })
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT)
