@@ -1,4 +1,4 @@
-const morgan = require('morgan')
+import morgan from 'morgan'
 
 morgan.token('body', (req) => {
   return req.method === 'POST' || req.method === 'PUT'
@@ -11,4 +11,4 @@ const requestLogger = morgan(
     ':method :url :status :res[content-length] - :response-time ms :body'
 )
 
-module.exports = requestLogger
+export { requestLogger } 

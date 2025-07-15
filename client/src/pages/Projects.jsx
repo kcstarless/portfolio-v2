@@ -1,9 +1,10 @@
 import useProject from "../hooks/useProject"
 
 const Projects = () => {
-    const { projects } = useProject()  // Destructure the object
+    console.log("🔴 Projects component rendering...")
+    const { projects } = useProject()  // Get both projects and loading
     
-    if (!projects || projects.length === 0) return <h1>Loading or no data...</h1>
+    if (!projects) return <h1>Loading data...</h1>
 
     return (
         <>

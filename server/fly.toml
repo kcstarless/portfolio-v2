@@ -1,10 +1,12 @@
-# fly.toml app configuration file generated for dave-gim on 2025-07-15T11:47:38+10:00
+# fly.toml app configuration file generated for davidgim on 2025-07-15T12:24:45+10:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'dave-gim'
+app = 'davidgim'
 primary_region = 'syd'
+
+[build]
 
 [http_service]
   internal_port = 3001
