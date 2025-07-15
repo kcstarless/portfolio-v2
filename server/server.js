@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 const requestLogger = require('./middleware/morgan')
 
 app.use(express.json())
+app.use(cors())
 
 let projects = [
   {
