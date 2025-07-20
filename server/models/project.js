@@ -1,14 +1,23 @@
 import mongoose from "mongoose"
 
 const projectSchema = new mongoose.Schema({
-    projectNo: Number,
-    title: String,
-    description: String,
-    tech_stacks: String,
-    demoUrl: String,
-    githubUrl: String,
-    imageUrl: String,
-    important: Boolean,
+    projectNo: { type: Number, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    tech: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tech' }],
+        required: true,
+        validate: [array => array.length > 0, 'At least one tech is required']
+    },
+    demoUrl: { type: String, required: true },
+    githubUrl: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    difficulty: { type: String, enum: ['easy', 'medium', 'hard'] },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 })
 
 projectSchema.set('toJSON', {

@@ -1,0 +1,24 @@
+//// Get all techs
+GET http://localhost:3001/api/techs
+
+###
+
+//// Add a tech
+POST http://localhost:3001/api/techs
+Content-Type: application/json
+
+{
+    "name": "React",
+    "iconUrl": "http://icon"
+}
+
+### 
+
+//// Add a tech
+POST http://localhost:3001/api/techs
+Content-Type: application/json
+
+{
+    "name": "JavaScript",
+    "iconUrl": "http://icon"
+}

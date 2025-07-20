@@ -1,0 +1,66 @@
+import mongoose from "mongoose"
+import { Project } from "../models/project.js"
+import { Tech } from '../models/tech.js'
+import { User } from "../models/user.js"
+import { getMongoUri } from '../utils/config.js'
+import { getSeedProjects, seedTechs, seedUsers, getValidProject } from "./_data.js"
+
+//// Users test helper
+const initialiseUsers = async () => {
+    await User.deleteMany({})
+    await User.insertMany(seedUsers)
+}
+const usersInDB = async () => {
+    const users = await User.find({})
+    return users.map(user => user.toJSON())
+}
+const getValidUserId = async () => {
+    const validUserId = await User.findOne().then(user => user._id);
+    return validUserId
+}
+
+//// Techs test helper
+const initialiseTechs = async () => {
+    await Tech.deleteMany({})
+    await Tech.insertMany(seedTechs)
+}
+const techsInDB = async () => {
+    const techs = await Tech.find({})
+    return techs.map(tech => tech.toJSON())
+}
+const getValidTechIds = async () => {
+    const validTechIds = await Tech.find().limit(2).then(techs => techs.map(t => t._id))
+    return validTechIds
+}
+
+//// Projects test helper
+const initialiseProjects = async () => {
+    const user = await getValidUserId()
+    const techs = await getValidTechIds()
+    await Project.deleteMany({})
+    await Project.insertMany(getSeedProjects(user, techs))
+}
+const projectsInDB = async () => {
+    const projects = await Project.find({})
+    return projects.map(proj => proj.toJSON())
+}
+const prepareValidProject = async () => {
+  const userId = await getValidUserId()
+  const techIds = await getValidTechIds()
+  return getValidProject(userId, techIds)
+}
+
+//// Mongo connection test helper
+const connectTestDB = async () => {
+    await mongoose.connect(getMongoUri())
+} 
+const disconnectTestDB = async () => {
+    await mongoose.connection.close()
+}
+
+export { 
+    usersInDB, initialiseUsers, getValidUserId,
+    techsInDB, initialiseTechs, getValidTechIds,
+    projectsInDB, initialiseProjects, prepareValidProject,
+    connectTestDB, disconnectTestDB
+ }

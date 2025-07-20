@@ -1,15 +1,16 @@
 import mongoose from 'mongoose'
-import { MONGODB_URI } from './config.js'
+import { getMongoUri} from './config.js'
+import { info, error } from './logger.js'
 
-console.log('connecting to mongoDB')
+info("connecting to mongo...")
 
 mongoose
-    .connect(MONGODB_URI)
+    .connect(getMongoUri())
     .then(() => {
-        console.log('connected to mongoDB')
+        info('connected to mongoDB...')
     })
     .catch((err) => {
-        console.log('error occurred connecting to mongoDB: ', err.message)
+        error('error occurred connecting to mongoDB: ', err.message)
     })
 
 export {}

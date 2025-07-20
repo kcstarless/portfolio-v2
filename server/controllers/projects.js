@@ -1,16 +1,60 @@
-import express from 'express';
+import express from 'express'
 import { Project } from '../models/project.js'
+import { User } from '../models/user.js'
+import { Tech } from '../models/tech.js'
+import { validateProject } from '../middleware/validations.js'
 
 const projectsRouter = express.Router()
 
-projectsRouter.get('/', async (request, response) => {
+projectsRouter.get('/', async (req, res) => {
     const projects = await Project.find({})
-    response.status(200).json(projects)
+      .populate('user', { name: 1})
+      .populate('tech', { name: 1})
+    res.status(200).json(projects)
 })
 
-projectsRouter.get('/:id', async (request, response) => {
-    await Project.findById(request.params.id)
-    response.status(204).end()
+projectsRouter.get('/:id', async (req, res) => {
+    const project = await Project.findById(req.params.id)
+    
+    if (project) {
+      res.status(200).json(project)
+    } else {
+      res.status(404).json({ error: 'No matching project found' })
+    }
+})
+
+projectsRouter.post('/', validateProject, async (req, res) => {
+    const body = req.body
+    // console.log(body.userId)
+    const user = await User.findById(body.user)
+
+    if (!user) {
+      return res.status(400).json({ error: 'user missing or not valid' })
+    }
+
+    const project = new Project(prepProject(body, user))
+    const saved = await project.save()
+    user.projects = user.projects.concat(saved._id)
+    await user.save()
+    
+    res.status(201).json(saved)
+})
+
+projectsRouter.delete('/:id', async (req, res) => {
+  await Project.findByIdAndDelete(req.params.id)
+  res.status(204).end()
+})
+
+const prepProject = (body, user) => ({
+        projectNo: body.projectNo,
+        title: body.title,
+        description: body.description,
+        tech: body.tech,
+        demoUrl: body.demoUrl,
+        githubUrl: body.githubUrl,
+        imageUrl: body.imageUrl,
+        difficulty: body.difficulty,
+        user: user._id
 })
 
 export { projectsRouter } 

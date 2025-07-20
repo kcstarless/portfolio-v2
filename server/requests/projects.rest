@@ -1,0 +1,29 @@
+//// Get all projects
+GET http://localhost:3001/api/projects
+
+###
+
+//// Add a project
+POST http://localhost:3001/api/projects
+Content-Type: application/json
+
+{
+    "projectNo": 1,
+    "title": "Test Post",
+    "description": "This is my second project",
+    "tech": [
+        "687c3eee815046710dbc9bc2",
+        "687c3f65815046710dbc9bc6"
+    ],
+    "demoUrl": "http://demo",
+    "githubUrl": "http://github",
+    "imageUrl": "http://image",
+    "difficulty": "easy",
+    "user": "687af03c76078a3caeb1f2cd"
+}
+
+###
+
+//// Delete a project
+DELETE http://localhost:3001/api/projects/687c406f9278af8961931b24
+
