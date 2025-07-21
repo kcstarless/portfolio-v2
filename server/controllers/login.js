@@ -1,6 +1,6 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import bcryt from 'bcrypt'
+import bcrypt from 'bcrypt'
 import { User } from '../models/user.js'
 
 const loginRouter = express.Router()
@@ -24,7 +24,11 @@ loginRouter.post('/', async (req, res) => {
         id: user._id,
     }
 
-    const token = jwt.sign(userForToken, process.env.SECRET)
+    const token = jwt.sign(
+        userForToken,
+        process.env.SECRET,
+        { expiresIn: 60 * 60 }
+    )
 
     res
         .status(200)

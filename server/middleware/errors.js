@@ -1,4 +1,4 @@
-import { info, error } from '../utils/logger.js'
+import { error } from '../utils/logger.js'
 
 const errorHandler = (err, req, res, next) => {
     error("ERROR NAME: ", err.name)
@@ -15,11 +15,14 @@ const errorHandler = (err, req, res, next) => {
           return res.status(400).json({ error: 'username must be unique' })
         }
         return res.status(400).json({ error: err.message })
+      case 'JsonWebTokenError':
+        return res.status(401).json({ error: 'token invalid' })
+      case 'TokenExpiredError':
+        return res.status(401).json({ error: 'token expired' })
       default: 
+        error("Unhandled error stack:", err.stack)
         return res.status(500).json({ error: 'internal server error'})
     }
-
-    next()
 }
 
 const unknownEndpoint = (req, res) => {

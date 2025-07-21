@@ -8,7 +8,17 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-    "username": "dgim",
+    "username": "dg",
     "name": "David Gim",
+    "password": "UpperLower8!"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "demo",
+    "name": "demo demo",
     "password": "UpperLower8!"
 }

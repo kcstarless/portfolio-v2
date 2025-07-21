@@ -200,8 +200,8 @@ describe('User property validation: ', () => {
         const data = JSON.parse(res._getData())
 
         assert.strictEqual(res.statusCode, 400)
-        assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'Username is required');
+        assert.strictEqual(data.error, 'Validation failed')
+        assert.strictEqual(data.details, 'Username is required')
     })
 
     test('Test3: validation fails with whitespace username', async () => {
@@ -214,8 +214,8 @@ describe('User property validation: ', () => {
         const data = JSON.parse(res._getData())
 
         assert.strictEqual(res.statusCode, 400)
-        assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'Username is required');
+        assert.strictEqual(data.error, 'Validation failed')
+        assert.strictEqual(data.details, 'Username is required')
     })
 
     test('Test4: validation fails with password less than 8 characters', async () => {
@@ -230,8 +230,8 @@ describe('User property validation: ', () => {
         const data = JSON.parse(res._getData())
 
         assert.strictEqual(res.statusCode, 400)
-        assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'Password must be at least 8 characters long');
+        assert.strictEqual(data.error, 'Validation failed')
+        assert.strictEqual(data.details, 'Password must be at least 8 characters long')
     })
 
     test('Test5: validation fails by complexity', async () => {
@@ -247,8 +247,22 @@ describe('User property validation: ', () => {
         // test_log(data)
 
         assert.strictEqual(res.statusCode, 400)
-        assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'Password must include at least one uppercase letter, one number, and one special character');
+        assert.strictEqual(data.error, 'Validation failed')
+        assert.strictEqual(data.details, 'Password must include at least one uppercase letter, one number, and one special character')
+    })
+
+    test('Test6: validation fails with username less than 4 characters', async () => {
+        const req = mockRequest('POST', { username: '123', name: 'short username', password: 'LowerUpper8!'})
+
+        const res = httpMocks.createResponse()
+        const next = () => {}
+
+        validateUser(req, res, next)
+        const data = JSON.parse(res._getData())
+
+        assert.strictEqual(res.statusCode, 400)
+        assert.strictEqual(data.error, 'Validation failed')
+        assert.strictEqual(data.details, 'Usernmae must be at least 4 characters long')
     })
 })
 

@@ -53,11 +53,15 @@ describe('Get a project: ', () => {
 
 describe ('Post a new project: ', () => {
     test('Test1: adds new project with correct with valid properties and the new project exists', async () => {
+        const token = await helper.getValidToken()
+        // test_log(token)
+
         const projectsBefore = await helper.projectsInDB()
         const newProject = await helper.prepareValidProject()
         // test_log(newProject)
         const res = await api  
             .post('/api/projects')
+            .set('Authorization', `Bearer ${token}`)
             .send(newProject)
             .expect(201)
 
@@ -68,21 +72,61 @@ describe ('Post a new project: ', () => {
         const exists = projectsAfter.some(p => p.id === res.body.id)
         assert.ok(exists, 'Newly created project not found in database')
     })
+
+    test('Test2: adding new project fails if no token is provided - 401', async() => {
+        const projectsBefore = await helper.projectsInDB()
+        const newProject = await helper.prepareValidProject()
+        // test_log(newProject)
+        await api  
+            .post('/api/projects')
+            .send(newProject)
+            .expect(401)
+
+        const projectsAfter = await helper.projectsInDB()
+
+        assert.strictEqual(projectsBefore.length, projectsAfter.length)
+    })
+
+    test('Test3: adding new projects fails with invalid token', async() => {
+        const invalidToken = 'xxkjasdfs'
+        // test_log(token)
+
+        const projectsBefore = await helper.projectsInDB()
+        const newProject = await helper.prepareValidProject()
+        // test_log(newProject)
+        const res = await api  
+            .post('/api/projects')
+            .set('Authorization', `Bearer ${invalidToken}`)
+            .send(newProject)
+            .expect(401)
+
+        // test_log(res.body.error)
+        const projectsAfter = await helper.projectsInDB()
+
+        assert.strictEqual(projectsBefore.length, projectsAfter.length)
+        assert.strictEqual(res.body.error, 'token invalid')
+    })
 })
 
 describe('Delete a project: ', () => {
     test('Test1: deletes a project in DB', async () => {
+        const token = await helper.getValidToken()
+
         const projectsBefore = await helper.projectsInDB()
         const projectId = projectsBefore[0].id
-        // test_log(projectId)
+        // test_log(projectsBefore[0].user)
+
         await api
             .delete(`/api/projects/${projectId}`)
+            .set('Authorization', `Bearer ${token}`)
             .expect(204)
+
         const projectsAfter = await helper.projectsInDB()
 
         assert.strictEqual(
             projectsAfter.some(p => p.id === projectId),
             false
         )
+        assert.strictEqual(projectsBefore.length - 1, projectsAfter.length)
     })
 })

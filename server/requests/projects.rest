@@ -6,9 +6,10 @@ GET http://localhost:3001/api/projects
 //// Add a project
 POST http://localhost:3001/api/projects
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY4N2RhMzk3YmUwZTQ1YzI4NzU5N2I1NyIsImlhdCI6MTc1MzA2NDM3MSwiZXhwIjoxNzUzMDY3OTcxfQ.J0NDYEamRx3mkBybVBtw7wyM4rgilh8o3UXkqyZw8Po
 
 {
-    "projectNo": 1,
+   "projectNo": 1,
     "title": "Test Post",
     "description": "This is my second project",
     "tech": [
@@ -25,5 +26,8 @@ Content-Type: application/json
 ###
 
 //// Delete a project
-DELETE http://localhost:3001/api/projects/687c406f9278af8961931b24
+DELETE http://localhost:3001/api/projects/687da361be0e45c287597b54
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY4N2RhMzk3YmUwZTQ1YzI4NzU5N2I1NyIsImlhdCI6MTc1MzA2NDM3MSwiZXhwIjoxNzUzMDY3OTcxfQ.J0NDYEamRx3mkBybVBtw7wyM4rgilh8o3UXkqyZw8Po
+
 

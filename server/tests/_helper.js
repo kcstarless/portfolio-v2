@@ -1,9 +1,18 @@
 import mongoose from "mongoose"
+import jwt from 'jsonwebtoken'
 import { Project } from "../models/project.js"
 import { Tech } from '../models/tech.js'
 import { User } from "../models/user.js"
 import { getMongoUri } from '../utils/config.js'
 import { getSeedProjects, seedTechs, seedUsers, getValidProject } from "./_data.js"
+
+//// Mongo connection test helper
+const connectTestDB = async () => {
+    await mongoose.connect(getMongoUri())
+} 
+const disconnectTestDB = async () => {
+    await mongoose.connection.close()
+}
 
 //// Users test helper
 const initialiseUsers = async () => {
@@ -50,17 +59,22 @@ const prepareValidProject = async () => {
   return getValidProject(userId, techIds)
 }
 
-//// Mongo connection test helper
-const connectTestDB = async () => {
-    await mongoose.connect(getMongoUri())
-} 
-const disconnectTestDB = async () => {
-    await mongoose.connection.close()
+//// Get valid token
+const getValidToken = async () => {
+    const user = await User.findOne()
+    const userForToken = {
+        username: user.username,
+        id: user._id
+    }
+    return jwt.sign(userForToken, process.env.SECRET, { expiresIn: '1h'})
 }
+
+
 
 export { 
     usersInDB, initialiseUsers, getValidUserId,
     techsInDB, initialiseTechs, getValidTechIds,
     projectsInDB, initialiseProjects, prepareValidProject,
-    connectTestDB, disconnectTestDB
+    connectTestDB, disconnectTestDB,
+    getValidToken,
  }

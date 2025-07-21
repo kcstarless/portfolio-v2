@@ -2,7 +2,7 @@ import { info } from "../utils/logger.js"
 
 const validateProject = (req, res, next) => {
   const { body } = req
-  info('Validating body:', body) // Debug log
+  info('Validating body:', body)
   
   // Required string fields
   const requiredFields = [
@@ -92,6 +92,13 @@ const validateUser = (req, res, next) => {
       details: 'Username is required'
     })
   }
+
+  if (username && username.length < 4) {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: 'Usernmae must be at least 4 characters long'
+    })
+  } 
 
   if (!password || password.length < 8) {
     return res.status(400).json({

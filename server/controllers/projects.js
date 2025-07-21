@@ -1,14 +1,15 @@
 import express from 'express'
 import { Project } from '../models/project.js'
 import { User } from '../models/user.js'
-import { Tech } from '../models/tech.js'
+import { authMiddleware } from '../middleware/authMiddleware.js'
 import { validateProject } from '../middleware/validations.js'
+import { info, test_log } from '../utils/logger.js'
 
 const projectsRouter = express.Router()
 
 projectsRouter.get('/', async (req, res) => {
     const projects = await Project.find({})
-      .populate('user', { name: 1})
+      .populate('user', { username: 1, name: 1})
       .populate('tech', { name: 1})
     res.status(200).json(projects)
 })
@@ -23,10 +24,10 @@ projectsRouter.get('/:id', async (req, res) => {
     }
 })
 
-projectsRouter.post('/', validateProject, async (req, res) => {
+projectsRouter.post('/', authMiddleware, validateProject, async (req, res) => {
     const body = req.body
-    // console.log(body.userId)
-    const user = await User.findById(body.user)
+
+    const user = await User.findById(req.user.id)
 
     if (!user) {
       return res.status(400).json({ error: 'user missing or not valid' })
@@ -40,9 +41,21 @@ projectsRouter.post('/', validateProject, async (req, res) => {
     res.status(201).json(saved)
 })
 
-projectsRouter.delete('/:id', async (req, res) => {
-  await Project.findByIdAndDelete(req.params.id)
-  res.status(204).end()
+projectsRouter.delete('/:id', authMiddleware, async (req, res) => {
+    const currentUserId = req.user.id
+    const project = await Project.findById(req.params.id)
+    // test_log('current user id: ', currentUserId)
+    // test_log('project owner id: ', project.user.toString())
+    if (!project) {
+      return res.status(404).json({ error: 'project not found' })
+    }
+
+    if (currentUserId !== project.user.toString()) {
+      return res.status(403).json({ error: 'project not owned by the current user'})
+    }
+
+    await Project.findByIdAndDelete(req.params.id)
+    res.status(204).end()
 })
 
 const prepProject = (body, user) => ({

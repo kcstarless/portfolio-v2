@@ -3,6 +3,7 @@ import * as helper from './_helper.js'
 import * as testData from './_data.js'
 import assert from 'node:assert'
 import { describe, test } from 'node:test'
+import { Tech } from '../models/tech.js'
 import { test_log } from '../utils/logger.js'
 
 //// Test
@@ -13,7 +14,7 @@ describe('Tech model: ', () => {
     })
 
     test('Test2: can save valid tech', async () => {
-        const saved = await testData.getValidTech().save()
+        const saved = await new Tech(testData.getValidTech()).save()
         assert.strictEqual(saved.title, testData.getValidTech().title)
     })
 
@@ -21,7 +22,7 @@ describe('Tech model: ', () => {
         let error = null
 
         try {
-            await testData.getMissingFieldTech().save()
+            await new Tech(testData.getMissingFieldTech()).save()
         } catch(err) {
             error = err
         }
@@ -34,7 +35,7 @@ describe('Tech model: ', () => {
         let error = null
         
         try {
-            await testData.getMissingIconUrlTech().save()
+            await new Tech(testData.getMissingIconUrlTech()).save()
         } catch(err) {
             error = err
         }
