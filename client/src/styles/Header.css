@@ -1,0 +1,47 @@
+.header-info {
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.header-login {
+    display: flex;
+    width: 50%;
+    justify-content: end;
+    /* border: var(--border); */
+    /* padding: 1rem; */
+}
+
+.header-login-form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+input {
+    height: 30px;
+    border: var(--border);
+    border-radius: var(--space-s);
+    padding: var(--space-m);
+}
+
+
+.visually-hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

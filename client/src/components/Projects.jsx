@@ -1,7 +1,7 @@
 import useProject from "../hooks/useProject"
+import { ProjectCard } from "./ProjectCard"
 
 const Projects = () => {
-    console.log("🔴 Projects component rendering...")
     const { projects } = useProject()  // Get both projects and loading
     
     if (!projects) return <h1>Loading data...</h1>
@@ -9,8 +9,9 @@ const Projects = () => {
 
     return (
         <>
+            <h1>Portfolio</h1>
             {projects.map(project => (
-                <div key={project.id}>{project.title}</div>
+                <ProjectCard project={project} key={project.id}/>
             ))}            
         </>
     )

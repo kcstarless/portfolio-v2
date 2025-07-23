@@ -1,12 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
+
 :root {
     --font-family-sans: 'Poppins', system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
     --lh-headers: 1.1;
+    
+    --space-s: 5px;
+    --space-m: 10px;
+    --space-l: 15px;
 
     --border: solid 2px black;
     --border-red: solid 2px red;
+    --border-round: 
+}
+
+#root {
+  max-width: 1280px;
+  height: 100vh;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  border: var(--border);
 }
 
 body {
