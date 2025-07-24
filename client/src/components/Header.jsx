@@ -1,4 +1,4 @@
-import { HeaderLogin } from '../HeaderLogin'
+import { Login } from './Login'
 
 import { Box, Typography } from '@mui/material'
 
@@ -23,7 +23,7 @@ const Header = () => {
                 Melbourne Weather Today
             </Typography>
             <Box>
-                <HeaderLogin />
+                <Login />
             </Box>
         </Box>
     )

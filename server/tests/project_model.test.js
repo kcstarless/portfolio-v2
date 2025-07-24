@@ -17,6 +17,7 @@ describe('Project model: ', () => {
     test('Test2: can save a valid project', async () => {
         const projectsBefore = await helper.projectsInDB()
         const newProject = await helper.prepareValidProject()
+        newProject.imagePath = helper.getTestImagePath()
         const saved = await new Project(newProject).save()
         const projectsAfter = await helper.projectsInDB()
         const exists = projectsAfter.some(p => p.id === saved.id)

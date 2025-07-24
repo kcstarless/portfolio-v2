@@ -10,7 +10,9 @@ const useProject = () => {
         })
     }, [])
 
-    return { projects }
+    const length = projects.length
+    
+    return { projects, length }
 }
 
 export default useProject

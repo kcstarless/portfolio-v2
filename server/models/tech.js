@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
 
 const techSchema = new mongoose.Schema({
-    name: { type: String, required: true},
-    iconUrl: { type: String, required: true},
+    name: { type: String, required: true },
+    icon: { type: String, required: true },
 })
 
 techSchema.set('toJSON', {

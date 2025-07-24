@@ -1,46 +1,28 @@
-import { info } from "../utils/logger.js"
+import { info, test_log } from "../utils/logger.js"
 
 const validateProject = (req, res, next) => {
   const { body } = req
-  info('Validating body:', body)
+  // test_log('Validating body:', body)
   
-  // Required string fields
   const requiredFields = [
-    'projectNo',
     'title',
     'description', 
     'tech',
     'demoUrl',
     'githubUrl',
-    'imageUrl',
-    'difficulty',
     'user'
   ]
   
-
-  // Check for missing or empty fields
   const missingFields = requiredFields.filter(field => 
     !body[field] || (typeof body[field] === 'string' && body[field].trim() === '')
   )
   
-  // Collect all validation errors
   const errors = []
   
   if (missingFields.length > 0) {
     errors.push(`Missing required fields: ${missingFields.join(', ')}`)
   }
-
-  // Validate difficulty either easy, medium or hard
-  if (body.difficulty && !['easy', 'medium', 'hard'].includes(body.difficulty)) {
-     errors.push('difficulty must be easy, medium or hard')
-  }
   
-  // Validate projectNo is a positive number
-  if (body.projectNo && ((!Number.isInteger(Number(body.projectNo)) || Number(body.projectNo) <= 0))) {
-    errors.push('projectNo must be a positive integer')
-  }
-  
-  // Validate URLs
   const urlFields = ['demoUrl', 'githubUrl']
   for (const field of urlFields) {
     if (body[field]) { // Only validate if field exists
@@ -52,7 +34,6 @@ const validateProject = (req, res, next) => {
     }
   }
   
-  // Return all errors at once
   if (errors.length > 0) {
     return res.status(400).json({ 
       error: 'Validation failed',
@@ -64,7 +45,7 @@ const validateProject = (req, res, next) => {
 }
 
 const validateTech = (req, res, next) => {
-  const { name, iconUrl } = req.body
+  const { name, icon } = req.body
 
   if (!name || (typeof name === 'string' && name.trim() === '')) {
     return res.status(400).json({
@@ -73,10 +54,10 @@ const validateTech = (req, res, next) => {
     })
   }
 
-  if (!iconUrl) {
+  if (!icon) {
     return res.status(400).json({
       error: 'Validation failed',
-      details: 'IconUrl is required'
+      details: 'icon is required'
     })
   }
 

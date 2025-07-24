@@ -18,13 +18,15 @@ const app = express()
 app.use(express.static(join(__dirname, 'dist')))
 app.use(express.json())
 app.use(cors())
+app.use('/uploads', express.static(join(__dirname, 'uploads')))
+app.use(requestLogger)
 
 app.use('/api/login', loginRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/techs', techsRouter)
 
-app.use(requestLogger)
+
 app.use(unknownEndpoint)
 app.use(errorHandler)
 

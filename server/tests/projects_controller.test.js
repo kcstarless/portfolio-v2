@@ -1,5 +1,6 @@
 import './_setup.js'
 import * as helper from './_helper.js'
+import path from 'path'
 import assert from 'node:assert'
 import supertest from 'supertest'
 import { test_log } from '../utils/logger.js'
@@ -54,16 +55,25 @@ describe('Get a project: ', () => {
 describe ('Post a new project: ', () => {
     test('Test1: adds new project with correct with valid properties and the new project exists', async () => {
         const token = await helper.getValidToken()
-        // test_log(token)
-
+        const imagePath = helper.getTestImagePath()
         const projectsBefore = await helper.projectsInDB()
         const newProject = await helper.prepareValidProject()
-        // test_log(newProject)
-        const res = await api  
+        // test_log(newProject.tech)
+        // test_log(newProject.user.toString())
+        let req = api
             .post('/api/projects')
             .set('Authorization', `Bearer ${token}`)
-            .send(newProject)
-            .expect(201)
+            .field('title', newProject.title)
+            .field('description', newProject.description)
+            .field('demoUrl', newProject.demoUrl)
+            .field('githubUrl', newProject.githubUrl)
+            .field('user', newProject.user.toString());
+
+        newProject.tech.forEach(id => {
+            req = req.field('tech', id.toString());
+        });
+
+        const res = await req.attach('image', imagePath).expect(201);
 
         const projectsAfter = await helper.projectsInDB()
 
@@ -100,7 +110,6 @@ describe ('Post a new project: ', () => {
             .send(newProject)
             .expect(401)
 
-        // test_log(res.body.error)
         const projectsAfter = await helper.projectsInDB()
 
         assert.strictEqual(projectsBefore.length, projectsAfter.length)

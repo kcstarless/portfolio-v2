@@ -1,15 +1,15 @@
-import Header from './components/layout/Header'
+import Header from './components/Header'
 import Projects from './components/Projects'
 import { Box, Typography, Stack } from '@mui/material'
 
 
 function App() {
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <Box display="flex" flexDirection="column" minHeight="100%">
       <Header />
 
       <Stack direction="row" flex={1}>
-        <Box component="aside" width="240px" p={2} bgcolor="#f5f5f5">
+        <Box component="aside" width="350px" p={2} bgcolor="#f5f5f5">
           Sidebar
         </Box>
 

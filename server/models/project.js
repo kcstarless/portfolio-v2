@@ -1,7 +1,6 @@
 import mongoose from "mongoose"
 
 const projectSchema = new mongoose.Schema({
-    projectNo: { type: Number, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     tech: {
@@ -11,8 +10,7 @@ const projectSchema = new mongoose.Schema({
     },
     demoUrl: { type: String, required: true },
     githubUrl: { type: String, required: true },
-    imageUrl: { type: String, required: true },
-    difficulty: { type: String, enum: ['easy', 'medium', 'hard'] },
+    imagePath: { type: String, required: true },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

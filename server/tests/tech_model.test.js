@@ -31,17 +31,17 @@ describe('Tech model: ', () => {
         assert.ok(error.errors.name, 'Expected error on missing name')
     })
 
-    test('Test4: throws validation error if required field is missing - iconUrl', async () => {
+    test('Test4: throws validation error if required field is missing - icon', async () => {
         let error = null
         
         try {
-            await new Tech(testData.getMissingIconUrlTech()).save()
+            await new Tech(testData.getMissingiconTech()).save()
         } catch(err) {
             error = err
         }
 
         // test_log(error)
         assert.ok(error, 'Expected validation error')
-        assert.ok(error.errors.iconUrl, 'Expected error on missing name')
+        assert.ok(error.errors.icon, 'Expected error on missing name')
     })
 })

@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "React",
-    "iconUrl": "http://icon"
+    "icon": "SiReact"
 }
 
 ### 
@@ -20,5 +20,15 @@ Content-Type: application/json
 
 {
     "name": "JavaScript",
-    "iconUrl": "http://icon"
+    "icon": "SiJavascript"
 }
+
+###
+
+//// Delete a tech
+DELETE http://localhost:3001/api/techs/687c3f65815046710dbc9bc6
+Content-Type: application/json
+
+### 
+
+//// Delete all

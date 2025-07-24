@@ -19,15 +19,20 @@ techsRouter.get('/:id', async (req, res) => {
 })
 
 techsRouter.post('/', validateTech, async (req, res) => {
-    const { name, iconUrl } = req.body
+    const { name, icon } = req.body
     
     const tech = new Tech({
         name,
-        iconUrl,
+        icon,
     })
 
     const savedTech = await tech.save()
     res.status(201).json(savedTech)
+})
+
+techsRouter.delete('/:id', async (req, res) => {
+    await Tech.findByIdAndDelete(req.params.id)
+    res.status(204).end()
 })
 
 export { techsRouter }

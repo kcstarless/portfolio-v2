@@ -5,6 +5,13 @@ import { Tech } from '../models/tech.js'
 import { User } from "../models/user.js"
 import { getMongoUri } from '../utils/config.js'
 import { getSeedProjects, seedTechs, seedUsers, getValidProject } from "./_data.js"
+import path from 'path'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 //// Mongo connection test helper
 const connectTestDB = async () => {
@@ -59,6 +66,8 @@ const prepareValidProject = async () => {
   return getValidProject(userId, techIds)
 }
 
+const getTestImagePath = () => path.join(__dirname, 'test_assets', 'test_project_image.png')
+
 //// Get valid token
 const getValidToken = async () => {
     const user = await User.findOne()
@@ -74,7 +83,7 @@ const getValidToken = async () => {
 export { 
     usersInDB, initialiseUsers, getValidUserId,
     techsInDB, initialiseTechs, getValidTechIds,
-    projectsInDB, initialiseProjects, prepareValidProject,
+    projectsInDB, initialiseProjects, prepareValidProject, getTestImagePath,
     connectTestDB, disconnectTestDB,
     getValidToken,
  }

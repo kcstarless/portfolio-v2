@@ -6,10 +6,9 @@ GET http://localhost:3001/api/projects
 //// Add a project
 POST http://localhost:3001/api/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY4N2RhMzk3YmUwZTQ1YzI4NzU5N2I1NyIsImlhdCI6MTc1MzA2NDM3MSwiZXhwIjoxNzUzMDY3OTcxfQ.J0NDYEamRx3mkBybVBtw7wyM4rgilh8o3UXkqyZw8Po
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRnaW0iLCJpZCI6IjY4N2FmMDNjNzYwNzhhM2NhZWIxZjJjZCIsImlhdCI6MTc1MzM5MDQwNywiZXhwIjoxNzUzMzk0MDA3fQ.-h2YlnwYqzF6nmBVlxF7MDphmSDlz_fvibtI8NrIHg4
 
 {
-   "projectNo": 1,
     "title": "Test Post",
     "description": "This is my second project",
     "tech": [
@@ -18,16 +17,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlb
     ],
     "demoUrl": "http://demo",
     "githubUrl": "http://github",
-    "imageUrl": "http://image",
-    "difficulty": "easy",
+    "image": "http://image",
     "user": "687af03c76078a3caeb1f2cd"
 }
 
 ###
 
 //// Delete a project
-DELETE http://localhost:3001/api/projects/687da361be0e45c287597b54
+DELETE http://localhost:3001/api/projects/6881ba8181883538f8114300
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY4N2RhMzk3YmUwZTQ1YzI4NzU5N2I1NyIsImlhdCI6MTc1MzA2NDM3MSwiZXhwIjoxNzUzMDY3OTcxfQ.J0NDYEamRx3mkBybVBtw7wyM4rgilh8o3UXkqyZw8Po
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRnaW0iLCJpZCI6IjY4N2FmMDNjNzYwNzhhM2NhZWIxZjJjZCIsImlhdCI6MTc1MzM5MDQwNywiZXhwIjoxNzUzMzk0MDA3fQ.-h2YlnwYqzF6nmBVlxF7MDphmSDlz_fvibtI8NrIHg4
 
 

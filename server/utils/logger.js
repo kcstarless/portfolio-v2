@@ -1,17 +1,27 @@
 const info = (...params) => {
-    if (process.env.NODE_ENV !== 'test') {
-        console.log("\n#### info ####\n", ...params, "\n#### end ####")
-    }
+    console.log(
+        "\n#### info ####\n", 
+        ...params, 
+        "\n#### end ####\n"
+    )
 }
 
-const error = (...params) => {
-    if (process.env.NODE_ENV !== 'test') { 
-        console.error("\n#### error ####\n", ...params, "\n#### end ####")
-    }
+const error = (err) => {
+    console.error(
+        "\n#### ERROR ####",
+        "\nName: ", err.name,
+        "\nCode: ", err.code,
+        "\nMessage: ", err.message,
+        "\n#### END ####\n"
+    )
 }
 
 const test_log = (...params) => {
-    console.log("\n#### test response ####\n", ...params, '\n#### end ####')
+    console.log(
+        "\n#### test response ####\n", 
+        ...params, 
+        '\n#### end ####'
+    )
 }
 
 export { info, error, test_log }

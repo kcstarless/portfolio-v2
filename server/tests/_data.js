@@ -1,39 +1,29 @@
-import { Tech } from "../models/tech.js"
-import { User } from "../models/user.js"
-
 ///// Project test data
 const getSeedProjects = (userId, techIds) => ([
     {
-        projectNo: 1,
         title: "Todo List App",
         description: "A simple task management app to add, complete, and delete tasks.",
         tech: techIds,
         demoUrl: "https://example.com/todo-app",
         githubUrl: "https://github.com/username/todo-app",
-        imageUrl: "https://example.com/images/todo-app.png",
-        difficulty: "easy",
+        imagePath: "https://example.com/images/todo-app.png",
         user: userId
     },
     {
-        projectNo: 2,
         title: "Mini E-commerce Store",
         description: "A mock online store with product listings, cart functionality, and checkout.",
         tech: techIds,
         demoUrl: "https://example.com/ecommerce",
         githubUrl: "https://github.com/username/ecommerce-app",
-        imageUrl: "https://example.com/images/ecommerce.png",
-        difficulty: "medium",
+        imagePath: "https://example.com/images/ecommerce.png",
         user: userId
     }
 ])
 const getValidProject = (userId, techIds) => ({
-        projectNo: 3,
         title: "Example App",
         description: "A example app does the examples",
         demoUrl: "https://example.com/todo-app",
         githubUrl: "https://github.com/username/todo-app",
-        imageUrl: "https://example.com/images/todo-app.png",
-        difficulty: "medium",
         tech: techIds,
         user: userId
 })
@@ -63,28 +53,28 @@ const getWhiteSpaceUser = () => ({
 const seedTechs = [
     {
         name: 'React',
-        iconUrl: './location',
+        icon: 'SiReact',
     },
     {
         name: 'Node',
-        iconUrl: './location',
+        icon: 'SiNode',
     },
     {
         name: 'JavaScript',
-        iconUrl: './location',
+        icon: 'SiJavascript',
     }
 ]
 const getValidTech = () => ({
     name: 'HTML',
-    iconUrl: './location'
+    icon: 'SiHtml'
 })
 const getMissingFieldTech = () => ({
     // name: "CSS",
-    iconUrl: './location'
+    icon: 'SiCss'
 })
-const getMissingIconUrlTech = () => ({
+const getMissingiconTech = () => ({
     name: "CSS",
-    // iconUrl: './location'
+    // icon: './location'
 })
 
 export {
@@ -97,5 +87,5 @@ export {
     getValidUser,
     getInvalidUser,
     getWhiteSpaceUser,
-    getMissingIconUrlTech,
+    getMissingiconTech,
 }

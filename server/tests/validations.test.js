@@ -7,13 +7,11 @@ import { test, describe } from 'node:test'
 
 //// Setup
 const validProject = {
-    projectNo: 3,
     title: "Example App",
     description: "A example app does the examples",
     demoUrl: "https://example.com/todo-app",
     githubUrl: "https://github.com/username/todo-app",
-    imageUrl: "https://example.com/images/todo-app.png",
-    difficulty: "medium",
+    imagePath: "https://example.com/images/todo-app.png",
     tech: ['id1', 'id2'],
     user: 'userId123'
 }
@@ -36,18 +34,7 @@ describe('Project property validation: ', () => {
         assert.strictEqual(res.statusCode, 200)
     })
 
-    test('Test2: missing projectNo', () => {
-        const invalidProject = { ...validProject }
-        delete invalidProject.projectNo
-
-        const req = mockRequest('POST', invalidProject)
-
-        const res = httpMocks.createResponse()
-        const next = () => {}
-
-        validateProject(req, res, next)
-
-        assert.strictEqual(res.statusCode, 400)
+    test('Test2: missing field', () => {
     })
 
     test('Test3: missing title', () => {
@@ -108,8 +95,8 @@ describe('Project property validation: ', () => {
         assert.equal(message.details, 'Missing required fields: demoUrl')
     })
 
-    test('Test7: multiple fields missing - demoUrl, title, difficulty', () => {
-        const { demoUrl, title, difficulty, ...invalidProject } = validProject;
+    test('Test7: multiple fields missing - demoUrl, title', () => {
+        const { demoUrl, title, ...invalidProject } = validProject;
 
         const req = mockRequest('POST', invalidProject)
 
@@ -121,43 +108,14 @@ describe('Project property validation: ', () => {
 
         const message = res._getJSONData()
         assert.equal(message.error, 'Validation failed')
-        assert.equal(message.details, 'Missing required fields: title, demoUrl, difficulty')
+        assert.equal(message.details, 'Missing required fields: title, demoUrl')
     })
 
-    test('Test8: invalid projectNo (-1) & missing field', () => {
-        const invalidProject = { ...validProject }
-        invalidProject.projectNo = -1
-        delete invalidProject.tech
-        
-        const req = mockRequest('POST', invalidProject)
-
-        const res = httpMocks.createResponse()
-        const next = () => {}
-
-        validateProject(req, res, next)
-        assert.strictEqual(res.statusCode, 400)
-
-        const message = res._getJSONData()
-        assert.equal(message.error, 'Validation failed')
-        assert.ok(message.details.includes('Missing required fields: tech'));
-        assert.ok(message.details.includes('projectNo must be a positive integer'));
+    test('Test8: something & missing field', () => {
     })
 
-    test('Test9: invalid difficulty', () => {
-        const invalidProject = { ...validProject }
-        invalidProject.difficulty = 'soso'
-        
-        const req = mockRequest('POST', invalidProject)
+    test('Test9: invalid ', () => {
 
-        const res = httpMocks.createResponse()
-        const next = () => {}
-
-        validateProject(req, res, next)
-        assert.strictEqual(res.statusCode, 400)
-
-        const message = res._getJSONData()
-        assert.equal(message.error, 'Validation failed')
-        assert.ok(message.details.includes('difficulty must be easy, medium or hard'));
     })
 
     test('Test10: missing user', () => {
@@ -292,8 +250,8 @@ describe('Tech property validation', () => {
         assert.strictEqual(data.error, 'Validation failed');
         assert.strictEqual(data.details, 'Name is required');
     })
-    test('Test3: validation fails with missing iconUrl', async () => {
-        const req = mockRequest('POST', testData.getMissingIconUrlTech())
+    test('Test3: validation fails with missing icon', async () => {
+        const req = mockRequest('POST', testData.getMissingiconTech())
 
         const res = httpMocks.createResponse()
         const next = () => {}
@@ -303,6 +261,6 @@ describe('Tech property validation', () => {
 
         assert.strictEqual(res.statusCode, 400)
         assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'IconUrl is required');
+        assert.strictEqual(data.details, 'icon is required');
     })
 })
