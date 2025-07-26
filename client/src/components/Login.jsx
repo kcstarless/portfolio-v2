@@ -1,54 +1,62 @@
 import { useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
-import LoginForm from './LoginForm'
-import AddDialog from './AddDialog'
-import ProjectForm from './ProjectForm'
-import TechForm from './TechForm'
+import { LoginForm } from './LoginForm'
+import { AddDialog } from './AddDialog'
+import { ProjectForm } from './ProjectForm'
+import { TechForm } from './TechForm'
+import { useNotification } from '../contexts/NotificationContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { loginUser, logoutUser }from '../store/authSlice'
 
-import { IconButton, Tooltip, Typography, Box, Slide } from '@mui/material'
-import { MdArrowDropDown, MdArrowDropUp  } from "react-icons/md"
-import { IoMdLogOut  } from "react-icons/io"
-
+import { IconButton, Tooltip, Box, Slide, CircularProgress } from '@mui/material'
+import { GetIcon } from './Icon'
 
 export const Login = () => {
-    const { user, login, logout, errorMessage, loading } = useAuth()
+    const { showNotification } = useNotification()
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
+    const loading = useSelector(state => state.auth.loading)
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [showLogin, setShowLogin] = useState(false)
 
-    const handleLogout = (event) => {
+    const handleLogout = async (event) => {
         event.preventDefault()
-        logout()
+        try {
+            await dispatch(logoutUser()).unwrap()
+            showNotification('info', 'you have successfully logged out')
+        } catch (error) {
+            showNotification('error', error)
+        }
     }
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        const success = await login({ username, password })
-        if (success) {
+        try {
+            const loggedInUser =await dispatch(loginUser({ username, password })).unwrap()
             setUsername('')
             setPassword('')
             setShowLogin(false)
+            showNotification('info', `Welcome ${loggedInUser.name}`)
+        } catch (error) {
+            showNotification('error', error)
         }
     }
 
     if (user) {
         return (
             <Box display='flex' alignItems="center" gap={1}>
-                <Typography variant="body2" sx={{ px: 1 }}>
-                            {user.name} 
-                </Typography>
-
-                <AddDialog>
+                <AddDialog addType="tech">
                     {({user, onSuccess}) => <TechForm user={user} onSuccess={onSuccess} />}
                 </AddDialog>
 
-                <AddDialog>
+                <AddDialog addType="project">
                     {({ user, onSuccess }) => <ProjectForm user={user} onSuccess={onSuccess} />}
                 </AddDialog>
 
                 <Tooltip title="Click to log out">
                     <IconButton onClick={handleLogout} aria-label="Log out" size="large">
-                        <IoMdLogOut />
+                        {loading ? <CircularProgress size={24} /> : <GetIcon type='logout' size={24} />}
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -65,7 +73,6 @@ export const Login = () => {
                         setPassword={setPassword}
                         username={username}
                         setUsername={setUsername}
-                        errorMessage={errorMessage}
                         loading={loading}
                     />
                 </Box>
@@ -79,7 +86,7 @@ export const Login = () => {
                     aria-controls="login-form"
                     size="large"
                     >
-                    {showLogin ? <MdArrowDropUp color='navy' size='30' /> : <MdArrowDropDown color='navy' size='30' />}
+                    {showLogin ? <GetIcon type='arrowUp' /> : <GetIcon type='arrowDown' />}
                 </IconButton>
             </Tooltip>
         </Box>

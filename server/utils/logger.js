@@ -6,12 +6,13 @@ const info = (...params) => {
     )
 }
 
-const error = (err) => {
+const error = (err, src='') => {
     console.error(
         "\n#### ERROR ####",
         "\nName: ", err.name,
         "\nCode: ", err.code,
         "\nMessage: ", err.message,
+        "\nTriggered from: ", src,
         "\n#### END ####\n"
     )
 }

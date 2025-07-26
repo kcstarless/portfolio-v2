@@ -1,11 +1,10 @@
-import Header from './components/Header'
-import Projects from './components/Projects'
+import { Header } from './components/Header'
+import { Projects } from './components/Projects'
 import { Box, Typography, Stack } from '@mui/material'
-
 
 function App() {
   return (
-    <Box display="flex" flexDirection="column" minHeight="100%">
+    <Box display="flex" flexDirection="column" minHeight="100vh">
       <Header />
 
       <Stack direction="row" flex={1}>

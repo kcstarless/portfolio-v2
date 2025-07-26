@@ -1,8 +1,7 @@
-import { IconButton, Tooltip, Box, TextField, Alert, CircularProgress } from '@mui/material'
-import { IoMdLogIn } from "react-icons/io"
+import { IconButton, Tooltip, Box, TextField, CircularProgress } from '@mui/material'
+import { GetIcon } from './Icon'
 
 const LoginForm = (props) => {
-
     return (
         <Box
             component="form"
@@ -19,8 +18,6 @@ const LoginForm = (props) => {
             {/* <Typography variant="h6" id="login-form-title">
                 Login
             </Typography> */}
-
-            {props.errorMessage && <Alert severity="error">{props.errorMessage}</Alert>}
 
             <TextField
                 id="username-input"
@@ -48,11 +45,11 @@ const LoginForm = (props) => {
             />
 
             <Tooltip title="Click to Log in">
-                <IconButton type='submit' aria-label="Log in" size="large">
+                <IconButton type='submit' aria-label="Log in" size="large" sx={{ ml: -1}}>
                     {props.loading ? (
                         <CircularProgress size={24} />
                     ) : (
-                        <IoMdLogIn size='30' />
+                        <GetIcon type='login' size='24' />
                     )}
                 </IconButton>
             </Tooltip>
@@ -60,4 +57,4 @@ const LoginForm = (props) => {
     )
 }
 
-    export default LoginForm
+export { LoginForm }

@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import useTech from '../hooks/useTech'
-import { getTechIcon } from '../utils/helper'
-import projectService from '../services/project'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchTechs } from '../store/techSlice'
+import { useEffect, useState } from 'react'
+import projectService from '../services/projectService'
+
 import {
   Button,
   TextField,
@@ -12,21 +13,31 @@ import {
   Checkbox,
   ListItemText,
   OutlinedInput,
+  ToggleButtonGroup,
+  ToggleButton,
   FormHelperText,
   Box,
+  Tooltip,
 } from '@mui/material'
+import { GetTechIcon } from './Icon'
 
 const initialFormData = {
-  title: '',
-  description: '',
-  tech: [],
-  demoUrl: '',
-  githubUrl: '',
-  image: null,
+    title: '',
+    description: '',
+    tech: [],
+    demoUrl: '',
+    githubUrl: '',
+    image: null,
 }
 
 const ProjectForm = ({ user, onSuccess }) => {
-  const { techs } = useTech()
+  const dispatch = useDispatch()
+  const techs = useSelector(state => state.techs.items)
+
+  useEffect(() => {
+    dispatch(fetchTechs())
+  }, [dispatch])
+
   const techOptions = techs || []
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
@@ -46,11 +57,6 @@ const ProjectForm = ({ user, onSuccess }) => {
   const handleChange = (field) => (e) => {
     const value = field === 'tech' ? e.target.value : e.target.value
     setFormData({ ...formData, [field]: value })
-  }
-
-  const techIcon = (name) => {
-    const Icon = getTechIcon(name)
-    return Icon ? <Icon /> : null
   }
 
   const handleSubmit = async (e) => {
@@ -126,24 +132,24 @@ const ProjectForm = ({ user, onSuccess }) => {
       </FormControl>
 
       <FormControl error={!!errors.tech}>
-        <InputLabel>Tech Stack</InputLabel>
-        <Select
-          multiple
-          value={formData.tech}
-          onChange={handleChange('tech')}
-          input={<OutlinedInput label="Tech Stack" />}
-          renderValue={(selected) =>
-            selected.map(id => techOptions.find(t => t.id === id)?.name).join(', ')
-          }
-        >
-          {techOptions.map((tech) => (
-            <MenuItem key={tech.id} value={tech.id}>
-              <Checkbox checked={formData.tech.includes(tech.id)} />
-              {techIcon(tech.icon)} &nbsp;
-              <ListItemText primary={tech.name} />
-            </MenuItem>
-          ))}
-        </Select>
+          <ToggleButtonGroup
+            value={formData.tech}
+            onChange={(e, newTechs) => setFormData({ ...formData, tech: newTechs })}
+            aria-label="tech stack"
+            sx={{ flexWrap: 'wrap', gap: 1, mt: 2 }}
+          >
+            {techOptions.map((tech) => (
+            <Tooltip title={tech.name}>
+              <ToggleButton
+                key={tech.id}
+                value={tech.id}
+                aria-label={tech.name}
+              >
+                  <GetTechIcon techName={tech.icon} size={20} />
+              </ToggleButton>
+            </Tooltip>
+            ))}
+          </ToggleButtonGroup>
         <FormHelperText>{errors.tech}</FormHelperText>
       </FormControl>
 
@@ -168,10 +174,10 @@ const ProjectForm = ({ user, onSuccess }) => {
       )}
 
       <Button type="submit" variant="contained" color="primary">
-        Submit
+        Add New Project
       </Button>
     </Box>
   )
 }
 
-export default ProjectForm
+export { ProjectForm }

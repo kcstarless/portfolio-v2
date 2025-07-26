@@ -26,7 +26,7 @@ Content-Type: application/json
 ###
 
 //// Delete a tech
-DELETE http://localhost:3001/api/techs/687c3f65815046710dbc9bc6
+DELETE http://localhost:3001/api/techs/6884a1290c007fc858e0eee0
 Content-Type: application/json
 
 ### 

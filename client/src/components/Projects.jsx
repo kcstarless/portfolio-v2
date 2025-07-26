@@ -1,5 +1,5 @@
 import useProject from "../hooks/useProject"
-import ProjectCard from "./ProjectCard"
+import { ProjectCard } from "./ProjectCard"
 import { Box, Typography } from "@mui/material"
 
 const style = {
@@ -20,11 +20,15 @@ const Projects = () => {
     return (
         <Box>
             <Typography variant="h4" gutterBottom sx={style.pageTitle}>Portfolio</Typography>
-            {projects.map((project, index) => 
-                <ProjectCard project={project} index={index} key={project.id} />
+            {projects.slice().reverse().map((project, index) => 
+                <ProjectCard
+                    project={project}
+                    index={projects.slice().reverse().length - 1 - index} // <-- this will display the correct number
+                    key={project.id}
+                />
             )}
         </Box>
     )
 }
 
-export default Projects
+export { Projects }

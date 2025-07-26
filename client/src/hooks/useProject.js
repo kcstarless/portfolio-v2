@@ -1,4 +1,4 @@
-import projectServices from '../services/project'
+import projectServices from '../services/projectService'
 import { useEffect, useState } from 'react'
 
 const useProject = () => {

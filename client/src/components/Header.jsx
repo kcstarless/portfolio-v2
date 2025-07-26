@@ -1,6 +1,6 @@
 import { Login } from './Login'
-
-import { Box, Typography } from '@mui/material'
+import { useNotification } from '../contexts/NotificationContext'
+import { Box, Typography, Alert } from '@mui/material'
 
 const headerStyles = {
   container: {
@@ -17,11 +17,22 @@ const headerStyles = {
 }
 
 const Header = () => {
+    const { notification } = useNotification()
+
     return (
         <Box component="header" sx={headerStyles.container}>
-            <Typography variant="body1" sx={headerStyles.title}>
-                Melbourne Weather Today
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  m: 0, p: 0 }}>
+              {notification.open ? (
+                <Alert
+                  severity={notification.type}
+                  sx={{ m: 0, p: 0, backgroundColor: 'transparent' }}
+                >
+                  {notification.message}
+                </Alert>
+              ) : (
+                <Typography>Melbourne Weather</Typography>
+              )}
+            </Box>
             <Box>
                 <Login />
             </Box>
@@ -29,4 +40,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export { Header }

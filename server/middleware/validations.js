@@ -50,7 +50,7 @@ const validateTech = (req, res, next) => {
   if (!name || (typeof name === 'string' && name.trim() === '')) {
     return res.status(400).json({
       error: 'Validation failed',
-      details: 'Name is required'
+      details: 'name is required'
     })
   }
 

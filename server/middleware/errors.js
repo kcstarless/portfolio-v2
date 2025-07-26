@@ -1,7 +1,8 @@
-import { error } from '../utils/logger.js'
+import { error, info } from '../utils/logger.js'
 
 const errorHandler = (err, req, res, next) => {
-    error(err)
+    info(err)
+    error(err, 'utils/logger.js')
 
     // multer errors
     if (err.name === 'MulterError') {
@@ -24,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
       err.name === 'MongoServerError'
     ) {
       if (err.name === 'MongoServerError' && err.code === 11000) {
-        return res.status(400).json({ error: 'username must be unique' })
+        return res.status(400).json({ error: 'duplicate key error' })
       }
 
       if (err.name === 'CastError') {
