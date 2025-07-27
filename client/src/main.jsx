@@ -8,6 +8,7 @@ import 'modern-css-reset'
 import './styles/index.css'
 import store from './store/index.js'
 import App from './App.jsx'
+import 'devicon/devicon.min.css';
 
 createRoot(document.getElementById('root')).render(
   <ThemeProvider theme={theme}>

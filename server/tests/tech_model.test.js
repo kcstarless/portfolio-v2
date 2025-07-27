@@ -44,4 +44,18 @@ describe('Tech model: ', () => {
         assert.ok(error, 'Expected validation error')
         assert.ok(error.errors.icon, 'Expected error on missing name')
     })
+
+    test('Test5: throws validation error if field icon is not unique', async () => {
+        let error = null
+
+        await Tech(testData.getValidTech()).save()
+        try {
+            await Tech(testData.getSameIconName()).save()
+        } catch(err) {
+            error = err
+        }
+        // test_log(error)
+        // test_log(error.errorResponse)
+        assert.ok(error,'Expected validation error' )
+    })
 })

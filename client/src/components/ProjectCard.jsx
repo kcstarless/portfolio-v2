@@ -141,7 +141,7 @@ const ProjectCard = ({ project, index }) => {
                         <Box sx={cardStyle.techList}>
                             {project.tech.map((tech) => (
                                 <Box key={tech.id} sx={cardStyle.techIcon}>
-                                  <GetTechIcon techName={tech.icon} />
+                                  <GetTechIcon techName={tech.icon} size={22} />
                                 </Box>
                             ))}
                         </Box>

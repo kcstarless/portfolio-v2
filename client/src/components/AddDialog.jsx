@@ -45,7 +45,7 @@ const AddDialog = ({addType, children}) => {
             >
                 <DialogTitle>
                     <Box display="flex" alignItems="center" m={1} p={0} justifyContent={'space-between'}>
-                      <Typography m={1} p={0} display='flex' alignItems="center">
+                      <Typography variant='h5' m={1} p={0} display='flex' alignItems="center">
                         {addType === 'tech' ? <GetIcon type='addTech' />: <GetIcon type='addProject' />}
                         &nbsp; Add New {addType === 'tech' ? 'Technology Stack' : 'Project'}
                       </Typography>

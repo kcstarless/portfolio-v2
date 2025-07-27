@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { getMongoUri} from './config.js'
 import { info, error } from './logger.js'
 
-info("connecting to mongo...")
+// info("connecting to mongo...")
 
 mongoose
     .connect(getMongoUri())

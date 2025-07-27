@@ -7,11 +7,11 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({ error: 'token missing or invalid' })
     }
 
-    info(authorization)
+    // info(authorization)
 
     const token = authorization.substring(7)
     const decodedToken = jwt.verify(token, process.env.SECRET)
-    info("decodedToken: ", token)
+    // info("decodedToken: ", token)
     
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' })

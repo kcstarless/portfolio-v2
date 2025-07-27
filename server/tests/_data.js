@@ -77,6 +77,11 @@ const getMissingiconTech = () => ({
     // icon: './location'
 })
 
+const getSameIconName = () => ({
+    name: 'HTML',
+    icon: 'SiHtml',
+})
+
 export {
     seedTechs,
     seedUsers,
@@ -88,4 +93,5 @@ export {
     getInvalidUser,
     getWhiteSpaceUser,
     getMissingiconTech,
+    getSameIconName,
 }

@@ -1,7 +1,6 @@
 import { error, info } from '../utils/logger.js'
 
 const errorHandler = (err, req, res, next) => {
-    info(err)
     error(err, 'utils/logger.js')
 
     // multer errors
@@ -25,7 +24,7 @@ const errorHandler = (err, req, res, next) => {
       err.name === 'MongoServerError'
     ) {
       if (err.name === 'MongoServerError' && err.code === 11000) {
-        return res.status(400).json({ error: 'duplicate key error' })
+        return res.status(400).json({ error: 'duplicate/uniqness key error' })
       }
 
       if (err.name === 'CastError') {

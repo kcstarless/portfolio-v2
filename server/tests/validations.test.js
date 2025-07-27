@@ -227,7 +227,7 @@ describe('User property validation: ', () => {
 describe('Tech property validation', () => {
     test('Test1: validation passes', async () => {
         const req = mockRequest('POST', testData.getValidTech())
-        test_log(req.body)
+        // test_log(req.body)
         
         const res = httpMocks.createResponse()
         const next = () => {}
@@ -248,7 +248,7 @@ describe('Tech property validation', () => {
 
         assert.strictEqual(res.statusCode, 400)
         assert.strictEqual(data.error, 'Validation failed');
-        assert.strictEqual(data.details, 'Name is required');
+        assert.strictEqual(data.details, 'name is required');
     })
     test('Test3: validation fails with missing icon', async () => {
         const req = mockRequest('POST', testData.getMissingiconTech())

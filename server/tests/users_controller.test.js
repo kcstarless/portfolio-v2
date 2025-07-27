@@ -7,7 +7,6 @@ import { test, describe } from 'node:test'
 import { test_log } from '../utils/logger.js'
 import { app } from '../app.js'
 
-
 //// Setup
 const api = supertest(app)
 
@@ -46,7 +45,7 @@ describe('User controller: ', () => {
         const { usersAtStart, usersAtEnd, res } = await expectUserCreation(newUser, 400)
         // test_log(res.body)
         assert.strictEqual(usersAtEnd.length, usersAtStart.length)
-        assert(res.body.error.includes('username must be unique'))
+        assert(res.body.error.includes('duplicate/uniqness key error'))
     })
 
     test('Test4: creation fails when username length is less than 4 characters', async () => {

@@ -54,10 +54,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-selected': {
-            backgroundColor: palette.secondary.light,
+            backgroundColor: palette.secondary.main,
             color: palette.primary.contrastText,
             '&:hover': {
-              backgroundColor: palette.secondary.light, // or any color you want for selected+hover
+              backgroundColor: palette.secondary.main, // or any color you want for selected+hover
             },
           },
           '&:hover': {

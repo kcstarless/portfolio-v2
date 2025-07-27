@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchTechs } from '../store/techSlice'
 import { useEffect, useState } from 'react'
 import projectService from '../services/projectService'
+import * as helper from '../utils/projectUtils'
 
 import {
   Button,
@@ -21,15 +22,6 @@ import {
 } from '@mui/material'
 import { GetTechIcon } from './Icon'
 
-const initialFormData = {
-    title: '',
-    description: '',
-    tech: [],
-    demoUrl: '',
-    githubUrl: '',
-    image: null,
-}
-
 const ProjectForm = ({ user, onSuccess }) => {
   const dispatch = useDispatch()
   const techs = useSelector(state => state.techs.items)
@@ -39,20 +31,8 @@ const ProjectForm = ({ user, onSuccess }) => {
   }, [dispatch])
 
   const techOptions = techs || []
-  const [formData, setFormData] = useState(initialFormData)
+  const [formData, setFormData] = useState(helper.initialFormData)
   const [errors, setErrors] = useState({})
-
-  const validate = () => {
-    const newErrors = {}
-    if (!formData.title) newErrors.title = 'Title is required'
-    if (!formData.description) newErrors.description = 'Description is required'
-    if (!formData.tech.length) newErrors.tech = 'At least one tech is required'
-    if (!formData.demoUrl) newErrors.demoUrl = 'Demo URL is required'
-    if (!formData.githubUrl) newErrors.githubUrl = 'GitHub URL is required'
-    if (!formData.image) newErrors.image = 'Image is required'
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
 
   const handleChange = (field) => (e) => {
     const value = field === 'tech' ? e.target.value : e.target.value
@@ -61,20 +41,13 @@ const ProjectForm = ({ user, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!validate()) return
+    if (!helper.validate(formData, setErrors)) return
 
-    const data = new FormData()
-    data.append('title', formData.title)
-    data.append('description', formData.description)
-    data.append('demoUrl', formData.demoUrl)
-    data.append('githubUrl', formData.githubUrl)
-    data.append('user', user.id)
-    data.append('image', formData.image)
-    formData.tech.forEach(t => data.append('tech', t))
+    const data = helper.prepData(formData, user)
 
     try {
       await projectService.create(data)
-      setFormData(initialFormData) // reset form after success
+      setFormData(helper.initialFormData) // reset form after success
       if (onSuccess) onSuccess()
     } catch (error) {
       setErrors({ submit: error.response?.data?.error || 'Submission failed' })
