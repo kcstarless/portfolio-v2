@@ -56,7 +56,7 @@ export const Login = () => {
 
                 <Tooltip title="Click to log out">
                     <IconButton onClick={handleLogout} aria-label="Log out" size="large">
-                        {loading ? <CircularProgress size={24} /> : <GetIcon type='logout' size={24} />}
+                        {loading ? <CircularProgress size={25} /> : <GetIcon type='logout' />}
                     </IconButton>
                 </Tooltip>
             </Box>

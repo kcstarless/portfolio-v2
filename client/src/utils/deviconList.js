@@ -4,7 +4,7 @@ export const deviconList = [
   { name: "Apache", class: "devicon-apache-plain colored" },
   { name: "Appwrite", class: "devicon-appwrite-plain colored" },
   { name: "Apple", class: "devicon-apple-original colored" },
-  { name: "AWS", class: "devicon-amazonwebservices-original colored" },
+  { name: "AWS", class: "devicon-amazonwebservices-plain-wordmark colored" },
   { name: "Babel", class: "devicon-babel-plain colored" },
   { name: "BackboneJS", class: "devicon-backbonejs-plain colored" },
   { name: "Bash", class: "devicon-bash-plain colored" },
@@ -136,4 +136,8 @@ export const deviconList = [
   { name: "WordPress", class: "devicon-wordpress-plain colored" },
   { name: "Yarn", class: "devicon-yarn-plain colored" },
   { name: "Zeplin", class: "devicon-zeplin-plain colored" },
+  { name: "Turbo", class: "devicon-turbo-original colored" },
+  { name: "Rspec", class: "devicon-rspec-plain" },
+  { name: "FramerMotion", class: "devicon-framermotion-original" },
+  { name: "Next.js", class: "devicon-nextjs-original-wordmark" },
 ];

@@ -47,9 +47,9 @@ const LoginForm = (props) => {
             <Tooltip title="Click to Log in">
                 <IconButton type='submit' aria-label="Log in" size="large" sx={{ ml: -1}}>
                     {props.loading ? (
-                        <CircularProgress size={24} />
+                        <CircularProgress size={25} />
                     ) : (
-                        <GetIcon type='login' size='24' />
+                        <GetIcon type='login' />
                     )}
                 </IconButton>
             </Tooltip>

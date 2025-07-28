@@ -21,7 +21,7 @@ techsRouter.get('/:id', async (req, res) => {
 })
 
 techsRouter.post('/', authMiddleware, validateTech, async (req, res) => {
-    const { name, icon } = req.body
+    const { name, icon, level } = req.body
     const user = await User.findById(req.user.id)
 
     if (!user) {
@@ -31,6 +31,7 @@ techsRouter.post('/', authMiddleware, validateTech, async (req, res) => {
     const tech = new Tech({
         name,
         icon,
+        level,
     })
 
     const savedTech = await tech.save()

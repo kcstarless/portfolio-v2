@@ -1,43 +1,55 @@
-import { Login } from './Login'
-import { useNotification } from '../contexts/NotificationContext'
-import { Box, Typography, Alert } from '@mui/material'
+import { Login } from './Login';
+import { useNotification } from '../contexts/NotificationContext';
+import { Box, Typography, Alert } from '@mui/material';
 
-const headerStyles = {
+const sxHeader = {
   container: {
+    position: 'sticky',
+    top: 0,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    borderBottom: '1px solid #ccc',
+    backgroundColor: 'secondary.light',
     px: 1,
+    zIndex: '1000',
+  },
+  leftBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    m: 0,
+    p: 0,
+    ml: 2,
+  },
+  alert: {
+    m: 0,
+    p: 0,
+    backgroundColor: 'transparent',
   },
   title: {
     color: 'text.primary',
   },
-}
+};
 
 const Header = () => {
-    const { notification } = useNotification()
+  const { notification } = useNotification();
 
-    return (
-        <Box component="header" sx={headerStyles.container}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',  m: 0, p: 0 }}>
-              {notification.open ? (
-                <Alert
-                  severity={notification.type}
-                  sx={{ m: 0, p: 0, backgroundColor: 'transparent' }}
-                >
-                  {notification.message}
-                </Alert>
-              ) : (
-                <Typography>Melbourne Weather</Typography>
-              )}
-            </Box>
-            <Box>
-                <Login />
-            </Box>
-        </Box>
-    )
-}
+  return (
+    <Box component="header" sx={sxHeader.container}>
+      <Box sx={sxHeader.leftBox}>
+        {notification.open ? (
+          <Alert severity={notification.type} sx={sxHeader.alert}>
+            {notification.message}
+          </Alert>
+        ) : (
+          <Typography sx={sxHeader.title}>Melbourne Weather</Typography>
+        )}
+      </Box>
+      <Box>
+        <Login />
+      </Box>
+    </Box>
+  );
+};
 
-export { Header }
+export { Header };

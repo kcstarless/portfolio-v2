@@ -17,6 +17,7 @@ import {
 
 const AddDialog = ({addType, children}) => {
     const user = useSelector(state => state.auth.user)
+
     const { formNotification } = useNotification()
     const [open, setOpen] = useState(false)
 
@@ -44,11 +45,13 @@ const AddDialog = ({addType, children}) => {
               maxWidth="md"
             >
                 <DialogTitle>
-                    <Box display="flex" alignItems="center" m={1} p={0} justifyContent={'space-between'}>
-                      <Typography variant='h5' m={1} p={0} display='flex' alignItems="center">
-                        {addType === 'tech' ? <GetIcon type='addTech' />: <GetIcon type='addProject' />}
-                        &nbsp; Add New {addType === 'tech' ? 'Technology Stack' : 'Project'}
+
+                    <Box display="flex" alignItems="center" m={0} p={0} justifyContent={'space-between'}>
+                      <Typography variant='h3' m={1} p={0} display='flex' alignItems="center">
+                        {/* {addType === 'tech' ? <GetIcon type='addTech' />: <GetIcon type='addProject' />} */}
+                        Add New {addType === 'tech' ? 'Stack' : 'Project'}
                       </Typography>
+
                       {formNotification.open && (
                         <Alert
                           severity={formNotification.type}

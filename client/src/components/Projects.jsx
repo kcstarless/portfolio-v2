@@ -1,34 +1,50 @@
-import useProject from "../hooks/useProject"
-import { ProjectCard } from "./ProjectCard"
-import { Box, Typography } from "@mui/material"
+import { ProjectCard } from "./ProjectCard";
+import { Box, Typography, Divider } from "@mui/material";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProjects } from '../store/projectSlice';
+import { useEffect } from 'react';
 
-const style = {
-    pageTitle: {
-        borderBottom: '2px solid red',
-        width: '100%',
-        textAlign: 'right',
-    }
-    
-}
+const sxProjects = {
+  pageTitle: {
+    width: '100%',
+    textAlign: 'right',
+  },
+};
 
 const Projects = () => {
-    const { projects } = useProject()
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projects.items);
 
-    if (!projects) return <Typography variant="h5">Loading data...</Typography>
-    if (projects.length === 0) return <Typography variant="h5">No Data...</Typography>
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
-    return (
-        <Box>
-            <Typography variant="h4" gutterBottom sx={style.pageTitle}>Portfolio</Typography>
-            {projects.slice().reverse().map((project, index) => 
-                <ProjectCard
-                    project={project}
-                    index={projects.slice().reverse().length - 1 - index} // <-- this will display the correct number
-                    key={project.id}
-                />
-            )}
-        </Box>
-    )
-}
+  if (!projects) {
+    return <Typography variant="h5">Loading data...</Typography>;
+  }
 
-export { Projects }
+  if (projects.length === 0) {
+    return <Typography variant="h5">No projects yet! time to get busy!</Typography>;
+  }
+
+  return (
+    <Box>
+      <Typography variant="h3" gutterBottom sx={sxProjects.pageTitle}>
+        portfolio
+      </Typography>
+      <Divider />
+      {projects
+        .slice()
+        .reverse()
+        .map((project, index, reversed) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={reversed.length - 1 - index}
+          />
+        ))}
+    </Box>
+  );
+};
+
+export { Projects };

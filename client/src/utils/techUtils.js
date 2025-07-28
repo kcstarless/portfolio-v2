@@ -16,16 +16,25 @@ export const searchIcons = (search, SiIcons) => {
         .slice(0, 10)
 }
 
+export const initialFormData = {
+    name: '',
+    icon: '',
+    level: '',
+}
 
-export const validate = (formData, showFormNotification) => {
-    let valid = true
-    if (!formData.name) {
-        showFormNotification('error', 'Technology name is required')
-        valid = false
-    }
-    if (!formData.icon) {
-        showFormNotification('error', 'Must select a valid tech icon')
-        valid = false
-    }
-    return valid
+export const levels = [
+  { value: 'novice', label: 'Novice' },
+  { value: 'intermediate', label: 'Intermediate' },
+  { value: 'expert', label: 'Expert' },
+]
+
+
+
+export const validate = (formData, setErrors) => {
+    const newErrors = {}
+    if (!formData.name) newErrors.name = "Tech name is required"
+    if (!formData.icon) newErrors.icon = "Icon name is required"
+    if (!formData.level) newErrors.level = "Level is required"
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
 }

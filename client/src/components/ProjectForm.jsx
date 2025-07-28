@@ -1,30 +1,28 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTechs } from '../store/techSlice'
 import { useEffect, useState } from 'react'
+import { fetchProjects } from '../store/projectSlice'
 import projectService from '../services/projectService'
+import { GetTechIcon } from "./Icon";
+import { useNotification } from '../contexts/NotificationContext'
 import * as helper from '../utils/projectUtils'
 
 import {
   Button,
   TextField,
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
-  Checkbox,
-  ListItemText,
-  OutlinedInput,
   ToggleButtonGroup,
   ToggleButton,
   FormHelperText,
   Box,
   Tooltip,
 } from '@mui/material'
-import { GetTechIcon } from './Icon'
 
 const ProjectForm = ({ user, onSuccess }) => {
   const dispatch = useDispatch()
+  const { showFormNotification } = useNotification()
   const techs = useSelector(state => state.techs.items)
+  const loading = useSelector(state => state.projects.status === 'loading')
 
   useEffect(() => {
     dispatch(fetchTechs())
@@ -46,11 +44,13 @@ const ProjectForm = ({ user, onSuccess }) => {
     const data = helper.prepData(formData, user)
 
     try {
-      await projectService.create(data)
+      const created = await projectService.create(data)
+      dispatch(fetchProjects())
+      console.log(data)
+      showFormNotification('info', `${created.title} added to your project list`)
       setFormData(helper.initialFormData) // reset form after success
-      if (onSuccess) onSuccess()
     } catch (error) {
-      setErrors({ submit: error.response?.data?.error || 'Submission failed' })
+      showFormNotification('error', `Failed to add: ${error.data.error}`)
     }
   }
 
@@ -68,6 +68,7 @@ const ProjectForm = ({ user, onSuccess }) => {
         onChange={handleChange('title')}
         error={!!errors.title}
         helperText={errors.title}
+        disabled={loading} 
       />
 
       <TextField
@@ -78,6 +79,7 @@ const ProjectForm = ({ user, onSuccess }) => {
         onChange={handleChange('description')}
         error={!!errors.description}
         helperText={errors.description}
+        disabled={loading} 
       />
 
       <FormControl error={!!errors.image}>
@@ -90,6 +92,7 @@ const ProjectForm = ({ user, onSuccess }) => {
           onChange={e => {
             setFormData({ ...formData, image: e.target.files[0] })
           }}
+          disabled={loading} 
         />
         <label htmlFor="upload-image">
           <Button variant="contained" component="span">
@@ -110,6 +113,7 @@ const ProjectForm = ({ user, onSuccess }) => {
             onChange={(e, newTechs) => setFormData({ ...formData, tech: newTechs })}
             aria-label="tech stack"
             sx={{ flexWrap: 'wrap', gap: 1, mt: 2 }}
+            disabled={loading} 
           >
             {techOptions.map((tech) => (
             <Tooltip title={tech.name}>
@@ -118,7 +122,7 @@ const ProjectForm = ({ user, onSuccess }) => {
                 value={tech.id}
                 aria-label={tech.name}
               >
-                  <GetTechIcon techName={tech.icon} size={20} />
+                  <GetTechIcon className={tech.icon} size={30} />
               </ToggleButton>
             </Tooltip>
             ))}
@@ -132,6 +136,7 @@ const ProjectForm = ({ user, onSuccess }) => {
         onChange={handleChange('demoUrl')}
         error={!!errors.demoUrl}
         helperText={errors.demoUrl}
+        disabled={loading} 
       />
 
       <TextField
@@ -140,13 +145,14 @@ const ProjectForm = ({ user, onSuccess }) => {
         onChange={handleChange('githubUrl')}
         error={!!errors.githubUrl}
         helperText={errors.githubUrl}
+        disabled={loading} 
       />
 
       {errors.submit && (
         <FormHelperText error>{errors.submit}</FormHelperText>
       )}
 
-      <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary" disabled={loading} >
         Add New Project
       </Button>
     </Box>

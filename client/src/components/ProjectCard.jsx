@@ -1,8 +1,11 @@
-import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box, Link, Tooltip } from "@mui/material"
+import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box, Tooltip } from "@mui/material"
 
 import { useState } from "react";
-import { GetIcon, GetTechIcon } from "./Icon";
-
+import { GetIcon, GetTechIcon, GetIconButton } from "./Icon";
+import { useSelector, useDispatch } from 'react-redux'
+import { palette } from "../styles/theme";
+import { deleteProject } from "../store/projectSlice";
+import { useNotification } from '../contexts/NotificationContext'
 
 const cardStyle = {
   card: {
@@ -14,14 +17,14 @@ const cardStyle = {
     boxShadow: 'none',
     // border: '1px solid #ddd',
     // boxShadow: 2,
-    // background: '#fff',
+    background: 'transparent',
     // overflow: 'hidden',
   },
   projectNo: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    gap: 1,
+    // gap: 1,
   },
   projectImage: {
     width: '100%',
@@ -45,18 +48,24 @@ const cardStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // border: 'solid 1px black'
   },
   techList: {
     display: 'flex',
     gap: 1,
     alignItems: 'center',
+    cursor: 'cursor',
+    
+    // filter: 'grayscale(100%)',
+    // transition: 'filter 0.5s ease',
+    // '&:hover': {
+    //   filter: 'grayscale(0%) contrast(100%) saturate(100%)',
+    // },
   },
   techIcon: {
-    filter: 'grayscale(100%)',
-    transition: 'filter 0.5s ease',
-    '&:hover': {
-      filter: 'grayscale(0%) contrast(120%) saturate(120%)',
-    },
+    display: 'flex',
+    gap: 1,
+    alignItems: 'center',
   },
   projectDesc: {
     fontSize: '1rem',
@@ -79,24 +88,29 @@ const cardStyle = {
 }
 
 const ProjectCard = ({ project, index }) => {
+    const dispatch = useDispatch()
+    const { showNotification } = useNotification()
+    const user = useSelector(state => state.auth.user)
     const [expanded, setExpanded] = useState(false)
+
+    const handleDelete = async () => {
+      if (!user) return
+      try {
+        await dispatch(deleteProject(project.id)).unwrap()
+        showNotification('info', `${project.title.charAt(0).toUpperCase() + project.title.slice(1)} deleted`)
+      } catch (error) {
+        showNotification('error', `Failed to delete: ${error.data.error}`)
+      }
+    }
 
     return (
         <Card sx={cardStyle.card}>
+
             <Box sx={cardStyle.projectNo}>
-                <Box sx={cardStyle.link}>
-                  <Tooltip title='link: demo site'>
-                    <Link href={project.demoUrl} target="_blank" underline="none" sx={{ display: 'block' }}>
-                      <GetIcon type='demolink' />
-                    </Link>
-                  </Tooltip>
-                  <Tooltip title='link: github repository'>
-                    <Link href={project.githubUrl} target="_blank">
-                        <GetIcon type="github" />
-                    </Link>
-                  </Tooltip>
-                </Box>
-                <Typography variant="h5">{String(index + 1).padStart(2, '0')}</Typography>
+                {user && <GetIconButton title={`delete ${project.title}`} type='delete' onClick={handleDelete} />}
+                <GetIconButton title='link: demo site' type='demolink' href={project.demoUrl} target='_blank' />
+                <GetIconButton title='link: github repository' type='github' href={project.githubUrl} target='_blank' />
+                <Typography variant="h5">&nbsp; {String(index + 1).padStart(2, '0')}</Typography>
             </Box>
 
             <CardMedia
@@ -119,34 +133,30 @@ const ProjectCard = ({ project, index }) => {
                 <AccordionSummary
                     aria-controls={`project-desc-${index}`}
                     id={`project-title-${index}`}
-                    // expandIcon={<FcExpand size={25}/>}
-                    sx={{
-                        px: 0,
-                    }}
+                    sx={{ px: 0 }}
                     >
 
                     <Box sx={cardStyle.projectTitleRow} width="100%">
+                        <Box sx={cardStyle.techList}>
+                            {project.tech.map((tech) => (
+                              <GetTechIcon key={tech.id} className={tech.icon} size={25} sx={cardStyle.techIcon} title={tech.name} />
+                            ))}
+                        </Box>
 
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                          {expanded ? <GetIcon type='arrowUp' /> : <GetIcon type='arrowDown' />}
                           <Typography
-                            variant="h6"
-                            sx={{ cursor: 'pointer', fontWeight: 'bold', ml: 1 }}
-                            title={project.description}
+                            variant="h4"
+                            sx={{ cursor: 'pointer', ml: 1 }}
+                            title={project.title}
                           >
                             {project.title}
                           </Typography>
-                        </Box>
-          
-                        <Box sx={cardStyle.techList}>
-                            {project.tech.map((tech) => (
-                                <Box key={tech.id} sx={cardStyle.techIcon}>
-                                  <GetTechIcon techName={tech.icon} size={22} />
-                                </Box>
-                            ))}
+                          {expanded ? <GetIcon type='arrowUp' /> : <GetIcon type='arrowDown' />}
                         </Box>
                     </Box>
+
                 </AccordionSummary>
+
                 <AccordionDetails sx={{ px: 0 }}>
                     <Box sx={cardStyle.projectDesc}>
                         <Typography variant="body2">{project.description}</Typography>

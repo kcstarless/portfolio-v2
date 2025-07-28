@@ -45,7 +45,7 @@ const validateProject = (req, res, next) => {
 }
 
 const validateTech = (req, res, next) => {
-  const { name, icon } = req.body
+  const { name, icon, level } = req.body
 
   if (!name || (typeof name === 'string' && name.trim() === '')) {
     return res.status(400).json({
@@ -58,6 +58,13 @@ const validateTech = (req, res, next) => {
     return res.status(400).json({
       error: 'Validation failed',
       details: 'icon is required'
+    })
+  }
+
+  if (!level) {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: 'level is required'
     })
   }
 
