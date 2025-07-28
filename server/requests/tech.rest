@@ -9,7 +9,8 @@ Content-Type: application/json
 
 {
     "name": "React",
-    "icon": "SiReact"
+    "icon": "React",
+    "level": "novice"
 }
 
 ### 
@@ -20,13 +21,14 @@ Content-Type: application/json
 
 {
     "name": "JavaScript",
-    "icon": "SiJavascript"
+    "icon": "Javascript",
+    "level": "novice"
 }
 
 ###
 
 //// Delete a tech
-DELETE http://localhost:3001/api/techs/6884a1290c007fc858e0eee0
+DELETE http://localhost:3001/api/techs/6887b7d0f8efba52dcc6d1f8
 Content-Type: application/json
 
 ### 

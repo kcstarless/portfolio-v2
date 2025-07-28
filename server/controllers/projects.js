@@ -52,7 +52,7 @@ projectsRouter.delete('/:id', authMiddleware, async (req, res) => {
     const project = await Project.findById(req.params.id)
 
     if (!project) {
-      return res.status(404).json({ error: 'project not found' })
+      return res.status(404).json({ error: 'No matching project found' })
     }
 
     if (currentUserId !== project.user.toString()) {

@@ -8,6 +8,8 @@ import { getSeedProjects, seedTechs, seedUsers, getValidProject } from "./_data.
 import path from 'path'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import bcrypt from 'bcrypt'
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,6 +36,9 @@ const getValidUserId = async () => {
     const validUserId = await User.findOne().then(user => user._id);
     return validUserId
 }
+const getValidUser = async() => {
+    return await User.findOne()
+}
 
 //// Techs test helper
 const initialiseTechs = async () => {
@@ -48,6 +53,13 @@ const getValidTechIds = async () => {
     const validTechIds = await Tech.find().limit(2).then(techs => techs.map(t => t._id))
     return validTechIds
 }
+const getTechJSON = async () => {
+    const tech = await Tech.findOne({})
+    return tech.toJSON()
+}
+const getInvalidTechId = async () => {
+    return new mongoose.Types.ObjectId().toString()
+}
 
 //// Projects test helper
 const initialiseProjects = async () => {
@@ -61,9 +73,9 @@ const projectsInDB = async () => {
     return projects.map(proj => proj.toJSON())
 }
 const prepareValidProject = async () => {
-  const userId = await getValidUserId()
-  const techIds = await getValidTechIds()
-  return getValidProject(userId, techIds)
+    const userId = await getValidUserId()
+    const techIds = await getValidTechIds()
+    return getValidProject(userId, techIds)
 }
 
 const getTestImagePath = () => path.join(__dirname, 'test_assets', 'test_project_image.png')
@@ -78,12 +90,20 @@ const getValidToken = async () => {
     return jwt.sign(userForToken, process.env.SECRET, { expiresIn: '1h'})
 }
 
+const getExpiredToken = async () => {
+    const user = await User.findOne()
+    const userForToken = {
+        username: user.username,
+        id: user._id
+    }
+    return jwt.sign(userForToken, process.env.SECRET, { expiresIn: '-10'})
+}
 
 
 export { 
-    usersInDB, initialiseUsers, getValidUserId,
-    techsInDB, initialiseTechs, getValidTechIds,
+    usersInDB, initialiseUsers, getValidUserId, getValidUser,
+    techsInDB, initialiseTechs, getValidTechIds, getTechJSON, getInvalidTechId,
     projectsInDB, initialiseProjects, prepareValidProject, getTestImagePath,
     connectTestDB, disconnectTestDB,
-    getValidToken,
+    getValidToken, getExpiredToken
  }

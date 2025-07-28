@@ -29,7 +29,6 @@ const sxSidebar = {
   },
   role: {
     fontWeight: 'bold',
-    color: 'secondary.main',
     pb: 1,
   },
   description: {

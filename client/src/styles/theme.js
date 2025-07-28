@@ -33,7 +33,7 @@ const theme = createTheme({
     h3: { fontFamily: 'Bebas Neue', fontWeight: 'bold', letterSpacing: '0.2rem'},
     h4: { fontFamily: 'Bebas Neue', fontWeight: 'bold'},
     h5: { fontFamily: 'Righteous'},
-    h6: { fontFamily: 'Bebas Neue', fontWeight: 'bold', letterSpacing: '0.2rem',},
+    h6: { fontFamily: 'Bebas Neue', fontWeight: 'bold', color: palette.secondary.main, letterSpacing: '0.2rem',},
     body2: { fontSize: '1rem', letterSpacing: '0.05rem'},
     button: { fontFamily: 'Bebas Neue', height: '55px', fontSize: '2rem', backgroundColor: 'transparent'}
   },

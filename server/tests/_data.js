@@ -53,33 +53,44 @@ const getWhiteSpaceUser = () => ({
 const seedTechs = [
     {
         name: 'React',
-        icon: 'SiReact',
+        icon: 'React',
+        level: 'novice'
     },
     {
         name: 'Node',
-        icon: 'SiNode',
+        icon: 'Node.js',
+        level: 'novice',
     },
     {
         name: 'JavaScript',
-        icon: 'SiJavascript',
+        icon: 'JavaScript',
+        level: 'novice'
     }
 ]
 const getValidTech = () => ({
     name: 'HTML',
-    icon: 'SiHtml'
+    icon: 'HTML5',
+    level: 'novice'
 })
 const getMissingFieldTech = () => ({
     // name: "CSS",
-    icon: 'SiCss'
+    icon: 'CSS3',
+    level: 'novice'
 })
 const getMissingiconTech = () => ({
     name: "CSS",
     // icon: './location'
+    level: "novice,"
 })
-
 const getSameIconName = () => ({
     name: 'HTML',
-    icon: 'SiHtml',
+    icon: 'HTML5',
+    level: 'novice'
+})
+const getInvalidTechLevel = () => ({
+    name: 'JavaScript',
+    icon: 'JavaScript',
+    level: 'NOVIC'
 })
 
 export {
@@ -94,4 +105,5 @@ export {
     getWhiteSpaceUser,
     getMissingiconTech,
     getSameIconName,
+    getInvalidTechLevel,
 }

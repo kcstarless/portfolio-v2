@@ -1,6 +1,5 @@
 import './_setup.js'
 import * as helper from './_helper.js'
-import path from 'path'
 import assert from 'node:assert'
 import supertest from 'supertest'
 import { test_log } from '../utils/logger.js'
@@ -11,7 +10,7 @@ import { app } from '../app.js'
 const api = supertest(app)
 
 //// Test
-describe('Get all projects: ', () => {
+describe('GET /api/projects', () => {
     test('Test1: projects are returned as json', async () => {
         await api
             .get('/api/projects')
@@ -24,7 +23,7 @@ describe('Get all projects: ', () => {
     })
 })
 
-describe('Get a project: ', () => {
+describe('GET /api/projects/:id ', () => {
     test('Test1: retrieve one project based on id', async () => {
         const projects = await helper.projectsInDB()
         const project = projects[0] 
@@ -52,7 +51,7 @@ describe('Get a project: ', () => {
     })
 })
 
-describe ('Post a new project: ', () => {
+describe ('POST /api/projects ', () => {
     test('Test1: adds new project with correct with valid properties and the new project exists', async () => {
         const token = await helper.getValidToken()
         const imagePath = helper.getTestImagePath()
@@ -120,10 +119,8 @@ describe ('Post a new project: ', () => {
 describe('Delete a project: ', () => {
     test('Test1: deletes a project in DB', async () => {
         const token = await helper.getValidToken()
-
         const projectsBefore = await helper.projectsInDB()
         const projectId = projectsBefore[0].id
-        // test_log(projectsBefore[0].user)
 
         await api
             .delete(`/api/projects/${projectId}`)
@@ -131,11 +128,67 @@ describe('Delete a project: ', () => {
             .expect(204)
 
         const projectsAfter = await helper.projectsInDB()
-
         assert.strictEqual(
             projectsAfter.some(p => p.id === projectId),
             false
         )
         assert.strictEqual(projectsBefore.length - 1, projectsAfter.length)
+    })
+
+    test('Test2: fails with 401 if no token is provided', async () => {
+        const project = (await helper.projectsInDB())[0]
+
+        const response = await api
+            .delete(`/api/projects/${project.id}`)
+            .expect(401)
+
+        assert.strictEqual(response.body.error, 'token missing or invalid')
+    })
+
+    test('Test3: fails with 401 if token is invalid', async () => {
+        const project = (await helper.projectsInDB())[0]
+
+        const response = await api
+            .delete(`/api/projects/${project.id}`)
+            .set('Authorization', 'Bearer faketoken123')
+            .expect(401)
+
+        assert.strictEqual(response.body.error, 'token invalid')
+    })
+
+    test('Test4: fails with 401 if token is expired', async () => {
+        const expiredToken = await helper.getExpiredToken()
+        const project = (await helper.projectsInDB())[0]
+
+        const response = await api
+            .delete(`/api/projects/${project.id}`)
+            .set('Authorization', `Bearer ${expiredToken}`)
+            .expect(401)
+
+        assert.strictEqual(response.body.error, 'token expired')
+    })
+
+    test('Test5: returns 404 when project does not exist', async () => {
+        const token = await helper.getValidToken()
+        const nonExistentId = '507f1f77bcf86cd799439011' // valid ObjectId but not in DB
+
+        const response = await api
+            .delete(`/api/projects/${nonExistentId}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(404)
+
+        assert.strictEqual(response.body.error, 'No matching project found')
+    })
+
+    test('Test6: returns 400 when ID is malformed', async () => {
+        const token = await helper.getValidToken()
+        const malformedId = 'abc123'
+
+        const response = await api
+            .delete(`/api/projects/${malformedId}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(400)
+
+        assert.strictEqual(response.body.error, 'malformatted id')
     })
 })

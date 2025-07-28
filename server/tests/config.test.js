@@ -6,7 +6,7 @@ import assert from 'node:assert'
 
 //// Test
 describe('Enviornment config tests: ', () => {
-    test('Test1: ueses TEST_MONGODB_URI when NODE_ENV is test', async () => {
+    test('Test1: uses TEST_MONGODB_URI when NODE_ENV is test', async () => {
         process.env.NODE_ENV = 'test'
         process.env.TEST_MONGODB_URI = 'TestDB'
 

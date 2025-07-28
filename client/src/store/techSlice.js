@@ -6,7 +6,8 @@ export const fetchTechs = createAsyncThunk('techs/fetchAll', async () => {
 })
 
 export const createTech = createAsyncThunk('techs/create',  async (newTech, { dispatch, rejectWithValue }) => {
-    try {
+  await new Promise((res) => setTimeout(res, 1500))  
+  try {
       const created = await techService.create(newTech)
       dispatch(fetchTechs())
       return created
@@ -21,6 +22,7 @@ export const createTech = createAsyncThunk('techs/create',  async (newTech, { di
 )
 
 export const deleteTech = createAsyncThunk('techs/delete', async (id, { dispatch, rejectWithValue}) => {
+    await new Promise((res) => setTimeout(res, 1500))
     try {
       await techService.remove(id)
       dispatch(fetchTechs())

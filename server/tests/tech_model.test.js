@@ -4,7 +4,7 @@ import * as testData from './_data.js'
 import assert from 'node:assert'
 import { describe, test } from 'node:test'
 import { Tech } from '../models/tech.js'
-import { test_log } from '../utils/logger.js'
+import { test_log, error } from '../utils/logger.js'
 
 //// Test
 describe('Tech model: ', () => {
@@ -57,5 +57,18 @@ describe('Tech model: ', () => {
         // test_log(error)
         // test_log(error.errorResponse)
         assert.ok(error,'Expected validation error' )
+    })
+
+    test('Test6: throws validation error if level is not enum', async () => {
+        let error = null
+        try {
+            await Tech(testData.getInvalidTechLevel()).save()
+        } catch(err) {
+            error = err
+        }
+        test_log(error)
+        console.log(error.code)
+        assert.ok(error, 'Expected validation error')
+        assert.strictEqual(error.message, 'Tech validation failed: level: `NOVIC` is not a valid enum value for path `level`.')
     })
 })

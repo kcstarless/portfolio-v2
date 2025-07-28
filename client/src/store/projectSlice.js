@@ -19,7 +19,6 @@ export const createProject = createAsyncThunk('projects/create', async (newProje
     }
 })
 
-
 export const deleteProject = createAsyncThunk('projects/delete', async (id, { dispatch, rejectWithValue}) => {
     try {
       await projectService.remove(id)
