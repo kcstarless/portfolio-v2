@@ -107,7 +107,7 @@ const ProjectCard = ({ project, index }) => {
         <Card sx={sxProjectCard.card}>
 
             <Box sx={sxProjectCard.projectNo}>
-                {user && <GetIconButton title={`delete ${project.title}`} type='delete' onClick={handleDelete} />}
+                {user && <GetIconButton title={`delete ${project.title}`} iconName='delete' onClick={handleDelete} />}
                 <GetIconButton title='link: demo site' iconName='demolink' href={project.demoUrl} target='_blank' />
                 <GetIconButton title='link: github repository' iconName='github' href={project.githubUrl} target='_blank' />
                 <Typography variant="h5">&nbsp; {String(index + 1).padStart(2, '0')}</Typography>
@@ -151,7 +151,7 @@ const ProjectCard = ({ project, index }) => {
                           >
                             {project.title}
                           </Typography>
-                          {expanded ? <GetIcon iconName='arrowUp' /> : <GetIcon type='arrowDown' />}
+                          {expanded ? <GetIcon iconName='arrowUp' /> : <GetIcon iconName='arrowDown' />}
                         </Box>
                     </Box>
 
