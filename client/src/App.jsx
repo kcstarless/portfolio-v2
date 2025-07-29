@@ -1,4 +1,4 @@
-import { Header } from './components/Header'
+import { Header } from './components/header/_Header'
 import { Sidebar } from './components/sidebar/_Sidebar'
 import { Projects } from './components/Projects'
 import { Box, Typography, Stack } from '@mui/material'

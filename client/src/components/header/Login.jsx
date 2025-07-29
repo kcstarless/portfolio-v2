@@ -1,11 +1,11 @@
 // src/components/Login.jsx
-import { Box, IconButton, Tooltip, Slide, CircularProgress } from '@mui/material'
-import { GetIcon } from './Icon'
-import { AddDialog } from './AddDialog'
-import { ProjectForm } from './forms/_ProjectForm'
-import { TechForm } from './forms/_TechForm'
-import { LoginForm } from './forms/_LoginForm'
-import { useLogin } from '../hooks/useLogin'
+import { Box, Slide } from '@mui/material'
+import { GetIconButton } from '../Icon'
+import { AddDialog } from '../sidebar/AddDialog'
+import { ProjectForm } from '../forms/_ProjectForm'
+import { TechForm } from '../forms/_TechForm'
+import { LoginForm } from '../forms/_LoginForm'
+import { useLogin } from '../../hooks/useLogin'
 
 export const Login = () => {
   const {
@@ -32,11 +32,7 @@ export const Login = () => {
           {({ user, onSuccess }) => <ProjectForm user={user} onSuccess={onSuccess} />}
         </AddDialog>
 
-        <Tooltip title="Click to log out">
-          <IconButton onClick={handleLogout} aria-label="Log out" size="large">
-            {loading ? <CircularProgress size={25} /> : <GetIcon type="logout" />}
-          </IconButton>
-        </Tooltip>
+        <GetIconButton title='click to log out' onClick={handleLogout} size='large' iconName='logout' loading={loading} />
       </Box>
     )
   }
@@ -56,18 +52,15 @@ export const Login = () => {
         </Box>
       </Slide>
 
-      <Tooltip title={showLogin ? 'Hide login form' : 'Show login form'}>
-        <IconButton
-          type="button"
-          onClick={() => setShowLogin(!showLogin)}
-          aria-label={showLogin ? 'Hide login form' : 'Show login form'}
-          aria-expanded={showLogin}
-          aria-controls="login-form"
-          size="large"
-        >
-          {showLogin ? <GetIcon type="arrowUp" /> : <GetIcon type="arrowDown" />}
-        </IconButton>
-      </Tooltip>
+      <GetIconButton
+        title={showLogin ? 'hide login form' : 'show login form'}
+        onClick={() => setShowLogin(!showLogin)}
+        aria-label={showLogin ? 'hide login form' : 'show login form'}
+        aria-expanded={showLogin}
+        aria-controls="login-form"
+        size='large'
+        iconName={showLogin ? 'arrowUp' : 'arrowDown'} 
+      />
     </Box>
   )
 }

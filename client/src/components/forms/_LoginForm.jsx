@@ -1,6 +1,6 @@
 // src/components/forms/LoginForm.jsx
-import { Box, TextField, IconButton, Tooltip, CircularProgress } from '@mui/material'
-import { GetIcon } from '../Icon'
+import { Box, TextField } from '@mui/material'
+import { GetIconButton } from '../Icon'
 
 export const LoginForm = ({
   handleLogin,
@@ -48,11 +48,15 @@ export const LoginForm = ({
         size="small"
       />
 
-      <Tooltip title="Click to Log in">
-        <IconButton type="submit" aria-label="Log in" size="large" sx={{ ml: -1 }}>
-          {loading ? <CircularProgress size={25} /> : <GetIcon type="login" />}
-        </IconButton>
-      </Tooltip>
+      <GetIconButton
+        sx={{ ml: -2 }} 
+        title='click to log in' 
+        type='submit' 
+        iconName='login' 
+        loading={loading}
+        size='large' 
+        aria-label='log in' 
+      />
     </Box>
   )
 }

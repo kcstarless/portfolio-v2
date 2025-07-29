@@ -22,7 +22,7 @@ export const createTech = createAsyncThunk('techs/create',  async (newTech, { di
 )
 
 export const deleteTech = createAsyncThunk('techs/delete', async (id, { dispatch, rejectWithValue}) => {
-    await new Promise((res) => setTimeout(res, 1500))
+    await new Promise((res) => setTimeout(res, 5000))
     try {
       await techService.remove(id)
       dispatch(fetchTechs())
@@ -43,6 +43,7 @@ const techSlice = createSlice({
         items: [],
         status: 'idle',
         error: null,
+        deletingId: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -69,16 +70,19 @@ const techSlice = createSlice({
             state.status = 'failed'
             state.error = action.payload?.data?.error || action.payload?.message || action.error.message
         })
-        .addCase(deleteTech.pending, (state) => {
+        .addCase(deleteTech.pending, (state, action) => {
             state.status = 'loading'
+            state.deletingId = action.meta.arg 
         })
         .addCase(deleteTech.fulfilled, (state) => {
             state.status = 'succeeded'
             state.error = null
+            state.deletingId = null
         })
         .addCase(deleteTech.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.payload?.data?.error || action.payload?.message || action.error.message
+            state.deletingId = null
         })
     },
 })

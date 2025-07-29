@@ -1,5 +1,5 @@
 import { Login } from './Login';
-import { useNotification } from '../contexts/NotificationContext';
+import { useNotification } from '../../contexts/NotificationContext';
 import { Box, Typography, Alert } from '@mui/material';
 
 const sxHeader = {
