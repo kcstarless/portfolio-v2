@@ -1,7 +1,7 @@
 import { Box, Tooltip } from '@mui/material'
 import { GetIcon, GetTechIcon } from '../Icon'
 
-const sx = {
+const sxCurrentTechStack = {
   iconBox: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +20,7 @@ const CurrentTechStack = ({ techs, hoveredTech, setHoveredTech, handleDelete }) 
     {techs.map((tech) => (
       <Box
         key={tech.icon}
-        sx={sx.iconBox}
+        sx={sxCurrentTechStack.iconBox}
         onMouseEnter={() => setHoveredTech(tech.icon)}
         onMouseLeave={() => setHoveredTech(null)}
       >

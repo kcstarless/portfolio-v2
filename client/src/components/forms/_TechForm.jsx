@@ -1,6 +1,7 @@
 import { Box, Button, TextField, Typography, Tooltip, InputLabel, MenuItem, FormControl, Select } from '@mui/material'
 import { useNotification } from '../../contexts/NotificationContext'
 import { GetIcon, GetTechIcon } from '../Icon'
+import { IconResultBox } from './IconResultBox'
 import { CurrentTechStack } from './CurrentTechStack'
 import { useTechForm } from '../../hooks/useTechForm'
 import * as ut from '../../utils/techUtils'
@@ -105,23 +106,11 @@ const TechForm = ({ user }) => {
         <Button type="submit" variant="contained" color="primary">Add New Tech</Button>
       </Box>
 
-      <Box sx={sxTechForm.iconResultsBox}>
-        {iconResults.slice(0, 10).map(icon => {
-          const isSelected = formData.icon === icon.class
-          return (
-            <Box
-              key={icon.class}
-              sx={{
-                ...sxTechForm.iconBox,
-                ...(isSelected ? sxTechForm.iconBoxSelected : sxTechForm.iconBoxUnselected),
-              }}
-              onClick={() => selectIcon(icon)}
-            >
-              <GetTechIcon className={icon.class} size={30} />
-            </Box>
-          )
-        })}
-      </Box>
+      <IconResultBox
+        iconResults={iconResults}
+        selectedIcon={formData.icon}
+        selectIcon={selectIcon}
+      />
 
       <Typography variant="h4" sx={sxTechForm.titleRow}>
         <GetIcon type="addTech" /> &nbsp; My Current Stack

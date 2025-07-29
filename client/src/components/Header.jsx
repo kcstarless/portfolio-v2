@@ -11,7 +11,7 @@ const sxHeader = {
     alignItems: 'center',
     backgroundColor: 'secondary.light',
     px: 1,
-    zIndex: '1000',
+    zIndex: '1000'
   },
   leftBox: {
     display: 'flex',
@@ -42,7 +42,7 @@ const Header = () => {
             {notification.message}
           </Alert>
         ) : (
-          <Typography sx={sxHeader.title}>Melbourne Weather</Typography>
+          <Typography variant='localInfo' sx={sxHeader.title}>Melbourne Weather</Typography>
         )}
       </Box>
       <Box>

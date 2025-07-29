@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { Box, TextField, Button, FormControl, FormHelperText } from '@mui/material'
-import { fetchTechs } from '../../store/techSlice'
+import { Box, TextField, Button, FormHelperText } from '@mui/material'
 import { useNotification } from '../../contexts/NotificationContext'
 import { useProjectForm } from '../../hooks/useProjectForm'
 import { ImageUploadField } from './ImageUploadField'
@@ -21,10 +19,6 @@ const ProjectForm = ({ user, onSuccess }) => {
     handleTechChange,
     handleSubmit,
   } = useProjectForm({ user, onSuccess, dispatch, showFormNotification })
-
-  useEffect(() => {
-    dispatch(fetchTechs())
-  }, [dispatch])
 
   return (
     <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}

@@ -2,9 +2,9 @@
 import { Box, IconButton, Tooltip, Slide, CircularProgress } from '@mui/material'
 import { GetIcon } from './Icon'
 import { AddDialog } from './AddDialog'
-import { ProjectForm } from './forms/ProjectForm'
-import { TechForm } from './forms/TechForm'
-import { LoginForm } from './forms/LoginForm'
+import { ProjectForm } from './forms/_ProjectForm'
+import { TechForm } from './forms/_TechForm'
+import { LoginForm } from './forms/_LoginForm'
 import { useLogin } from '../hooks/useLogin'
 
 export const Login = () => {

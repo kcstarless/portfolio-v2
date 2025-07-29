@@ -11,11 +11,9 @@ export const TechToggleGroup = ({ techs, value, onChange, error, disabled }) => 
       disabled={disabled}
     >
       {techs.map((tech) => (
-        <Tooltip title={tech.name} key={tech.id}>
-          <ToggleButton value={tech.id} aria-label={tech.name}>
+          <ToggleButton key={tech.id} value={tech.id} aria-label={tech.name}>
             <GetTechIcon className={tech.icon} size={30} />
           </ToggleButton>
-        </Tooltip>
       ))}
     </ToggleButtonGroup>
     {error && <FormHelperText>{error}</FormHelperText>}

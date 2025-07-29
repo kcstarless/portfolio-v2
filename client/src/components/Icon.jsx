@@ -2,7 +2,6 @@ import { palette } from "../styles/theme"
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io"
 import { MdArrowDropDown, MdArrowDropUp, MdDeleteForever } from "react-icons/md"
 import { GrTechnology } from "react-icons/gr"
-import { FcBiotech } from "react-icons/fc";
 import { FaProjectDiagram, FaExternalLinkSquareAlt } from "react-icons/fa";
 import { SiGithub } from "react-icons/si"
 import { IconButton, Tooltip } from "@mui/material";
