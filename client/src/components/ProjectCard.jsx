@@ -73,18 +73,6 @@ const sxProjectCard = {
     m: 1,
     textAlign: 'left',
   },
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 1,
-    alignSelf: 'end',
-    mt: 1,
-  },
-  linkArrow: {
-    color: 'primary.main',
-    fontSize: 24,
-    ml: 0.5,
-  },
 }
 
 const ProjectCard = ({ project, index }) => {

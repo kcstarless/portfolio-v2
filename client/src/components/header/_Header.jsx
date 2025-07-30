@@ -1,6 +1,7 @@
-import { Login } from './Login';
-import { useNotification } from '../../contexts/NotificationContext';
-import { Box, Typography, Alert } from '@mui/material';
+import { Login } from './Login'
+import { useNotification } from '../../contexts/NotificationContext'
+import { Box, Typography, Alert } from '@mui/material'
+import { LocalInfo } from './LocalInfo';
 
 const sxHeader = {
   container: {
@@ -42,7 +43,7 @@ const Header = () => {
             {notification.message}
           </Alert>
         ) : (
-          <Typography variant='localInfo' sx={sxHeader.title}>Melbourne Weather</Typography>
+          <LocalInfo />
         )}
       </Box>
       <Box>

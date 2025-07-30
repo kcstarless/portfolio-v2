@@ -26,14 +26,13 @@ const Projects = () => {
   if (projects.length === 0) {
     return <Typography variant="h5">No projects yet! time to get busy!</Typography>;
   }
-
   return (
     <Box>
       <Typography variant="h3" gutterBottom sx={sxProjects.pageTitle}>
         portfolio
       </Typography>
       <Divider />
-      {projects
+      {/* {projects
         .slice()
         .reverse()
         .map((project, index, reversed) => (
@@ -42,7 +41,7 @@ const Projects = () => {
             project={project}
             index={reversed.length - 1 - index}
           />
-        ))}
+        ))} */}
     </Box>
   );
 };

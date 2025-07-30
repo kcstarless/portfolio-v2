@@ -60,6 +60,7 @@ export const Login = () => {
         aria-controls="login-form"
         size='large'
         iconName={showLogin ? 'arrowUp' : 'arrowDown'} 
+        colorSelect='white'
       />
     </Box>
   )
