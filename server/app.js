@@ -18,14 +18,16 @@ const app = express()
 app.use(express.static(join(__dirname, 'dist')))
 app.use(express.json())
 app.use(cors())
-app.use('/uploads', express.static(join(__dirname, 'uploads')))
 app.use(requestLogger)
 
 app.use('/api/login', loginRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/techs', techsRouter)
-
+console.log('Access Key:', process.env.AWS_ACCESS_KEY_ID);
+console.log('Secret Key:', process.env.AWS_SECRET_ACCESS_KEY);
+console.log('Region:', process.env.AWS_REGION);
+console.log('Endpoint:', process.env.AWS_ENDPOINT_URL_S3);
 
 app.use(unknownEndpoint)
 app.use(errorHandler)

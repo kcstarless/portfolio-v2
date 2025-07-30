@@ -23,6 +23,7 @@ const sxProjectCard = {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    pr: 1,
     // gap: 1,
   },
   projectImage: {
@@ -54,6 +55,7 @@ const sxProjectCard = {
     gap: 1,
     alignItems: 'center',
     cursor: 'cursor',
+    pl: 1,
     
     // filter: 'grayscale(100%)',
     // transition: 'filter 0.5s ease',
@@ -102,6 +104,8 @@ const ProjectCard = ({ project, index }) => {
         showNotification('error', `Failed to delete: ${error.data.error}`)
       }
     }
+
+    console.log(project.imagePath)
 
     return (
         <Card sx={sxProjectCard.card}>
