@@ -70,8 +70,7 @@ const sxProjectCard = {
   },
   projectDesc: {
     fontSize: '1rem',
-    mt: 1,
-    mb: 1,
+    m: 1,
     textAlign: 'left',
   },
   link: {
