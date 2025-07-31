@@ -2,10 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import projectService from '../services/projectService'
 
 export const fetchProjects = createAsyncThunk('projects/fetchAll', async () => {
+    await new Promise((res) => setTimeout(res, 1500))  
     return await projectService.getAll()
 })
 
 export const createProject = createAsyncThunk('projects/create', async (newProject, { dispatch, rejectWithValue}) => {
+    await new Promise((res) => setTimeout(res, 1500))  
     try {
         const created = await projectService.create(newProject)
         dispatch(fetchProjects())
@@ -20,6 +22,7 @@ export const createProject = createAsyncThunk('projects/create', async (newProje
 })
 
 export const deleteProject = createAsyncThunk('projects/delete', async (id, { dispatch, rejectWithValue}) => {
+    await new Promise((res) => setTimeout(res, 1500))  
     try {
       await projectService.remove(id)
       dispatch(fetchProjects())
@@ -35,7 +38,7 @@ export const deleteProject = createAsyncThunk('projects/delete', async (id, { di
 )
 
 const projectSlice = createSlice({
-    name: 'techs',
+    name: 'projects',
     initialState: {
         items: [],
         status: 'idle',

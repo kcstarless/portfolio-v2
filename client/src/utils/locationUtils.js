@@ -6,7 +6,7 @@ const getUserLocation = async () => {
     const response = await axios(`https://ipinfo.io/json?token=${token}`)
     const data = response.data
     const [latitude, longitude] = data.loc.split(',').map(Number);
-    console.log(data)
+    // console.log(data)
     return {
         city: data.city,
         region: data.region,

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import techService from '../services/techService'
 
 export const fetchTechs = createAsyncThunk('techs/fetchAll', async () => {
+    await new Promise((res) => setTimeout(res, 1500))  
     return await techService.getAll()
 })
 

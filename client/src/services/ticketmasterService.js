@@ -25,7 +25,7 @@ const getApiUrl = (lat, lon) => {
 const getLocalEvents = async (lat, lon) => {
   const url = getApiUrl(lat, lon);
   const response = await axios.get(url)
-  console.log(response)
+  // console.log(response)
   const events = response.data._embedded?.events || [];
 
   const seen = new Set();
