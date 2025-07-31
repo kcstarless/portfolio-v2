@@ -20,6 +20,7 @@ export const initialFormData = {
     name: '',
     icon: '',
     level: '',
+    comments: '',
 }
 
 export const levels = [
@@ -27,8 +28,6 @@ export const levels = [
   { value: 'intermediate', label: 'Intermediate' },
   { value: 'expert', label: 'Expert' },
 ]
-
-
 
 export const validate = (formData, setErrors) => {
     const newErrors = {}

@@ -1,8 +1,6 @@
 import { ProjectCard } from "./ProjectCard";
 import { Box, Typography, Divider } from "@mui/material";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjects } from '../store/projectSlice';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const sxProjects = {
   pageTitle: {
@@ -12,12 +10,7 @@ const sxProjects = {
 };
 
 const Projects = () => {
-  const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.items);
-
-  useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
 
   if (!projects) {
     return <Typography variant="h5">Loading data...</Typography>;
@@ -40,6 +33,7 @@ const Projects = () => {
             key={project.id}
             project={project}
             index={reversed.length - 1 - index}
+            last={ index === 0}
           />
         ))}
     </Box>

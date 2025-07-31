@@ -1,6 +1,4 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteTech } from '../../store/techSlice' // Adjust the import path as needed
+import { useSelector } from 'react-redux'
 import { Box, CircularProgress, Tooltip } from '@mui/material'
 import { GetTechIcon, GetIcon } from '../Icon'
 
@@ -18,7 +16,7 @@ const sxCurrentTechStack = {
   },
 }
 
-const CurrentTechStack = ({ techs, hoveredTech, setHoveredTech, handleDelete }) => {
+const CurrentTechStack = ({ techs, hoveredTech, setHoveredTech, handleDelete, handleEdit }) => {
   const deletingId = useSelector((state) => state.techs.deletingId)
 
   return (

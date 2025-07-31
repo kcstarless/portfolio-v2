@@ -1,10 +1,10 @@
-import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box, Tooltip } from "@mui/material"
-
 import { useState } from "react"
-import { GetIcon, GetTechIcon, GetIconButton } from "./Icon"
+import { GetIcon, GetTechIcon, GetIconButton } from "../Icon"
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteProject } from "../store/projectSlice"
-import { useNotification } from '../contexts/NotificationContext'
+import { deleteProject } from "../../store/projectSlice"
+import { useNotification } from '../../contexts/NotificationContext'
+import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box } from "@mui/material"
+
 
 const sxProjectCard = {
   card: {
@@ -67,11 +67,11 @@ const sxProjectCard = {
   },
 }
 
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project, index, last }) => {
     const dispatch = useDispatch()
     const { showNotification } = useNotification()
     const user = useSelector(state => state.auth.user)
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(last)
 
     const handleDelete = async () => {
       if (!user) return

@@ -62,7 +62,7 @@ const theme = createTheme({
         },
         standardError: {
           // backgroundColor: palette.secondary.dark,
-          color: palette.secondary.main,
+          color: palette.primary.main,
         },
         standardSuccess: {
           // backgroundColor: '#4caf50',

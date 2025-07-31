@@ -7,7 +7,8 @@ const techSchema = new mongoose.Schema({
         type: String, 
         enum: ['novice', 'intermediate', 'expert'], 
         required: true 
-    }
+    },
+    comments: { type: String }
 })
 
 techSchema.set('toJSON', {

@@ -1,10 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { motion } from "framer-motion"
 
 const messages = {
   s1: "Waking up the server...",
   s2: "Server is ready...",
-  s3: "Fetching data with Mongoose...",
+  s3: "Fetching app data...",
   s4: "Pre loading images from Tigris S3...",
   ready: "App ready!",
   error: "Something went wrong. Please try again.",

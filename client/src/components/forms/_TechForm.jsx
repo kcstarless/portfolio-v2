@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography, Tooltip, InputLabel, MenuItem, FormControl, Select } from '@mui/material'
+import { Box, Button, TextField, Typography, InputLabel, MenuItem, FormControl, Select } from '@mui/material'
 import { useNotification } from '../../contexts/NotificationContext'
-import { GetIcon, GetTechIcon } from '../Icon'
+import { GetIcon } from '../Icon'
 import { IconResultBox } from './IconResultBox'
 import { CurrentTechStack } from './CurrentTechStack'
 import { useTechForm } from '../../hooks/useTechForm'
+import { useEffect, useState } from 'react'
 import * as ut from '../../utils/techUtils'
 
 const sxTechForm = {
@@ -68,6 +69,7 @@ const sxTechForm = {
 
 const TechForm = ({ user }) => {
   const { showFormNotification } = useNotification()
+  const [editing, setEditing] = useState(null)
 
   const {
     formData,
@@ -106,6 +108,13 @@ const TechForm = ({ user }) => {
         <Button type="submit" variant="contained" color="primary">Add New Tech</Button>
       </Box>
 
+      <TextField
+        label="Comments"
+        value={formData.comments}
+        onChange={handleChange('comments')}
+        sx={sxTechForm.searchInput}
+      />
+
       <IconResultBox
         iconResults={iconResults}
         selectedIcon={formData.icon}
@@ -121,6 +130,7 @@ const TechForm = ({ user }) => {
         hoveredTech={hoveredTech}
         setHoveredTech={setHoveredTech}
         handleDelete={handleDelete}
+        handleEdit={setEditing}
       />
     </Box>
   )

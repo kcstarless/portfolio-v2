@@ -30,7 +30,7 @@ export const useTechForm = (showFormNotification) => {
   }
 
   const selectIcon = (icon) => {
-    setFormData({ name: icon.name, icon: icon.class, level: formData.level })
+    setFormData({ name: icon.name, icon: icon.class, level: formData.level, comments: formData.comments })
   }
 
   const handleSubmit = async (e) => {
