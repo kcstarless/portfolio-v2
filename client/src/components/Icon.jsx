@@ -5,11 +5,6 @@ import { GrTechnology } from "react-icons/gr"
 import { FaProjectDiagram, FaExternalLinkSquareAlt } from "react-icons/fa"
 import { SiGithub } from "react-icons/si"
 import { IconButton, Tooltip, CircularProgress } from "@mui/material"
-// import {
-//   FaSnowflake, FaCloudRain, FaBolt, FaCloudMoon,
-//   FaCloudSun, FaCloud, FaSun, FaCloudShowersHeavy,
-//   FaFog, FaWind
-// } from "react-icons/fa"
 import {
   IoMdSnow,
   IoMdRainy,
@@ -53,25 +48,6 @@ const weatherIconMap = {
   "clear-day": IoMdSunny,
   "clear-night": IoMdMoon,
 }
-
-// const weatherIconMap = {
-//   "snow": FaSnowflake,
-//   "snow-showers-day": FaSnowflake,
-//   "snow-showers-night": FaSnowflake,
-//   "thunder-rain": FaBolt,
-//   "thunder-showers-day": FaBolt,
-//   "thunder-showers-night": FaBolt,
-//   "rain": FaCloudRain,
-//   "showers-day": FaCloudShowersHeavy,
-//   "showers-night": FaCloudShowersHeavy,
-//   "fog": FaFog,
-//   "wind": FaWind,
-//   "cloudy": FaCloud,
-//   "partly-cloudy-day": FaCloudSun,
-//   "partly-cloudy-night": FaCloudMoon,
-//   "clear-day": FaSun,
-//   "clear-night": FaSun, // optionally night variant if available
-// }
 
 const GetWeatherIcon = ({ iconName, size=25, color='inherit' }) => {
   const IconComponent = weatherIconMap[iconName]

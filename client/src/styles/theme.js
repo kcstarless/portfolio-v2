@@ -98,7 +98,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: palette.primary.main, // your desired default color
-          textDecoration: 'none', // optional: remove underline
+          // textDecoration: 'none', // optional: remove underline
           // '&:hover': {
           //   textDecoration: 'underline', // optional: add underline on hover
           // },
