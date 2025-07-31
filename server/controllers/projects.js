@@ -38,10 +38,6 @@ projectsRouter.get('/:id', async (req, res) => {
 })
 
 projectsRouter.post('/', authMiddleware, uploadSingleImage, validateProject, async (req, res) => {
-  console.log('Access Key:', process.env.AWS_ACCESS_KEY_ID);
-console.log('Secret Key:', process.env.AWS_SECRET_ACCESS_KEY);
-console.log('Region:', process.env.AWS_REGION);
-console.log('Endpoint:', process.env.AWS_ENDPOINT_URL_S3);
   const body = req.body
   const user = await User.findById(req.user.id)
 

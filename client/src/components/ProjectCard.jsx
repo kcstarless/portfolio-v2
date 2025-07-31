@@ -1,9 +1,9 @@
 import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box, Tooltip } from "@mui/material"
 
-import { useState } from "react";
-import { GetIcon, GetTechIcon, GetIconButton } from "./Icon";
+import { useState } from "react"
+import { GetIcon, GetTechIcon, GetIconButton } from "./Icon"
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteProject } from "../store/projectSlice";
+import { deleteProject } from "../store/projectSlice"
 import { useNotification } from '../contexts/NotificationContext'
 
 const sxProjectCard = {
@@ -24,7 +24,6 @@ const sxProjectCard = {
     justifyContent: 'flex-end',
     alignItems: 'center',
     pr: 1,
-    // gap: 1,
   },
   projectImage: {
     width: '100%',
@@ -48,7 +47,6 @@ const sxProjectCard = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // border: 'solid 1px black'
   },
   techList: {
     display: 'flex',
@@ -56,12 +54,6 @@ const sxProjectCard = {
     alignItems: 'center',
     cursor: 'cursor',
     pl: 1,
-    
-    // filter: 'grayscale(100%)',
-    // transition: 'filter 0.5s ease',
-    // '&:hover': {
-    //   filter: 'grayscale(0%) contrast(100%) saturate(100%)',
-    // },
   },
   techIcon: {
     display: 'flex',
@@ -91,8 +83,6 @@ const ProjectCard = ({ project, index }) => {
         showNotification('error', `Failed to delete: ${error.data.error}`)
       }
     }
-
-    console.log(project.imagePath)
 
     return (
         <Card sx={sxProjectCard.card}>

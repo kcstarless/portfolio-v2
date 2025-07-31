@@ -32,7 +32,7 @@ const Projects = () => {
         portfolio
       </Typography>
       <Divider />
-      {/* {projects
+      {projects
         .slice()
         .reverse()
         .map((project, index, reversed) => (
@@ -41,7 +41,7 @@ const Projects = () => {
             project={project}
             index={reversed.length - 1 - index}
           />
-        ))} */}
+        ))}
     </Box>
   );
 };

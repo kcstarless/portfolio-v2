@@ -32,7 +32,7 @@ const TechInfo = () => {
     useEffect(() => {
         const interval = setInterval(() => {
         setIndex((prev) => (prev + 1) % techs.length)
-        }, 3000)
+        }, 4000)
         return () => clearInterval(interval)
     }, [techs.length])
 

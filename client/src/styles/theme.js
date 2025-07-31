@@ -37,7 +37,7 @@ const theme = createTheme({
     body2: { fontFamily: 'Azeret Mono', fontSize: '1rem', letterSpacing: '0.05rem'},
     button: { fontFamily: 'Bebas Neue', height: '55px', fontSize: '2rem', backgroundColor: 'transparent'},
 
-    localInfo: { fontFamily: 'Azeret Mono', textTransform: 'lowercase'}
+    localInfo: { fontFamily: 'Righteous' }
   },
   
 

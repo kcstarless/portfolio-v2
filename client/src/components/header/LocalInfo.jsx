@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, CircularProgress, Link, Typography } from "@mui/material";
 import { getUserLocation } from "../../utils/locationUtils";
 import weatherService from "../../services/weatherService";
 import ticketmasterService from "../../services/ticketmasterService";
@@ -47,6 +47,9 @@ const LocalInfo = () => {
             icon: weather.currentConditions.icon,
             isWeather: true,
           },
+          {
+            name: 'Your local events & tickets'
+          },
           ...events,
         ];
 
@@ -73,7 +76,7 @@ const LocalInfo = () => {
   if (!location || !weather || !events || events.length === 0) {
     return (
       <Box>
-        <Typography>Loading location...</Typography>
+        <Typography><CircularProgress size={25}/></Typography>
       </Box>
     );
   }
