@@ -1,87 +1,18 @@
-import { useEffect, useState } from "react";
-import { Box, CircularProgress, Link, Typography } from "@mui/material";
-import { getUserLocation } from "../../utils/locationUtils";
-import weatherService from "../../services/weatherService";
-import ticketmasterService from "../../services/ticketmasterService";
-import { GetWeatherIcon } from "../Icon";
-import { motion, AnimatePresence } from "framer-motion";
+import { Box, CircularProgress, Link, Typography } from "@mui/material"
+import { GetWeatherIcon } from "../Icon"
+import { motion, AnimatePresence } from "framer-motion"
+import { useLocalInfo } from "../../hooks/useLocalInfo"
 
 const LocalInfo = () => {
-  const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
-  const [events, setEvents] = useState(null);
-  const [index, setIndex] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [error, setError] = useState(null);
+  const { location, weather, events, setHovered, currentItem } = useLocalInfo()
 
-  useEffect(() => {
-    getUserLocation()
-      .then((loc) => setLocation(loc))
-      .catch((err) => setError(err.message));
-  }, []);
-
-  useEffect(() => {
-    if (!location) return;
-    const lat = location.latitude;
-    const lon = location.longitude;
-
-    weatherService
-      .getWeather(lat, lon)
-      .then((data) => setWeather(data))
-      .catch((err) => setError(err.message));
-
-    ticketmasterService
-      .getLocalEvents(lat, lon)
-      .then((data) => setEvents(data))
-      .catch((err) => setError(err.message));
-  }, [location]);
-
-  //// Combine weather + events into one list
-  const combinedItems =
-    !location || !weather || !events
-      ? []
-      : [
-          {
-            id: "weather-start",
-            name: `${location.city} - ${weather.currentConditions.temp}°C`,
-            icon: weather.currentConditions.icon,
-            isWeather: true,
-          },
-          {
-            name: 'Your local events & tickets'
-          },
-          ...events,
-        ];
-
-  useEffect(() => {
-    if (combinedItems.length === 0) return;
-
-    const interval = setInterval(() => {
-      if (!hovered) {
-        setIndex((prev) => (prev + 1) % combinedItems.length);
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [combinedItems.length, hovered]);
-
-  if (error) {
-    return (
-      <Box>
-        <Typography color="error">Error: {error}</Typography>
-      </Box>
-    );
-  }
-
-  if (!location || !weather || !events || events.length === 0) {
+  if (!location || !weather || events.length === 0) {
     return (
       <Box>
         <Typography><CircularProgress size={25}/></Typography>
       </Box>
     );
   }
-
-  const currentItem = combinedItems[index];
 
   return (
     <Box
@@ -124,4 +55,4 @@ const LocalInfo = () => {
   );
 };
 
-export { LocalInfo };
+export { LocalInfo }

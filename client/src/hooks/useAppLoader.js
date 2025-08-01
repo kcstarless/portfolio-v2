@@ -8,18 +8,21 @@ import { preloadImages } from "../utils/loadImages"
 export const useAppLoader = () => {
   const [step, setStep] = useState("s1")
   const dispatch = useDispatch()
+  
   useEffect(() => {
     const load = async () => {
       try {
+        await new Promise((res) => setTimeout(res, 1000))  
         //// Step 1: Ping server
-        // await new Promise((res) => setTimeout(res, 1000))  
         await axios.get("/api/init/ping")
         setStep("s2")
-        
+        await new Promise((res) => setTimeout(res, 1000))  
+
         //// Step2: Fetch projects
         setStep("s3")
         const projects = await dispatch(fetchProjects()).unwrap()
         await dispatch(fetchTechs()).unwrap()
+        await new Promise((res) => setTimeout(res, 1000))  
         
         //// Step3: Preload images
         setStep("s4")

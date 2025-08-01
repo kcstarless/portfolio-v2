@@ -1,7 +1,7 @@
 import { error, info } from '../utils/logger.js'
 
 const errorHandler = (err, req, res, next) => {
-    error(err, 'utils/logger.js')
+    // error(err, 'utils/logger.js')
 
     // multer errors
     if (err.name === 'MulterError') {

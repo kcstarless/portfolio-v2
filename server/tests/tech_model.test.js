@@ -66,8 +66,7 @@ describe('Tech model: ', () => {
         } catch(err) {
             error = err
         }
-        test_log(error)
-        console.log(error.code)
+        // test_log(error)
         assert.ok(error, 'Expected validation error')
         assert.strictEqual(error.message, 'Tech validation failed: level: `NOVIC` is not a valid enum value for path `level`.')
     })
