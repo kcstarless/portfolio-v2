@@ -10,9 +10,16 @@ const sxTechInfo = {
     alignItems: 'center',
     width: '100%',
   },
+  techList: {
+    display: 'flex',
+    gap: 2,
+    flexDirection: 'column',
+    alignItem: 'center'
+  },
   techBox: {
     display: 'flex',
     alignItems: 'center',
+        justifyContent: 'center',
     gap: 2,
   },
   icon: {
@@ -20,6 +27,10 @@ const sxTechInfo = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 100, // controls vertical space for animation
+  },
+  comments: {
+    display: 'flex',
+    justifyContent: 'center',
   }
 }
 
@@ -32,7 +43,7 @@ const TechInfo = () => {
     useEffect(() => {
         const interval = setInterval(() => {
         setIndex((prev) => (prev + 1) % techs.length)
-        }, 4000)
+        }, 6000)
         return () => clearInterval(interval)
     }, [techs.length])
 
@@ -66,9 +77,22 @@ const TechInfo = () => {
                                 {currentTech.name}
                             </Typography>
                         </Box>
-                        <Typography fontSize={'1.5rem'}>
-                            {/* {currentTech.level} */}
-                        </Typography>
+                    </motion.div>
+                </AnimatePresence>
+
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentTech.name}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <Box sx={sxTechInfo.comments}>
+                            <Typography fontSize={12}>
+                                "{currentTech.comments}"
+                            </Typography>
+                        </Box>
                     </motion.div>
                 </AnimatePresence>
             </Box>

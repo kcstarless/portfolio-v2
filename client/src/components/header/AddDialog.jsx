@@ -44,7 +44,7 @@ const AddDialog = ({addType, children}) => {
                   <Box display="flex" alignItems="center" m={0} p={0} justifyContent={'space-between'}>
                     <Typography variant='h3' m={1} p={0} display='flex' alignItems="center">
                       {/* {addType === 'tech' ? <GetIcon type='addTech' />: <GetIcon type='addProject' />} */}
-                      Add New {addType === 'tech' ? 'Stack' : 'Project'}
+                      {addType === 'tech' ? 'Technology Stack' : 'Add Project'}
                     </Typography>
 
                     {formNotification.open && (

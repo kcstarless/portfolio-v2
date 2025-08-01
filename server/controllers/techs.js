@@ -39,6 +39,22 @@ techsRouter.post('/', authMiddleware, validateTech, async (req, res) => {
     res.status(201).json(savedTech)
 })
 
+techsRouter.put('/:id', authMiddleware, validateTech, async (req, res) => {
+    const { name, icon, level, comments } = req.body
+
+    const updatedTech = await Tech.findByIdAndUpdate(
+      req.params.id,
+      { name, icon, level, comments },
+      { new: true, runValidators: true }
+    )
+
+    if (!updatedTech) {
+        return res.status(404).json({ error: 'No matching technology found' })
+    }
+
+    res.status(200).json(updatedTech)
+})
+
 techsRouter.delete('/:id', authMiddleware, async (req, res) => {
     const tech = await Tech.findById(req.params.id)
 

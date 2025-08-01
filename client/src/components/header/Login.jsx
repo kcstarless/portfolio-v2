@@ -1,7 +1,7 @@
 // src/components/Login.jsx
 import { Box, Slide } from '@mui/material'
 import { GetIconButton } from '../Icon'
-import { AddDialog } from '../sidebar/AddDialog'
+import { AddDialog } from './AddDialog'
 import { ProjectForm } from '../forms/_ProjectForm'
 import { TechForm } from '../forms/_TechForm'
 import { LoginForm } from '../forms/_LoginForm'

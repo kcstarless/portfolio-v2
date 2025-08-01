@@ -4,7 +4,7 @@ import { GetIcon } from '../Icon'
 import { IconResultBox } from './IconResultBox'
 import { CurrentTechStack } from './CurrentTechStack'
 import { useTechForm } from '../../hooks/useTechForm'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as ut from '../../utils/techUtils'
 
 const sxTechForm = {
@@ -64,23 +64,24 @@ const sxTechForm = {
     p: 0,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 1,
   },
 }
 
 const TechForm = ({ user }) => {
   const { showFormNotification } = useNotification()
-  const [editing, setEditing] = useState(null)
 
   const {
     formData,
     iconResults,
-    hoveredTech,
     techs,
     handleChange,
     selectIcon,
-    handleDelete,
     handleSubmit,
-    setHoveredTech
+    editingTech,
+    handleEdit,
+    handleDelete,
   } = useTechForm(showFormNotification)
 
   return (
@@ -90,6 +91,7 @@ const TechForm = ({ user }) => {
           label="Technology Stack Search"
           value={formData.name}
           onChange={handleChange('name')}
+          disabled={formData.id}
           sx={sxTechForm.searchInput}
         />
         <FormControl sx={sxTechForm.selectInput}>
@@ -105,7 +107,13 @@ const TechForm = ({ user }) => {
             ))}
           </Select>
         </FormControl>
-        <Button type="submit" variant="contained" color="primary">Add New Tech</Button>
+        {!formData.id 
+          ? <Button type="submit" variant="contained" color="primary">Add New Tech</Button>
+          : <>
+              <Button type="submit" variant="contained" color="primary">Update</Button>
+              <Button type="button" variant="contained" color="error" onClick={handleDelete}>Delete</Button>
+            </>
+        }
       </Box>
 
       <TextField
@@ -123,14 +131,15 @@ const TechForm = ({ user }) => {
 
       <Typography variant="h4" sx={sxTechForm.titleRow}>
         <GetIcon type="addTech" /> &nbsp; My Current Stack
+        <Typography fontSize={12}>
+          {editingTech ? 'unselect to go back.' : 'Select tech to update/delete.'}
+        </Typography>
       </Typography>
 
       <CurrentTechStack
         techs={techs}
-        hoveredTech={hoveredTech}
-        setHoveredTech={setHoveredTech}
-        handleDelete={handleDelete}
-        handleEdit={setEditing}
+        handleEdit={handleEdit}
+        editingTech={editingTech}
       />
     </Box>
   )

@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createTech, deleteTech } from '../store/techSlice'
+import { createTech, deleteTech, updateTech } from '../store/techSlice'
 import { deviconList } from '../utils/deviconList'
 import * as ut from '../utils/techUtils'
 
@@ -9,9 +9,24 @@ export const useTechForm = (showFormNotification) => {
   const [formData, setFormData] = useState(ut.initialFormData)
   const [iconResults, setIconResults] = useState([])
   const [hoveredTech, setHoveredTech] = useState(null)
+  const [editingTech, setEditingTech] = useState(null)
 
   const techs = useSelector(state => state.techs.items)
   const projects = useSelector(state => state.projects.items)
+
+  useEffect(() => {
+    if (editingTech) {
+      setFormData({
+        id: editingTech.id,
+        name: editingTech.name,
+        icon: editingTech.icon || '',
+        level: editingTech.level || '',
+        comments: editingTech.comments || '',
+      })
+    } else {
+      setFormData(ut.initialFormData)
+    }
+  }, [editingTech])
 
   const handleChange = (field) => (e) => {
     const value = e.target.value
@@ -35,22 +50,31 @@ export const useTechForm = (showFormNotification) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     if (!formData.name || !formData.icon || !formData.level) {
       showFormNotification('error', 'Please enter a name, level & select an icon.')
       return
     }
+    
+    const action = formData.id ? updateTech : createTech
+    const actionLabel = formData.id ? 'updated' : 'added'
 
     try {
-      await dispatch(createTech(formData)).unwrap()
-      setFormData(ut.initialFormData)
-      setIconResults([])
-      showFormNotification('info', `${formData.name} added to your technology list`)
+      await dispatch(action(formData)).unwrap()
+      if (!formData.id) {
+        setFormData(ut.initialFormData)
+        setIconResults([])
+      }
+      showFormNotification('info', `${formData.name} ${actionLabel}`)
     } catch (error) {
-      showFormNotification('error', `Failed to add: ${error.data.error}`)
+      const message = error?.data?.error || error?.message || 'Unexpected error'
+      showFormNotification('error', `Failed to ${actionLabel}: ${message}`)
     }
   }
 
-  const handleDelete = async (id, name) => {
+  const handleDelete = async () => {
+    const { id, name } = formData
+
     const techIcon = techs.find(t => t.id === id || t._id === id)
     if (!techIcon) {
       showFormNotification('error', 'Technology icon not found.')
@@ -71,8 +95,19 @@ export const useTechForm = (showFormNotification) => {
     try {
       await dispatch(deleteTech(id)).unwrap()
       showFormNotification('info', `${name} deleted`)
+      setFormData(ut.initialFormData)
+      setEditingTech(null)
     } catch (error) {
       showFormNotification('error', `Failed to delete: ${error.data.error}`)
+    }
+  }
+
+  const handleEdit = (tech) => {
+    if (editingTech !== tech) {
+      setEditingTech(tech)
+    }
+    if (editingTech === tech) {
+      setEditingTech(null)
     }
   }
 
@@ -81,10 +116,12 @@ export const useTechForm = (showFormNotification) => {
     iconResults,
     hoveredTech,
     techs,
+    editingTech,
     handleChange,
     selectIcon,
     handleDelete,
     handleSubmit,
     setHoveredTech,
+    handleEdit,
   }
 }
