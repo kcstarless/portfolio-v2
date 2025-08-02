@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useLocalInfo } from "../../hooks/useLocalInfo"
 
 const LocalInfo = () => {
-  const { location, weather, events, setHovered, currentItem } = useLocalInfo()
+  const {isLoaded, setHovered, currentItem } = useLocalInfo()
 
-  if (!location || !weather || events.length === 0) {
+  if (!isLoaded) {
     return (
       <Box>
         <Typography><CircularProgress size={25}/></Typography>

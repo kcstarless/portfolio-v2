@@ -3,9 +3,10 @@ import { Box, Typography } from "@mui/material";
 const messages = {
   s1: "Waking up the server...",
   s2: "Server is ready...",
-  s3: "Fetching app data...",
+  s2a: "Fetching local data...",
+  s3: "Fetching portfolio data...",
   s4: "Pre loading images from Tigris S3...",
-  ready: "App ready!",
+  ready: "Portfolio ready!",
   error: "Something went wrong. Please try again.",
 };
 

@@ -6,7 +6,6 @@ const NotificationContext = createContext()
 export const useNotification = () => useContext(NotificationContext)
 
 export const NotificationProvider = ({ children }) => {
-    
     const [notification, setNotification] = useState({
         open: false,
         type: 'info',

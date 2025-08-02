@@ -34,27 +34,27 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ duration: fadeDuration }}
         >
-                <SmoothScroll>
-          <Box display="flex" flexDirection="column" minHeight="100vh">
-            <Box>
-              <Header />
-            </Box>
-            <Stack direction="row" flex={1}>
-              <Box component="aside" width="400px" p={0}>
-                <Sidebar />
+          <SmoothScroll>
+            <Box display="flex" flexDirection="column" minHeight="100vh">
+              <Box>
+                <Header />
               </Box>
+              <Stack direction="row" flex={1}>
+                <Box component="aside" width="400px" p={0}>
+                  <Sidebar />
+                </Box>
 
-              <Box component="main" flex={1} p={2} bgcolor="#fff">
-                <Projects />
+                <Box component="main" flex={1} p={2} bgcolor="#fff">
+                  <Projects />
+                </Box>
+              </Stack>
+
+              <Box component="footer" p={2} textAlign="center">
+                <Typography variant="body2" color="text.primary">
+                  © 2025 David Gim
+                </Typography>
               </Box>
-            </Stack>
-
-            <Box component="footer" p={2} textAlign="center">
-              <Typography variant="body2" color="text.primary">
-                © 2025 David Gim
-              </Typography>
             </Box>
-          </Box>
           </SmoothScroll>
         </motion.div>
       )}

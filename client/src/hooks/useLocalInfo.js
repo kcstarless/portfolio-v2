@@ -4,12 +4,11 @@ import weatherService from "../services/weatherService"
 import locationService from "../services/locationService"
 import ticketmasterService from "../services/ticketmasterService"
 
-
 export const useLocalInfo = () => {
   const [location, setLocation] = useState(null)
   const [weather, setWeather] = useState(null)
-  const [events, setEvents] = useState([])
-  // const [error, setError] = useState(null)
+  const [events, setEvents] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const [index, setIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
@@ -17,6 +16,7 @@ export const useLocalInfo = () => {
   const { showNotification } = useNotification()
 
   useEffect(() => {
+    if (location) return 
     const loadData = async () => {
       try {
         const loc = await locationService.getUserLocation()
@@ -30,11 +30,11 @@ export const useLocalInfo = () => {
         setWeather(weatherData)
         setEvents(eventsData)
       } catch (err) {
-        showNotification('error', err.message)
-      } 
+        showNotification('error', 'Failed to load location data.')
+      } finally {
+        setLoading(false)
+      }
     }
-
-    console.log(events)
     loadData()
   }, [])
 
@@ -69,5 +69,6 @@ export const useLocalInfo = () => {
     combinedItems,
     currentItem: combinedItems[index],
     setHovered,
+    isLoaded: !loading && location && weather && events.length > 0,
   }
 }

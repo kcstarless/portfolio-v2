@@ -4,27 +4,32 @@ import { useDispatch } from "react-redux"
 import { fetchProjects } from "../store/projectSlice"
 import { fetchTechs } from "../store/techSlice"
 import { preloadImages } from "../utils/loadImages"
+// import { useLocalInfo } from "./useLocalInfo"
 
 export const useAppLoader = () => {
   const [step, setStep] = useState("s1")
   const dispatch = useDispatch()
-  
+
+  // const { isLoaded: localInfoLoaded } = useLocalInfo()
+
   useEffect(() => {
     const load = async () => {
       try {
         await new Promise((res) => setTimeout(res, 1000))  
-        //// Step 1: Ping server
         await axios.get("/api/init/ping")
         setStep("s2")
         await new Promise((res) => setTimeout(res, 1000))  
 
-        //// Step2: Fetch projects
+        // setStep("s2a")
+        // while (!localInfoLoaded) {
+        //   await new Promise((res) => setTimeout(res, 1000))
+        // }
+
         setStep("s3")
         const projects = await dispatch(fetchProjects()).unwrap()
         await dispatch(fetchTechs()).unwrap()
         await new Promise((res) => setTimeout(res, 1000))  
-        
-        //// Step3: Preload images
+
         setStep("s4")
         const imageUrls = projects.map((p) => p.imagePath).filter(Boolean)
         await preloadImages(imageUrls, (i, url, status) => {
@@ -41,4 +46,4 @@ export const useAppLoader = () => {
   }, [])
 
   return step;
-};
+}
