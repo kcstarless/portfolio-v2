@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
-import { getUserLocation } from "../utils/locationUtils"
 import { useNotification } from '../contexts/NotificationContext'
 import weatherService from "../services/weatherService"
+import locationService from "../services/locationService"
 import ticketmasterService from "../services/ticketmasterService"
 
 
 export const useLocalInfo = () => {
   const [location, setLocation] = useState(null)
   const [weather, setWeather] = useState(null)
-  const [events, setEvents] = useState(null)
+  const [events, setEvents] = useState([])
   // const [error, setError] = useState(null)
 
   const [index, setIndex] = useState(0)
@@ -19,7 +19,7 @@ export const useLocalInfo = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const loc = await getUserLocation()
+        const loc = await locationService.getUserLocation()
         setLocation(loc)
 
         const [weatherData, eventsData] = await Promise.all([

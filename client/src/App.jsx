@@ -27,13 +27,14 @@ function App() {
         {showLoader && <LoadingScreen step={step} />}
       </AnimatePresence>
 
-      <SmoothScroll>
+
       {!showLoader && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: fadeDuration }}
         >
+                <SmoothScroll>
           <Box display="flex" flexDirection="column" minHeight="100vh">
             <Box>
               <Header />
@@ -54,9 +55,9 @@ function App() {
               </Typography>
             </Box>
           </Box>
+          </SmoothScroll>
         </motion.div>
       )}
-      </SmoothScroll>
     </>
   )
 }

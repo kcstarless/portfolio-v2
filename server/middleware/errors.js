@@ -1,7 +1,7 @@
 import { error, info } from '../utils/logger.js'
 
 const errorHandler = (err, req, res, next) => {
-    // error(err, 'utils/logger.js')
+    error(err, 'utils/logger.js')
 
     // multer errors
     if (err.name === 'MulterError') {
@@ -44,7 +44,7 @@ const errorHandler = (err, req, res, next) => {
     }
   
     // Unhandle errors
-    error("Unhandled error stack:", err.stack)
+    // error("Unhandled error stack:", err.stack)
     return res.status(500).json({ error: 'internal server error'})
 }
 

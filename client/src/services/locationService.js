@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-const token = '20b177cf7981f4'
+const baseUrl ='/api/init/location'
 
 const getUserLocation = async () => {
-    const response = await axios(`https://ipinfo.io/json?token=${token}`)
+    const response = await axios.get(baseUrl)
+    console.log(response)
     const data = response.data
-    const [latitude, longitude] = data.loc.split(',').map(Number);
-    // console.log(data)
+    const [latitude, longitude] = data.loc.split(',').map(Number) 
+    console.log(data)
+
     return {
         city: data.city,
         region: data.region,
@@ -16,4 +18,4 @@ const getUserLocation = async () => {
     };
 }
 
-export { getUserLocation }
+export default { getUserLocation }
