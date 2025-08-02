@@ -5,6 +5,7 @@ import { Projects } from './components/projects/_Projects'
 import { LoadingScreen } from './components/LoadingScreen'
 import { useAppLoader } from './hooks/useAppLoader'
 import { Box, Typography, Stack } from '@mui/material'
+import { SmoothScroll } from './components/SmoothScroll'
 import { motion, AnimatePresence } from 'framer-motion'
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         {showLoader && <LoadingScreen step={step} />}
       </AnimatePresence>
 
+      <SmoothScroll>
       {!showLoader && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -54,6 +56,7 @@ function App() {
           </Box>
         </motion.div>
       )}
+      </SmoothScroll>
     </>
   )
 }

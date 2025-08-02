@@ -12,13 +12,10 @@ const sxProjects = {
 const Projects = () => {
   const projects = useSelector((state) => state.projects.items);
 
-  if (!projects) {
-    return <Typography variant="h5">Loading data...</Typography>;
-  }
-
   if (projects.length === 0) {
     return <Typography variant="h5">No projects yet! time to get busy!</Typography>;
   }
+
   return (
     <Box>
       <Typography variant="h3" gutterBottom sx={sxProjects.pageTitle}>
