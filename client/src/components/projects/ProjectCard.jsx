@@ -45,6 +45,7 @@ const sxProjectCard = {
   },
   projectTitleRow: {
     display: 'flex',
+    flexDirection: { xs: 'column', sm: 'row' },
     justifyContent: 'space-between',
     alignItems: 'center',
   },

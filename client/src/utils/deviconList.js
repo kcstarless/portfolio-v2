@@ -140,4 +140,5 @@ export const deviconList = [
   { name: "Rspec", class: "devicon-rspec-plain" },
   { name: "FramerMotion", class: "devicon-framermotion-original" },
   { name: "Next.js", class: "devicon-nextjs-original-wordmark" },
+  { name: "Vitest", class: "devicon-vitest-plain colored"},
 ];

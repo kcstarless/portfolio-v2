@@ -8,6 +8,7 @@ const sxHeader = {
     position: 'sticky',
     top: 0,
     display: 'flex',
+    // flexDirection: { xs: 'column', sm: 'row' },
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'secondary.light',
@@ -30,6 +31,9 @@ const sxHeader = {
   title: {
     color: 'text.primary',
   },
+  rightBox: {
+
+  },
 };
 
 const Header = () => {
@@ -46,7 +50,7 @@ const Header = () => {
           <LocalInfo />
         )}
       </Box>
-      <Box>
+      <Box sx={sxHeader.rightBox}>
         <Login />
       </Box>
     </Box>
