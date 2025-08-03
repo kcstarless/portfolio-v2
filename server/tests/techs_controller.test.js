@@ -1,11 +1,13 @@
 import './_setup.js'
+import * as helper from './_helper.js'
+import * as testData from './_data.js'
+
+import { test_log } from '../utils/logger.js'
 import { describe, test } from 'node:test'
 import assert from 'node:assert'
 import supertest from 'supertest'
 import { app } from '../app.js'
-import { test_log } from '../utils/logger.js'
-import * as helper from './_helper.js'
-import * as testData from './_data.js'
+
 
 const api = supertest(app)
 
@@ -85,7 +87,7 @@ describe('POST /api/techs', () => {
             .set('Authorization', `Bearer ${expiredToken}`)
             .send(techToAdd)
             .expect(401)
-        test_log(response.body)
+        // test_log(response.body)
         assert.strictEqual(response.body.error, 'token expired')
     })
 })
@@ -156,4 +158,45 @@ describe('DELETE /api/techs/:id', () => {
         assert.strictEqual(response.body.error, 'malformatted id')
     })
 })
+
+describe('PUT /api/techs/:id', () => {
+    test('Test1: updates a tech', async () => {
+        const token = await helper.getValidToken()
+        const tech = await helper.getTechJSON()
+        const updatedData = await helper.getUpdatedTech(tech)
+
+        const response = await api
+            .put(`/api/techs/${tech.id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send(updatedData)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+        // test_log(response.body)
+
+        assert.strictEqual(response.body.comments, updatedData.comments)
+        const findTech = await helper.getTechById(tech.id)
+        // test_log(findTech)
+        assert.deepStrictEqual(updatedData, findTech)
+    })
+
+    test('Test2: udpates fail with invalid id 404', async () =>{
+        const token = await helper.getValidToken()
+        const invalidId = await helper.getInvalidTechId()
+        const tech = await helper.getTechJSON()
+        const updatedData = await helper.getUpdatedTech(tech)
+
+        const response = await api
+            .put(`/api/techs/${invalidId}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send(updatedData)
+            .expect(404)
+            .expect('Content-Type', /application\/json/)
+        // test_log(response.body)
+        const findTech = await helper.getTechById(tech.id)
+        assert.strictEqual(response.body.error, 'No matching technology found')
+        assert.deepStrictEqual(tech, findTech)
+    })
+})
+
+
 

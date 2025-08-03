@@ -106,4 +106,31 @@ const validateUser = (req, res, next) => {
   next()
 }
 
-export { validateProject, validateTech, validateUser }
+const validateLogin = (req, res, next) => {
+  const { username, password } = req.body
+
+  if(!username && !password) {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: 'Username & password is required',
+    })
+  }
+  
+  if (!password) {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: 'Password is required',
+    })
+  }
+
+  if (!username) {
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: 'Username is required',
+    })
+  }
+
+  next()
+}
+
+export { validateProject, validateTech, validateUser, validateLogin }

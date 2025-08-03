@@ -54,44 +54,54 @@ const seedTechs = [
     {
         name: 'React',
         icon: 'React',
-        level: 'novice'
+        level: 'novice',
+        comments: 'some comments',
     },
     {
         name: 'Node',
         icon: 'Node.js',
         level: 'novice',
+        comments: 'some comments',
     },
     {
         name: 'JavaScript',
         icon: 'JavaScript',
-        level: 'novice'
+        level: 'novice',
+        comments: 'some comments',
     }
 ]
 const getValidTech = () => ({
     name: 'HTML',
     icon: 'HTML5',
-    level: 'novice'
+    level: 'novice',
+    comments: 'some comments',
 })
 const getMissingFieldTech = () => ({
     // name: "CSS",
     icon: 'CSS3',
-    level: 'novice'
+    level: 'novice',
+    comments: 'some comments',
 })
 const getMissingiconTech = () => ({
     name: "CSS",
     // icon: './location'
-    level: "novice,"
+    level: "novice,",
+    comments: 'some comments',
 })
 const getSameIconName = () => ({
     name: 'HTML',
     icon: 'HTML5',
-    level: 'novice'
+    level: 'novice',
+    comments: 'some comments',
 })
 const getInvalidTechLevel = () => ({
     name: 'JavaScript',
     icon: 'JavaScript',
-    level: 'NOVIC'
+    level: 'NOVIC',
+    comments: 'some comments',
 })
+
+
 
 export {
     seedTechs,

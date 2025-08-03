@@ -2,10 +2,11 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { User } from '../models/user.js'
+import { validateLogin } from '../middleware/validations.js'
 
 const loginRouter = express.Router()
 
-loginRouter.post('/', async (req, res) => {
+loginRouter.post('/', validateLogin, async (req, res) => {
     const { username, password } = req.body
 
     const user = await User.findOne({ username })

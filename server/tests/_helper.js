@@ -26,7 +26,15 @@ const disconnectTestDB = async () => {
 //// Users test helper
 const initialiseUsers = async () => {
     await User.deleteMany({})
-    await User.insertMany(seedUsers)
+    const usersWithHashedPasswords = await Promise.all(
+    seedUsers.map(async user => ({
+      username: user.username,
+      name: user.name,
+      passwordHash: await bcrypt.hash(user.password, 10),
+    }))
+  )
+
+  await User.insertMany(usersWithHashedPasswords)
 }
 const usersInDB = async () => {
     const users = await User.find({})
@@ -60,6 +68,18 @@ const getTechJSON = async () => {
 const getInvalidTechId = async () => {
     return new mongoose.Types.ObjectId().toString()
 }
+const getTechById = async (id) => {
+    const tech = await Tech.findById(id)
+    return tech.toJSON()
+}
+const getUpdatedTech = async (tech) => ({
+    id: tech.id,
+    name: tech.name,
+    icon: tech.icon,
+    level: 'expert',
+    comments: 'this is an updated comments',
+})
+
 
 //// Projects test helper
 const initialiseProjects = async () => {
@@ -102,7 +122,8 @@ const getExpiredToken = async () => {
 
 export { 
     usersInDB, initialiseUsers, getValidUserId, getValidUser,
-    techsInDB, initialiseTechs, getValidTechIds, getTechJSON, getInvalidTechId,
+    techsInDB, initialiseTechs, getValidTechIds, getTechJSON, getInvalidTechId, getTechById,
+    getUpdatedTech,
     projectsInDB, initialiseProjects, prepareValidProject, getTestImagePath,
     connectTestDB, disconnectTestDB,
     getValidToken, getExpiredToken

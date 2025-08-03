@@ -33,14 +33,14 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: fadeDuration }}
-        >
+        > 
           <SmoothScroll>
             <Box display="flex" flexDirection="column" minHeight="100vh">
               <Box>
                 <Header />
               </Box>
-              <Stack direction="row" flex={1}>
-                <Box component="aside" width="400px" p={0}>
+              <Stack direction={{ xs: 'column', md: 'row' }}  flex={1}>
+                <Box component="aside" width={{ xs: '100%', md: '400px' }} p={0}>
                   <Sidebar />
                 </Box>
 

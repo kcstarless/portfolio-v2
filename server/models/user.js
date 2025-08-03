@@ -10,13 +10,18 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     name: String,
-    passwordHash: String,
+    passwordHash: {
+        type: String,
+        required: true,
+    },
     projects: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Project',
         }
     ]
+}, {
+    strict: 'throw' // 👈 reject unknown fields
 })
 
 userSchema.set('toJSON', {
@@ -24,7 +29,7 @@ userSchema.set('toJSON', {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
         delete returnedObject.__v
-        delete returnedObject.passwordHash // password should not be revealed
+        delete returnedObject.passwordHash
     }
 })
 
