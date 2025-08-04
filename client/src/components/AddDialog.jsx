@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { useNotification } from '../../contexts/NotificationContext'
+import { useNotification } from '../contexts/NotificationContext'
 import { Alert, Box, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { GetIconButton } from '../Icon'
+import { GetIconButton } from './Icon'
 
 import {
   Button,
@@ -34,7 +33,6 @@ const sxAddDialog = {
 }
 
 const AddDialog = ({ addType, children }) => {
-  const user = useSelector((state) => state.auth.user)
   const { formNotification } = useNotification()
   const [open, setOpen] = useState(false)
 
@@ -43,16 +41,22 @@ const AddDialog = ({ addType, children }) => {
 
   const childWithProps =
     typeof children === "function"
-      ? children({ user, onSuccess: handleClose })
+      ? children({ onSuccess: handleClose, open })
       : children
 
-  const type = addType === "tech" ? "addTech" : "addProject"
+  const typeMeta = {
+    tech: { icon: "addTech", label: "Technology Stack" },
+    project: { icon: "addProject", label: "Add Project" },
+    update: { icon: "updateProject", label: "Update Project" },
+  }
+
+  const type = typeMeta[addType] || { icon: '', label: ''}
 
   return (
     <>
       <GetIconButton
         title={`click to add new ${addType}`}
-        iconName={type}
+        iconName={type.icon}
         onClick={handleClickOpen}
         size="large"
       />
@@ -61,7 +65,7 @@ const AddDialog = ({ addType, children }) => {
         <DialogTitle>
           <Box sx={sxAddDialog.dialogTitleBox}>
             <Typography variant="h3" sx={sxAddDialog.dialogTitleTypography}>
-              {addType === "tech" ? "Technology Stack" : "Add Project"}
+              {type.label}
             </Typography>
 
             {formNotification.open && (
@@ -72,11 +76,11 @@ const AddDialog = ({ addType, children }) => {
           </Box>
         </DialogTitle>
 
-        <DialogContent dividers>{childWithProps}</DialogContent>
+        <DialogContent dividers>{open && childWithProps}</DialogContent>
 
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
-            Cancel
+            Close
           </Button>
         </DialogActions>
       </Dialog>

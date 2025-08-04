@@ -4,8 +4,7 @@ import { GetIcon } from '../Icon'
 import { IconResultBox } from './IconResultBox'
 import { CurrentTechStack } from './CurrentTechStack'
 import { useTechForm } from '../../hooks/useTechForm'
-import { useState } from 'react'
-import * as ut from '../../utils/techUtils'
+import * as UT from '../../utils/techUtils'
 
 const sxTechForm = {
   formBox: {
@@ -69,7 +68,7 @@ const sxTechForm = {
   },
 }
 
-const TechForm = ({ user }) => {
+const TechForm = () => {
   const { showFormNotification } = useNotification()
 
   const {
@@ -102,7 +101,7 @@ const TechForm = ({ user }) => {
             label="Level"
             onChange={handleChange('level')}
           >
-            {ut.levels.map(option => (
+            {UT.levels.map(option => (
               <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
             ))}
           </Select>

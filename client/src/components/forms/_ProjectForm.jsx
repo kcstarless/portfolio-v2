@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Box, TextField, Button, FormHelperText } from '@mui/material'
-import { useNotification } from '../../contexts/NotificationContext'
 import { useProjectForm } from '../../hooks/useProjectForm'
 import { ImageUploadField } from './ImageUploadField'
 import { TechToggleGroup } from './TechToggleGroup'
 
-const ProjectForm = ({ user, onSuccess }) => {
-  const dispatch = useDispatch()
-  const { showFormNotification } = useNotification()
+const ProjectForm = ({ project }) => {
+  // console.log(project)
   const techs = useSelector(state => state.techs.items)
   const loading = useSelector(state => state.projects.status === 'loading')
 
@@ -18,7 +16,8 @@ const ProjectForm = ({ user, onSuccess }) => {
     handleFileChange,
     handleTechChange,
     handleSubmit,
-  } = useProjectForm({ user, onSuccess, dispatch, showFormNotification })
+  } = useProjectForm({ project })
+
 
   return (
     <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}
@@ -27,7 +26,7 @@ const ProjectForm = ({ user, onSuccess }) => {
       <TextField label="Title" value={formData.title} onChange={handleChange('title')}
         error={!!errors.title} helperText={errors.title} disabled={loading} />
 
-      <TextField label="Description" multiline rows={3} value={formData.description}
+      <TextField label="Description" multiline rows={5} value={formData.description}
         onChange={handleChange('description')} error={!!errors.description}
         helperText={errors.description} disabled={loading} />
 
@@ -44,6 +43,7 @@ const ProjectForm = ({ user, onSuccess }) => {
         onChange={handleTechChange}
         error={errors.tech}
         disabled={loading}
+        project={project}
       />
 
       <TextField label="Demo URL" value={formData.demoUrl}
@@ -57,7 +57,7 @@ const ProjectForm = ({ user, onSuccess }) => {
       {errors.submit && <FormHelperText error>{errors.submit}</FormHelperText>}
 
       <Button type="submit" variant="contained" color="primary" disabled={loading}>
-        Add New Project
+        {project ? 'Update Project' : 'Add New Project'}
       </Button>
     </Box>
   )

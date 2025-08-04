@@ -1,7 +1,7 @@
 import { FormControl, ToggleButtonGroup, ToggleButton, Tooltip, FormHelperText } from '@mui/material'
 import { GetTechIcon } from '../Icon'
 
-export const TechToggleGroup = ({ techs, value, onChange, error, disabled }) => (
+export const TechToggleGroup = ({ techs, value, onChange, error, disabled, project }) => (
   <FormControl error={!!error}>
     <ToggleButtonGroup
       value={value}

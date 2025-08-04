@@ -22,6 +22,15 @@ const create = async newObject => {
     return response.data
 }
 
+const update = async (projectToUpdate) => {
+    const config = {
+        headers: { Authorization: token}
+    }
+    const projectId = projectToUpdate.get('id')
+    const response = await axios.put(`${baseUrl}/${projectId}`, projectToUpdate, config)
+    return response.data
+}
+
 const remove = async (id) => {
     const config = {
         headers: { Authorization: token }
@@ -30,4 +39,4 @@ const remove = async (id) => {
     return response.data
 }
 
-export default { getAll, create, remove, setToken }
+export default { getAll, create, remove, update, setToken }

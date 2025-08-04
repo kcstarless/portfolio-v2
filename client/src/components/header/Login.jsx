@@ -1,7 +1,7 @@
 // src/components/Login.jsx
 import { Box, Slide } from '@mui/material'
 import { GetIconButton } from '../Icon'
-import { AddDialog } from './AddDialog'
+import { AddDialog } from '../AddDialog'
 import { ProjectForm } from '../forms/_ProjectForm'
 import { TechForm } from '../forms/_TechForm'
 import { LoginForm } from '../forms/_LoginForm'
@@ -25,11 +25,11 @@ export const Login = () => {
     return (
       <Box display="flex" alignItems="center" gap={1}>
         <AddDialog addType="tech">
-          {({ user, onSuccess }) => <TechForm user={user} onSuccess={onSuccess} />}
+          <TechForm />
         </AddDialog>
 
         <AddDialog addType="project">
-          {({ user, onSuccess }) => <ProjectForm user={user} onSuccess={onSuccess} />}
+          <ProjectForm />
         </AddDialog>
 
         <GetIconButton title='click to log out' onClick={handleLogout} size='large' iconName='logout' loading={loading} />

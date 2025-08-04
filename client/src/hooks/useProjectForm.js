@@ -1,11 +1,44 @@
-import { useState } from 'react'
-import * as helper from '../utils/projectUtils'
-import projectService from '../services/projectService'
-import { fetchProjects } from '../store/projectSlice'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createProject, updateProject } from '../store/projectSlice'
+import { useNotification } from '../contexts/NotificationContext'
+import * as UT from '../utils/projectUtils'
 
-export const useProjectForm = ({ user, onSuccess, dispatch, showFormNotification }) => {
-  const [formData, setFormData] = useState(helper.initialFormData)
+
+export const useProjectForm = ({ project }) => {
+  const [formData, setFormData] = useState(UT.initialFormData)
+  const [editingProject, setEditingProject] = useState(null)
   const [errors, setErrors] = useState({})
+  const { showFormNotification } = useNotification()
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.auth.user)
+
+  useEffect(() => {
+    if (!editingProject) return
+    console.log('edit triggered')
+    if (editingProject) {
+      console.log(editingProject)
+      setFormData({
+        id: editingProject._id || editingProject.id, 
+        title: editingProject.title,
+        description: editingProject.description,
+        tech: editingProject.tech.map(t => (typeof t === 'string' ? t : t.id)), // store tech as array of tech ids
+        demoUrl: editingProject.demoUrl,
+        githubUrl: editingProject.githubUrl,
+        image: editingProject.image,
+      })
+    } else {
+      setFormData(UT.initialFormData)
+    }
+  }, [editingProject])
+
+  useEffect(() => {
+    if (project) {
+      setEditingProject(project)
+    } else {
+      setEditingProject(null)
+    }
+  }, [project])
 
   const handleChange = (field) => (e) => {
     setFormData(prev => ({ ...prev, [field]: e.target.value }))
@@ -20,30 +53,33 @@ export const useProjectForm = ({ user, onSuccess, dispatch, showFormNotification
   }
 
   const resetForm = () => {
-    setFormData(helper.initialFormData)
+    setFormData(UT.initialFormData)
     setErrors({})
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!helper.validate(formData, setErrors)) return
+    if (!UT.validate(formData, setErrors)) return
 
-    const data = helper.prepData(formData, user)
+    const data = UT.prepData(formData, user)
+
+    const action = formData.id ? updateProject : createProject
+    const actionLabel = formData.id ? 'updated' : 'added'
 
     try {
-      const created = await projectService.create(data)
-      dispatch(fetchProjects())
-      showFormNotification('info', `${created.title} added to your project list`)
-      resetForm()
-    //   if (onSuccess) onSuccess(created)
+      const result = await dispatch(action(data)).unwrap()
+      showFormNotification('info', `${result.title} ${actionLabel}`)
+
+      if (!formData.id) resetForm()
     } catch (error) {
-      showFormNotification('error', `Failed to add: ${error?.data?.error || 'Unknown error'}`)
+      showFormNotification('error', `Failed to ${actionLabel}: ${error?.data?.error || 'Unknown error'}`)
     }
   }
 
   return {
     formData,
     errors,
+    editingProject,
     handleChange,
     handleFileChange,
     handleTechChange,

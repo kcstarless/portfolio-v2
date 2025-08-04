@@ -1,6 +1,6 @@
 import { palette } from "../styles/theme"
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io"
-import { MdArrowDropDown, MdArrowDropUp, MdDeleteForever } from "react-icons/md"
+import { MdArrowDropDown, MdArrowDropUp, MdDeleteForever, MdUpdate } from "react-icons/md"
 import { GrTechnology } from "react-icons/gr"
 import { FaProjectDiagram, FaExternalLinkSquareAlt } from "react-icons/fa"
 import { SiGithub } from "react-icons/si"
@@ -27,7 +27,8 @@ const iconMap = {
   addProject: {component: FaProjectDiagram, color: palette.primary.main },
   github: { component: SiGithub, color: palette.secondary.light},
   demolink: { component: FaExternalLinkSquareAlt, color: palette.secondary.light },
-  delete: { component: MdDeleteForever, color: palette.primary.main }
+  delete: { component: MdDeleteForever, color: palette.primary.main },
+  updateProject: { component: MdUpdate , color: palette.primary.main },
 }
 
 const weatherIconMap = {

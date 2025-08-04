@@ -21,6 +21,20 @@ export const createProject = createAsyncThunk('projects/create', async (newProje
     }
 })
 
+export const updateProject = createAsyncThunk('techs/update', async (projectToUpdate, { dispatch, rejectWithValue}) => {
+    await new Promise((res) => setTimeout(res, 1500))
+    try {
+      const updated = await projectService.update(projectToUpdate)
+      dispatch(fetchProjects())
+      return updated
+    } catch(error) {
+      const payload = error.response
+        ? { status: error.response.status, data: error.response.data }
+        : { message: error.message }
+      return rejectWithValue(payload)
+    }
+})
+
 export const deleteProject = createAsyncThunk('projects/delete', async (id, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))  
     try {
@@ -77,6 +91,17 @@ const projectSlice = createSlice({
             state.error = null
         })
         .addCase(deleteProject.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.payload?.data?.error || action.payload?.message || action.error.message
+        })
+        .addCase(updateProject.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(updateProject.fulfilled, (state) => {
+            state.status = 'succeeded'
+            state.error = null
+        })
+        .addCase(updateProject.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.payload?.data?.error || action.payload?.message || action.error.message
         })

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { deleteProject } from "../../store/projectSlice"
 import { useNotification } from '../../contexts/NotificationContext'
 import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box } from "@mui/material"
+import { AddDialog } from "../AddDialog"
+import { ProjectForm } from "../forms/_ProjectForm"
 
 
 const sxProjectCard = {
@@ -89,7 +91,15 @@ const ProjectCard = ({ project, index, last }) => {
         <Card sx={sxProjectCard.card}>
 
             <Box sx={sxProjectCard.projectNo}>
-                {user && <GetIconButton title={`delete ${project.title}`} iconName='delete' onClick={handleDelete} />}
+                {user &&
+                  <Box> 
+                    <GetIconButton title={`delete ${project.title}`} iconName='delete' onClick={handleDelete} />
+                    <AddDialog addType="update">
+                      <ProjectForm project={project} />
+                    </AddDialog>
+                  </Box>
+                }
+ 
                 <GetIconButton title='link: demo site' iconName='demolink' href={project.demoUrl} target='_blank' />
                 <GetIconButton title='link: github repository' iconName='github' href={project.githubUrl} target='_blank' />
                 <Typography variant="h5">&nbsp; {String(index + 1).padStart(2, '0')}</Typography>
