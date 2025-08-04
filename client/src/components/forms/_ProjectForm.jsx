@@ -4,8 +4,15 @@ import { useProjectForm } from '../../hooks/useProjectForm'
 import { ImageUploadField } from './ImageUploadField'
 import { TechToggleGroup } from './TechToggleGroup'
 
+const sxProjectForm = {
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+  },
+}
+
 const ProjectForm = ({ project }) => {
-  // console.log(project)
   const techs = useSelector(state => state.techs.items)
   const loading = useSelector(state => state.projects.status === 'loading')
 
@@ -18,17 +25,33 @@ const ProjectForm = ({ project }) => {
     handleSubmit,
   } = useProjectForm({ project })
 
-
   return (
-    <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+    <Box
+      component="form"
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+      sx={sxProjectForm.form}
     >
-      <TextField label="Title" value={formData.title} onChange={handleChange('title')}
-        error={!!errors.title} helperText={errors.title} disabled={loading} />
+      <TextField
+        label="Title"
+        value={formData.title}
+        onChange={handleChange('title')}
+        error={!!errors.title}
+        helperText={errors.title}
+        disabled={loading}
+      />
 
-      <TextField label="Description" multiline rows={5} value={formData.description}
-        onChange={handleChange('description')} error={!!errors.description}
-        helperText={errors.description} disabled={loading} />
+      <TextField
+        label="Description"
+        multiline
+        rows={5}
+        value={formData.description}
+        onChange={handleChange('description')}
+        error={!!errors.description}
+        helperText={errors.description}
+        disabled={loading}
+      />
 
       <ImageUploadField
         value={formData.image}
@@ -46,13 +69,23 @@ const ProjectForm = ({ project }) => {
         project={project}
       />
 
-      <TextField label="Demo URL" value={formData.demoUrl}
-        onChange={handleChange('demoUrl')} error={!!errors.demoUrl}
-        helperText={errors.demoUrl} disabled={loading} />
+      <TextField
+        label="Demo URL"
+        value={formData.demoUrl}
+        onChange={handleChange('demoUrl')}
+        error={!!errors.demoUrl}
+        helperText={errors.demoUrl}
+        disabled={loading}
+      />
 
-      <TextField label="GitHub URL" value={formData.githubUrl}
-        onChange={handleChange('githubUrl')} error={!!errors.githubUrl}
-        helperText={errors.githubUrl} disabled={loading} />
+      <TextField
+        label="GitHub URL"
+        value={formData.githubUrl}
+        onChange={handleChange('githubUrl')}
+        error={!!errors.githubUrl}
+        helperText={errors.githubUrl}
+        disabled={loading}
+      />
 
       {errors.submit && <FormHelperText error>{errors.submit}</FormHelperText>}
 

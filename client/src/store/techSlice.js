@@ -56,12 +56,14 @@ const techSlice = createSlice({
   name: 'techs',
   initialState: {
     items: [],
-    status: 'idle',
+    status: 'idle',    // for fetchTechs only (could rename to fetchStatus)
+    loading: false,    // generic loading flag for create/update/delete
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch techs
       .addCase(fetchTechs.pending, (state) => {
         state.status = 'loading'
       })
@@ -72,6 +74,36 @@ const techSlice = createSlice({
       .addCase(fetchTechs.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
+      })
+      // Create tech
+      .addCase(createTech.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(createTech.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(createTech.rejected, (state) => {
+        state.loading = false
+      })
+      // Update tech
+      .addCase(updateTech.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateTech.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(updateTech.rejected, (state) => {
+        state.loading = false
+      })
+      // Delete tech
+      .addCase(deleteTech.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteTech.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(deleteTech.rejected, (state) => {
+        state.loading = false
       })
   }
 })

@@ -1,44 +1,49 @@
 import { Box } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { GetTechIcon } from '../Icon'
 
-const sxCurrentTechStack = {
-  iconBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    cursor: 'pointer',
-    border: '3px solid transparent',
-    borderRadius: 1,
-    p: 1,
-    m: 1,
-  },
-}
-
-const CurrentTechStack = ({ techs, handleEdit, editingTech }) => {
-
+const CurrentTechStack = ({ disabled, techs, handleEdit, editingTech }) => {
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0, mt: 1 }}>
+    <Container>
       {techs.map((tech) => {
         const isSelected = editingTech?.id === tech.id
-
         return (
-          <Box
+          <IconBox
             key={tech.icon}
-            sx={{
-              ...sxCurrentTechStack.iconBox,
-              borderColor: isSelected ? 'secondary.light' : 'transparent',
-            }}
+            selected={isSelected}
+            disabled={disabled}
+            onClick={() => handleEdit(tech)}
           >
-            <GetTechIcon
-              className={tech.icon}
-              size={30}
-              onClick={() => handleEdit(tech)}
-            />
-          </Box>
+            <GetTechIcon className={tech.icon} size={30}/>
+          </IconBox>
         )
       })}
-    </Box>
+    </Container>
   )
 }
 
 export { CurrentTechStack }
+
+// Styled components placed below export
+const Container = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 0,
+  marginTop: theme.spacing(1),
+}))
+
+const IconBox = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'selected',
+})(({ theme, selected, disabled }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  cursor: 'pointer',
+  border: '3px solid',
+  borderColor: selected ? theme.palette.secondary.light : 'transparent',
+  borderRadius: theme.shape.borderRadius,
+  padding: theme.spacing(1),
+  margin: theme.spacing(1),
+  pointerEvents: disabled ? 'none' : 'auto',
+  opacity: disabled ? 0.5 : 1,
+}))
