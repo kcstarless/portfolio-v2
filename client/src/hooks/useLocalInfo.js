@@ -11,8 +11,7 @@ export const useLocalInfo = () => {
   const [location, setLocation] = useState(null)
   const [weather, setWeather] = useState(null)
   const [events, setEvents] = useState(null)
-  const [loading, setLoading] = useState(true)
-
+  
   const [index, setIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
 
@@ -42,13 +41,11 @@ export const useLocalInfo = () => {
           weatherService.getWeather(loc.latitude, loc.longitude),
           ticketmasterService.getLocalEvents(loc.latitude, loc.longitude),
         ])
-
+        // console.log(weatherData)
         setWeather(weatherData)
         setEvents(eventsData)
       } catch (err) {
         showNotification('error', 'Failed to load location data.')
-      } finally {
-        setLoading(false)
       }
     }
     loadData()
@@ -77,8 +74,15 @@ export const useLocalInfo = () => {
       })
     }
 
+    if (currentUser?.username === 'demo') {
+      items.push({
+        id: "logout",
+        name: "Please log out to view Dave's portfolio",
+      })
+    }
+
     // Add all events
-    items.push(...events)
+    // items.push(...events)
 
     return items
   }
@@ -86,15 +90,14 @@ export const useLocalInfo = () => {
   const combinedItems = createCombinedItems()
 
   // Reset index if it's out of bounds when combinedItems changes
-  useEffect(() => {
-    if (index >= combinedItems.length && combinedItems.length > 0) {
-      setIndex(0)
-    }
-  }, [combinedItems.length, index])
+  // useEffect(() => {
+  //   if (index >= combinedItems.length && combinedItems.length > 0) {
+  //     setIndex(0)
+  //   }
+  // }, [combinedItems.length, index])
 
   useEffect(() => {
     if (combinedItems.length === 0) return
-
     const interval = setInterval(() => {
       if (!hovered) {
         setIndex((prev) => (prev + 1) % combinedItems.length)
@@ -102,7 +105,7 @@ export const useLocalInfo = () => {
     }, 3000)
 
     return () => clearInterval(interval)
-  }, [combinedItems.length, hovered])
+  }, [combinedItems.length, hovered, currentUser])
 
   return {
     location,
@@ -111,6 +114,6 @@ export const useLocalInfo = () => {
     combinedItems,
     currentItem: combinedItems[index],
     setHovered,
-    isLoaded: !loading && location && weather && events.length > 0,
+    currentUser,
   }
 }

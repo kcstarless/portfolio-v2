@@ -12,8 +12,8 @@ export const useLogin = () => {
   const loading = useSelector(state => state.auth.loading)
   const error = useSelector(state => state.auth.error)
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('demo')
+  const [password, setPassword] = useState('DemoDemo8!')
   const [showLogin, setShowLogin] = useState(false)
 
   const handleLogin = async (e) => {

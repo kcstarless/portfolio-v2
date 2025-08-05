@@ -5,15 +5,20 @@ import { useLocalInfo } from "../../hooks/useLocalInfo"
 import { useSelector } from 'react-redux'
 
 const LocalInfo = () => {
-  const {isLoaded, setHovered, currentItem } = useLocalInfo()
+  const { setHovered, currentItem } = useLocalInfo()
   const loading = useSelector(state => state.auth.loading)
-
-  if (!isLoaded || loading || !currentItem) {
+  // console.log(currentItem)
+  if (loading || !currentItem) {
     return (
-      <Box>
-        <Typography><CircularProgress size={25}/></Typography>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+
+      >
+        <CircularProgress size={25} />
       </Box>
-    );
+    )
   }
 
   return (
