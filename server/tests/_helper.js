@@ -47,6 +47,11 @@ const getValidUserId = async () => {
 const getValidUser = async() => {
     return await User.findOne()
 }
+const getValidUserToAdd = async () => ({
+  username: 'hello',
+  name: 'valid name',
+  passwordHash: await bcrypt.hash('UpperLower8!', 10),
+})
 
 //// Techs test helper
 const initialiseTechs = async () => {
@@ -123,7 +128,7 @@ const getExpiredToken = async () => {
 export { 
     usersInDB, initialiseUsers, getValidUserId, getValidUser,
     techsInDB, initialiseTechs, getValidTechIds, getTechJSON, getInvalidTechId, getTechById,
-    getUpdatedTech,
+    getUpdatedTech, getValidUserToAdd,
     projectsInDB, initialiseProjects, prepareValidProject, getTestImagePath,
     connectTestDB, disconnectTestDB,
     getValidToken, getExpiredToken

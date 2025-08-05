@@ -1,7 +1,7 @@
 ///// Project test data
 const getSeedProjects = (userId, techIds) => ([
     {
-        title: "Todo List App",
+        title: "asdfasdfasdf List App",
         description: "A simple task management app to add, complete, and delete tasks.",
         tech: techIds,
         demoUrl: "https://example.com/todo-app",
@@ -33,20 +33,25 @@ const seedUsers = [
     { username: 'root', name: 'root user', password: 'sekret' },
     { username: 'demo', name: 'demo user', password: 'sekret' },
 ]
-const getValidUser = () => ({
+const getValiderUserBeforeHash = () => ({
     username: 'tomtom',
     name: 'Tom Brady',
     password: 'UpperLower8~',
 })
+const getValidUser = () => ({
+    username: 'tomtom',
+    name: 'Tom Brady',
+    passwordHash: 'UpperLower8~',
+})
 const getInvalidUser = () => ({
     // username: 'invalid',
     name: 'invalid name',
-    password: 'UpperLower8~',
+    passwordHash: 'UpperLower8~',
 })
 const getWhiteSpaceUser = () => ({
     username: '           ',
     name: 'white space',
-    password: 'UpperLower8!'
+    passwordHash: 'UpperLower8!'
 })
 
 ////// Tech test data
@@ -116,4 +121,5 @@ export {
     getMissingiconTech,
     getSameIconName,
     getInvalidTechLevel,
+    getValiderUserBeforeHash,
 }

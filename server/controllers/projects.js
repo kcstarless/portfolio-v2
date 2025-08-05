@@ -1,22 +1,14 @@
 import express from 'express'
-import path from 'path'
 
 import { Project } from '../models/project.js'
 import { User } from '../models/user.js'
 import { authMiddleware } from '../middleware/authMiddleware.js'
 import { validateProject } from '../middleware/validations.js'
 import { uploadSingleImage } from '../middleware/uploadMiddleware.js'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
-import { s3 } from '../utils/s3.js'  // your S3 client setup
+import { uploadToS3 } from '../utils/uploadToS3.js'
+import { error_log } from '../utils/logger.js'
 
 const projectsRouter = express.Router()
-
-// Filename sanitizer for safe keys
-const sanitizeFilename = (name) =>
-    name.toLowerCase()
-      .replace(/[^a-z0-9]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
 
 projectsRouter.get('/', async (req, res) => {
     const projects = await Project.find({})
@@ -37,91 +29,57 @@ projectsRouter.get('/:id', async (req, res) => {
 })
 
 projectsRouter.post('/', authMiddleware, uploadSingleImage, validateProject, async (req, res) => {
-    const body = req.body
-    const user = await User.findById(req.user.id)
+  const body = req.body
+  const user = req.user 
 
-    if (!user) {
-      return res.status(400).json({ error: 'User missing or not valid' })
-    }
+  if (!req.file) {
+    return res.status(400).json({ error: 'Image file is required' })
+  }
 
-    if (!req.file) {
-      return res.status(400).json({ error: 'Image file is required' })
-    }
+  const { url } = await uploadToS3({
+    file: req.file,
+    title: body.title,
+    userId: user.id,
+  })
 
-    const ext = path.extname(req.file.originalname)
-    const sanitizedTitle = sanitizeFilename(body.title || 'untitled')
-    const key = `${req.user.id}-${sanitizedTitle}-${ext}`
+  body.imagePath = url
 
-    try {
-      const command = new PutObjectCommand({
-        Bucket: process.env.BUCKET_NAME,
-        Key: key,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype,
-        ACL: 'public-read',
-      })
+  const project = new Project(prepProject(body, user))
+  const saved = await project.save()
 
-      await s3.send(command)
+  await User.findByIdAndUpdate(user.id, { $push: { projects: saved._id } })
 
-      // Save the public URL from Tigris (S3-compatible)
-      body.imagePath = `https://${process.env.BUCKET_NAME}.t3.storageapi.dev/${key}`
-    } catch (error) {
-      console.error('Error uploading image:', error)
-      return res.status(500).json({ error: 'Failed to upload image' })
-    }
-
-    const project = new Project(prepProject(body, user))
-    const saved = await project.save()
-    user.projects = user.projects.concat(saved._id)
-    await user.save()
-
-    res.status(201).json(saved)
+  res.status(201).json(saved)
 })
 
 projectsRouter.put('/:id', authMiddleware, uploadSingleImage, validateProject, async (req, res) => {
-    const body = req.body
-    const user = await User.findById(req.user.id)
+  const { id: projectId } = req.params
+  const user = req.user
+  const body = req.body
 
-    if (!user) {
-      return res.status(400).json({ error: 'User missing or not valid' })
-    }
+  const project = await Project.findOne({ _id: projectId, user: user.id })
+  if (!project) {
+    return res.status(403).json({ error: 'Not authorized to update this project' })
+  }
 
-    const project = await Project.findOne({ _id: req.params.id, user: req.user.id })
-    if (!project) {
-      return res.status(403).json({ error: 'Not authorized to update this project' })
-    }
+  if (req.file) {
+    const { url } = await uploadToS3({
+      file: req.file,
+      title: body.title,
+      userId: user.id,
+    })
+    body.imagePath = url
+  } else {
+    body.imagePath = project.imagePath
+  }
 
-    if (req.file) {
-      const ext = path.extname(req.file.originalname)
-      const sanitizedTitle = sanitizeFilename(body.title || 'untitled')
-      const key = `${req.user.id}-${sanitizedTitle}-${ext}`
-      try {
-        const command = new PutObjectCommand({
-          Bucket: process.env.BUCKET_NAME,
-          Key: key,
-          Body: req.file.buffer,
-          ContentType: req.file.mimetype,
-          ACL: 'public-read',
-        })
+  const updatedProject = await Project.findByIdAndUpdate(
+    projectId,
+    { ...body },
+    { new: true, runValidators: true }
+  )
 
-        await s3.send(command)
-
-        // Save the public URL from Tigris (S3-compatible)
-        body.imagePath = `https://${process.env.BUCKET_NAME}.t3.storageapi.dev/${key}`
-      } catch (error) {
-        console.error('Error uploading image:', error)
-        return res.status(500).json({ error: 'Failed to upload image' })
-      }
-    } else {
-      body.imagePath = project.imagePath
-    }
-
-    const updatedProject = await Project.findByIdAndUpdate(
-      req.params.id,
-      { ...body },
-      { new: true, runValidators: true }
-    )
-    res.status(200).json(updatedProject)
+  return res.status(200).json(updatedProject)
 })
 
 projectsRouter.delete('/:id', authMiddleware, async (req, res) => {

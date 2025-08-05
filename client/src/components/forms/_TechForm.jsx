@@ -75,7 +75,7 @@ const TechForm = () => {
           label="Technology Stack Search"
           value={formData.name}
           onChange={handleChange('name')}
-          disabled={formData.id} // cannot change name
+          disabled={formData.id || loading} // cannot change name
         />
         <LevelSelector level={formData.level} onChange={handleChange('level')} />
 

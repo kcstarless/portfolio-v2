@@ -1,4 +1,4 @@
-const info = (...params) => {
+const info_log = (...params) => {
     console.log(
         "\n#### info ####\n", 
         ...params, 
@@ -6,7 +6,7 @@ const info = (...params) => {
     )
 }
 
-const error = (err, src='') => {
+const error_log = (err, src='') => {
     console.error(
         "\n#### ERROR ####",
         "\nName: ", err.name,
@@ -25,4 +25,4 @@ const test_log = (...params) => {
     )
 }
 
-export { info, error, test_log }
+export { info_log, error_log, test_log }

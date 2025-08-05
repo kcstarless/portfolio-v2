@@ -9,7 +9,7 @@ import { app } from '../app.js'
 //// Setup
 const api = supertest(app)
 
-//// Test
+// Test
 describe('GET /api/projects', () => {
     test('Test1: projects are returned as json', async () => {
         await api
@@ -116,6 +116,138 @@ describe ('POST /api/projects ', () => {
     })
 })
 
+describe('PUT /api/projects/:id', () => {
+    test('TEST1: successfully updates a project', async () => {
+        const token = await helper.getValidToken()
+        const projectsBefore = await helper.projectsInDB()
+        const projectToUpdate = projectsBefore[0]
+        
+        let req = api
+            .put(`/api/projects/${projectToUpdate.id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .field('title', 'Updated Project Title')
+            .field('description', 'Updated Project Description')
+        .field('demoUrl', 'https://updated-demo.example.com')
+            .field('githubUrl', 'https://github.com/user/updated-project')
+            .field('user', projectToUpdate.user.toString()) // Use the project's existing user
+
+        // Add all tech IDs
+        projectToUpdate.tech.forEach(techId => {
+            req = req.field('tech', techId.toString())
+        })
+
+        // The route sets imagePath to existing project's imagePath if no file is uploaded
+        // So we don't need to send imagePath field
+
+        const response = await req
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        // Verify the response contains updated data
+        assert.strictEqual(response.body.title, 'Updated Project Title')
+        assert.strictEqual(response.body.description, 'Updated Project Description')
+        assert.strictEqual(response.body.demoUrl, 'https://updated-demo.example.com')
+        assert.strictEqual(response.body.githubUrl, 'https://github.com/user/updated-project')
+        assert.strictEqual(response.body.id, projectToUpdate.id)
+        
+        // Verify imagePath is preserved from original
+        assert.strictEqual(response.body.imagePath, projectToUpdate.imagePath)
+        
+        // Verify tech array is maintained
+        assert.strictEqual(response.body.tech.length, projectToUpdate.tech.length)
+
+        // Verify the update persisted in database
+        const projectsAfter = await helper.projectsInDB()
+        const updatedProjectInDB = projectsAfter.find(p => p.id === projectToUpdate.id)
+        
+        assert.strictEqual(updatedProjectInDB.title, 'Updated Project Title')
+        assert.strictEqual(updatedProjectInDB.description, 'Updated Project Description')
+        assert.strictEqual(updatedProjectInDB.demoUrl, 'https://updated-demo.example.com')
+        assert.strictEqual(updatedProjectInDB.githubUrl, 'https://github.com/user/updated-project')
+        
+        // Verify total number of projects hasn't changed
+        assert.strictEqual(projectsAfter.length, projectsBefore.length)
+    })
+
+    test('TEST2: successfully updates a project with new image', async () => {
+        const token = await helper.getValidToken()
+        const projectsBefore = await helper.projectsInDB()
+        const projectToUpdate = projectsBefore[0]
+        const imagePath = helper.getTestImagePath()
+        
+        let req = api
+            .put(`/api/projects/${projectToUpdate.id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .field('title', 'Updated Project with New Image')
+            .field('description', 'Updated description with new image')
+            .field('demoUrl', 'https://updated-demo.example.com')
+            .field('githubUrl', 'https://github.com/user/updated-project')
+            .field('user', projectToUpdate.user.toString())
+
+        // Add tech fields
+        projectToUpdate.tech.forEach(techId => {
+            req = req.field('tech', techId.toString())
+        })
+
+        // Attach image file
+        const response = await req
+            .attach('image', imagePath)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+
+        // Verify the response
+        assert.strictEqual(response.body.title, 'Updated Project with New Image')
+        assert.strictEqual(response.body.description, 'Updated description with new image')
+        
+        // Verify new imagePath was set (should be different from original)
+        assert.notStrictEqual(response.body.imagePath, projectToUpdate.imagePath)
+        assert(response.body.imagePath.includes('.t3.storageapi.dev/'))
+    })
+
+    test('TEST3: fails when user does not own the project', async () => {
+        // Create a project owned by a different user
+        const User = (await import('../models/user.js')).User
+        const bcrypt = (await import('bcrypt')).default
+        const jwt = (await import('jsonwebtoken')).default
+        
+        // Create a new user who doesn't own any projects
+        const differentUser = new User({
+            username: 'testuser2',
+            name: 'Test User 2',
+            passwordHash: await bcrypt.hash('password123', 10)
+        })
+        await differentUser.save()
+
+        // Create a token for the different user
+        const differentUserToken = jwt.sign(
+            { username: differentUser.username, id: differentUser._id },
+            process.env.SECRET,
+            { expiresIn: '1h' }
+        )
+
+        const projectsBefore = await helper.projectsInDB()
+        const projectToUpdate = projectsBefore[0] // This project belongs to the original user
+
+        // Try to update with the different user's token
+        let req = api
+            .put(`/api/projects/${projectToUpdate.id}`)
+            .set('Authorization', `Bearer ${differentUserToken}`) // Different user's token
+            .field('title', 'Should Not Update')
+            .field('description', 'Should not work')
+            .field('demoUrl', 'https://example.com')
+            .field('githubUrl', 'https://github.com/user/project')
+            .field('user', projectToUpdate.user.toString()) // Original project's user
+
+        projectToUpdate.tech.forEach(techId => {
+            req = req.field('tech', techId.toString())
+        })
+
+        const response = await req.expect(403)
+        
+        assert.strictEqual(response.body.error, 'Not authorized to update this project')
+    })
+})
+
 describe('Delete a project: ', () => {
     test('Test1: deletes a project in DB', async () => {
         const token = await helper.getValidToken()
@@ -142,7 +274,7 @@ describe('Delete a project: ', () => {
             .delete(`/api/projects/${project.id}`)
             .expect(401)
 
-        assert.strictEqual(response.body.error, 'token missing or invalid')
+        assert.strictEqual(response.body.error, 'Token missing or invalid')
     })
 
     test('Test3: fails with 401 if token is invalid', async () => {

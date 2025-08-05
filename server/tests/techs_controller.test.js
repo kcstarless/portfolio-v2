@@ -66,7 +66,7 @@ describe('POST /api/techs', () => {
             .post('/api/techs/')
             .send(techToAdd)
             .expect(401)
-        assert.strictEqual(response.body.error, 'token missing or invalid' )
+        assert.strictEqual(response.body.error, 'Token missing or invalid' )
     })
     test('Test3: post fails with invalid token', async () => {
         const invalidToken = 'asfs3234uakdjfaldjf'
@@ -113,7 +113,7 @@ describe('DELETE /api/techs/:id', () => {
             .delete(`/api/techs/${tech.id}`)
             .expect(401)
 
-        assert.strictEqual(response.body.error, 'token missing or invalid')
+        assert.strictEqual(response.body.error, 'Token missing or invalid')
     })
 
     test('Test3: delete fails with invalid token', async () => {

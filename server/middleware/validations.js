@@ -1,8 +1,8 @@
-import { info, test_log } from "../utils/logger.js"
+import { info_log, test_log } from "../utils/logger.js"
 
 const validateProject = (req, res, next) => {
   const { body } = req
-  // test_log('Validating body:', body)
+  test_log('Validating body:', body)
   
   const requiredFields = [
     'title',

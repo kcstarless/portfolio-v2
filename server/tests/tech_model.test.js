@@ -4,7 +4,7 @@ import * as testData from './_data.js'
 import assert from 'node:assert'
 import { describe, test } from 'node:test'
 import { Tech } from '../models/tech.js'
-import { test_log, error } from '../utils/logger.js'
+import { test_log, error_log } from '../utils/logger.js'
 
 //// Test
 describe('Tech model: ', () => {

@@ -138,7 +138,7 @@ describe('Project property validation: ', () => {
 
 describe('User property validation: ', () => {
     test('Test1: validation passes', async () => {
-        const req = mockRequest('POST', testData.getValidUser())
+        const req = mockRequest('POST', testData.getValiderUserBeforeHash())
 
         const res = httpMocks.createResponse()
         const next = () => {}

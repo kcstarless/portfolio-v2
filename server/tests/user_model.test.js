@@ -37,7 +37,7 @@ describe('User model: ', () => {
 
     test('Test4: throws validation error if username is less than 4', async () => {
         let error = null
-        const newUser = { username: 'tom', name: 'tom tom', password: 'UpperLower8!'}
+        const newUser = { username: 'tom', name: 'tom tom', passwordHash: 'UpperLower8!'}
         try {
             await new User(newUser).save()
         } catch(err){
@@ -50,7 +50,7 @@ describe('User model: ', () => {
 
     test('Test5: throws validation error if username is greater than 20', async () => {
         let error = null
-        const newUser = { username: 'tommytommytommytommmy', name: 'tom tom', password: 'UpperLower8!'}
+        const newUser = { username: 'tommytommytommytommmy', name: 'tom tom', passwordHash: 'UpperLower8!'}
         try {
             await new User(newUser).save()
         } catch(err){
@@ -63,7 +63,7 @@ describe('User model: ', () => {
 
     test('Test6: throws validation error for username uniqueness', async () => {
         let error = null
-        const newUser = { username: 'root', name: 'tom tom', password: 'UpperLower8!'}
+        const newUser = { username: 'root', name: 'tom tom', passwordHash: 'UpperLower8!'}
         try {
             await new User(newUser).save()
         } catch(err){
@@ -75,7 +75,7 @@ describe('User model: ', () => {
     })
 
     test('Test7: removes white spaces on username', async () => {
-        const newUser = { username: '   tommy', name: 'tom tom', password: 'UpperLower8!' }
+        const newUser = { username: '   tommy', name: 'tom tom', passwordHash: 'UpperLower8!' }
         // test_log(newUser.username)
         const usersBefore = await helper.usersInDB()
         const savedUser = await new User(newUser).save()

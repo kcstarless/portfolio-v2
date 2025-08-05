@@ -26,7 +26,7 @@ const expectUserCreation = async (newUser, expectedStatus) => {
 //// Test
 describe('User controller: ', () => {   
     test('Test1: creation succeeds with a fresh username', async () => {
-        const newUser = testData.getValidUser()
+        const newUser = testData.getValiderUserBeforeHash()
         const { usersAtStart, usersAtEnd } = await expectUserCreation(newUser, 201)
         // test_log(res.body)
         assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)

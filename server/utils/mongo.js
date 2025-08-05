@@ -1,16 +1,16 @@
 import mongoose from 'mongoose'
 import { getMongoUri} from './config.js'
-import { info, error } from './logger.js'
+import { info_log, error_log } from './logger.js'
 
-// info("connecting to mongo...")
+// info_log("connecting to mongo...")
 
 mongoose
     .connect(getMongoUri())
     .then(() => {
-        info('connected to mongoDB...')
+        info_log('connected to mongoDB...')
     })
     .catch((err) => {
-        error('error occurred connecting to mongoDB: ', err.message)
+        error_log('error occurred connecting to mongoDB: ', err.message)
     })
 
 export {}

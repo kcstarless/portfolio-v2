@@ -1,7 +1,7 @@
 import express from 'express'
 import axios from 'axios'
 import * as helper from '../utils/helper.js'
-import { info, test_log } from '../utils/logger.js'
+import { info_log, test_log } from '../utils/logger.js'
 
 const initRouter = express.Router()
 
@@ -15,7 +15,7 @@ initRouter.get('/ping', (req, res) => {
 // so fall back to server's public IP instead.
 initRouter.get('/location', async (req, res) => {
   const clientIP = helper.getClientIP(req)
-  // info(clientIP)
+  // info_log(clientIP)
   let location
 
   if (clientIP) {

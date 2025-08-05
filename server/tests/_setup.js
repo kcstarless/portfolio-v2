@@ -1,6 +1,13 @@
 import * as helper from './_helper.js'
 import { before, beforeEach, after } from 'node:test'
 
+if (process.env.NODE_ENV !== 'test') {
+    console.error('❌ DANGER: Tests must run with NODE_ENV=test')
+    console.error('Current NODE_ENV:', process.env.NODE_ENV)
+    console.error('Use: npm test')
+    process.exit(1)
+}
+
 const originalEnv = { ...process.env }
 
 before(async () => {
