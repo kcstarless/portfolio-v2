@@ -2,11 +2,13 @@ import { Box, CircularProgress, Link, Typography } from "@mui/material"
 import { GetWeatherIcon } from "../Icon"
 import { motion, AnimatePresence } from "framer-motion"
 import { useLocalInfo } from "../../hooks/useLocalInfo"
+import { useSelector } from 'react-redux'
 
 const LocalInfo = () => {
   const {isLoaded, setHovered, currentItem } = useLocalInfo()
+  const loading = useSelector(state => state.auth.loading)
 
-  if (!isLoaded) {
+  if (!isLoaded || loading || !currentItem) {
     return (
       <Box>
         <Typography><CircularProgress size={25}/></Typography>
@@ -40,6 +42,20 @@ const LocalInfo = () => {
                     href={currentItem.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                  >
+                    {currentItem.name}
+                  </Link>
+                ) : currentItem.isDemo ? (
+                  <Link
+                    component="button"
+                    onClick={currentItem.onClick}
+                    sx={{ 
+                      cursor: 'pointer',
+                      textDecoration: 'underline',
+                      '&:hover': {
+                        textDecoration: 'underline'
+                      }
+                    }}
                   >
                     {currentItem.name}
                   </Link>

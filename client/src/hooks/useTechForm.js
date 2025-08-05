@@ -12,7 +12,8 @@ export const useTechForm = (showFormNotification) => {
   const [editingTech, setEditingTech] = useState(null)
 
   const techs = useSelector(state => state.techs.items)
-  const projects = useSelector(state => state.projects.items)
+  // const projects = useSelector(state => state.projects.items)
+  const allProjects = useSelector((state) => state.projects.allItems)
 
   useEffect(() => {
     if (editingTech) {
@@ -74,6 +75,7 @@ export const useTechForm = (showFormNotification) => {
 
   const handleDelete = async () => {
     const { id, name } = formData
+    // console.log(allProjects)
 
     const techIcon = techs.find(t => t.id === id || t._id === id)
     if (!techIcon) {
@@ -81,7 +83,7 @@ export const useTechForm = (showFormNotification) => {
       return
     }
 
-    const isUsed = projects.some(project =>
+    const isUsed = allProjects.some(project =>
       Array.isArray(project.tech) && project.tech.some(t => t.icon === techIcon.icon)
     )
     

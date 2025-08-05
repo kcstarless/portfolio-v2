@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { fetchProjects } from "../store/projectSlice"
+import { fetchProjects, fetchAllProjects } from "../store/projectSlice"
 import { fetchTechs } from "../store/techSlice"
 import { preloadImages } from "../utils/loadImages"
 // import { useLocalInfo } from "./useLocalInfo"
@@ -27,6 +27,7 @@ export const useAppLoader = () => {
 
         setStep("s3")
         const projects = await dispatch(fetchProjects()).unwrap()
+        await dispatch(fetchAllProjects()).unwrap()
         await dispatch(fetchTechs()).unwrap()
         await new Promise((res) => setTimeout(res, 1000))  
 

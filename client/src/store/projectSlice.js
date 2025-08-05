@@ -1,9 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import projectService from '../services/projectService'
 
-export const fetchProjects = createAsyncThunk('projects/fetchAll', async () => {
+export const fetchAllProjects = createAsyncThunk('projects/all', async () => {
     await new Promise((res) => setTimeout(res, 1500))  
     return await projectService.getAll()
+})
+
+export const fetchProjects = createAsyncThunk('projects', async () => {
+    await new Promise((res) => setTimeout(res, 1500))  
+    return await projectService.getUsersProjects()
 })
 
 export const createProject = createAsyncThunk('projects/create', async (newProject, { dispatch, rejectWithValue}) => {
@@ -55,12 +60,24 @@ const projectSlice = createSlice({
     name: 'projects',
     initialState: {
         items: [],
+        allItems: [],    
         status: 'idle',
         error: null,
     },
     reducers: {},
     extraReducers: (builder) => {
     builder
+        .addCase(fetchAllProjects.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchAllProjects.fulfilled, (state, action) => {
+            state.allItems = action.payload
+            state.status = 'succeeded'
+        })
+        .addCase(fetchAllProjects.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
         .addCase(fetchProjects.fulfilled, (state, action) => {
             state.items = action.payload
             state.status = 'succeeded'

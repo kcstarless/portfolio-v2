@@ -2,18 +2,38 @@ import express from 'express'
 
 import { Project } from '../models/project.js'
 import { User } from '../models/user.js'
-import { authMiddleware } from '../middleware/authMiddleware.js'
+import { authMiddleware, optionalAuthMiddleware } from '../middleware/authMiddleware.js'
 import { validateProject } from '../middleware/validations.js'
 import { uploadSingleImage } from '../middleware/uploadMiddleware.js'
 import { uploadToS3 } from '../utils/uploadToS3.js'
-import { error_log } from '../utils/logger.js'
+import { error_log, info_log } from '../utils/logger.js'
 
 const projectsRouter = express.Router()
 
-projectsRouter.get('/', async (req, res) => {
-    const projects = await Project.find({})
-      .populate('user', { username: 1, name: 1 })
-      .populate('tech', { name: 1, icon: 1 })
+
+
+projectsRouter.get('/', optionalAuthMiddleware, async (req, res) => {
+    let projects
+    info_log(req.user)
+    if (req.user) {
+        // User is logged in - show their projects
+        projects = await Project.find({ user: req.user.id })
+            .populate('user', { username: 1, name: 1 })
+            .populate('tech', { name: 1, icon: 1 })
+    } else {
+        const defaultUser = await User.findOne({ username: 'dgim' }) // or whatever your default username is
+        
+        if (defaultUser) {
+            projects = await Project.find({ user: defaultUser._id })
+                .populate('user', { username: 1, name: 1 })
+                .populate('tech', { name: 1, icon: 1 })
+        } else {
+            // Fallback: show all projects if default user not found
+            projects = await Project.find({})
+                .populate('user', { username: 1, name: 1 })
+                .populate('tech', { name: 1, icon: 1 })
+        }
+    }
 
     res.status(200).json(projects)
 })
