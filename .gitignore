@@ -7,6 +7,7 @@ client/dist/
 client/build/
 server/dist/
 server/build/
+server/requests/
 
 # Logs
 *.log
