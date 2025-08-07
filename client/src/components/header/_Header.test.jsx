@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, vi, beforeEach, expect } from 'vitest';
-// import React from 'react';
+import { render, screen } from '@testing-library/react'
+import { describe, it, vi, beforeEach, expect } from 'vitest'
+// import userEvent from '@testing-library/user-event'
 
 vi.mock('./Login', () => ({
   Login: () => <div data-testid="login">Login</div>,
@@ -44,7 +44,8 @@ describe('Header', () => {
     }));
 
     const { Header } = await import('./_Header');
-    render(<Header />);
+    render(<Header />)
+    // screen.debug()
     // Prefer role-based query for alerts
     expect(screen.getByRole('alert')).toHaveTextContent('Something went wrong!');
     expect(screen.getByTestId('login')).toBeInTheDocument();

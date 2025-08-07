@@ -5,6 +5,7 @@ import { GrTechnology } from "react-icons/gr"
 import { FaProjectDiagram, FaExternalLinkSquareAlt } from "react-icons/fa"
 import { SiGithub } from "react-icons/si"
 import { IconButton, Tooltip, CircularProgress } from "@mui/material"
+import { RiFocus2Line } from "react-icons/ri"
 import {
   IoMdSnow,
   IoMdRainy,
@@ -29,6 +30,7 @@ const iconMap = {
   demolink: { component: FaExternalLinkSquareAlt, color: palette.secondary.light },
   delete: { component: MdDeleteForever, color: palette.primary.main },
   updateProject: { component: MdUpdate , color: palette.primary.main },
+  focus: {component: RiFocus2Line, color: palette.secondary.main },
 }
 
 const weatherIconMap = {

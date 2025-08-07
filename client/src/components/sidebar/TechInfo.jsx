@@ -19,7 +19,7 @@ const sxTechInfo = {
   techBox: {
     display: 'flex',
     alignItems: 'center',
-        justifyContent: 'center',
+    justifyContent: 'center',
     gap: 2,
   },
   icon: {
@@ -89,7 +89,7 @@ const TechInfo = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <Box sx={sxTechInfo.comments}>
-                            <Typography fontSize={12}>
+                            <Typography fontSize={14}>
                                 "{currentTech.comments}"
                             </Typography>
                         </Box>
