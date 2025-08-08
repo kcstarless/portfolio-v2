@@ -141,4 +141,5 @@ export const deviconList = [
   { name: "FramerMotion", class: "devicon-framermotion-original" },
   { name: "Next.js", class: "devicon-nextjs-original-wordmark" },
   { name: "Vitest", class: "devicon-vitest-plain colored"},
+  { name: "Playwright", class: "devicon-playwright-plain colored"},
 ];
