@@ -1,6 +1,6 @@
 // components/tech/IconResultBox.jsx
 import { Box } from '@mui/material'
-import { GetTechIcon } from '../Icon'
+import { GetTechIcon } from 'components/Icon'
 
 const sxIconResultBox = {
   container: (theme) => ({

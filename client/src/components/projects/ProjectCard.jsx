@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { GetIcon, GetTechIcon, GetIconButton } from "../Icon"
+import { GetIcon, GetTechIcon, GetIconButton } from "components/Icon"
 import { useSelector } from 'react-redux'
 import * as hooks from 'hooks'
-import { AddDialog } from "../AddDialog"
-import { ProjectForm } from "../forms/_ProjectForm"
+import { AddDialog } from "components/AddDialog"
+import { ProjectForm } from "components/forms/_ProjectForm"
 import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box } from "@mui/material"
 
 

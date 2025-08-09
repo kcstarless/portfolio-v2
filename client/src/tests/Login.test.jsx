@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, vi, beforeEach, expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
-import { Login } from './Login'
-import { useLogin } from '../../hooks/_useLogin'
+import { Login } from 'components/header/Login'
+import { useLogin } from 'hooks/_useLogin'
 
-vi.mock('../../hooks/useLogin', () => ({
+vi.mock('hooks/_useLogin', () => ({
     useLogin: vi.fn()
 })) 
 
-vi.mock('../../contexts/NotificationContext', () => ({
+vi.mock('contexts/NotificationContext', () => ({
   useNotification: () => ({
     formNotification: {
       success: vi.fn(),

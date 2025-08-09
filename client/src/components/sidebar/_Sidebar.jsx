@@ -1,7 +1,7 @@
 import { Paper, Divider } from '@mui/material'
-import { UserInfo } from './UserInfo'
-import { TechInfo } from './TechInfo'
-import { FocusInfo } from './FocusInfo'
+import { UserInfo } from 'components/sidebar/UserInfo'
+import { TechInfo } from 'components/sidebar/TechInfo'
+import { FocusInfo } from 'components/sidebar/FocusInfo'
 
 const sxSidebar = {
   paper: {

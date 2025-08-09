@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Link, Typography } from "@mui/material"
-import { GetWeatherIcon } from "../Icon"
+import { GetWeatherIcon } from "components/Icon"
 import { motion, AnimatePresence } from "framer-motion"
 import { useSelector } from 'react-redux'
 import * as hooks from 'hooks'

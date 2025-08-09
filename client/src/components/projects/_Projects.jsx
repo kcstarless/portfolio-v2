@@ -1,16 +1,16 @@
-import { ProjectCard } from "./ProjectCard";
-import { Box, Typography, Divider } from "@mui/material";
-import { useSelector } from 'react-redux';
+import { ProjectCard } from "components/projects/ProjectCard"
+import { Box, Typography, Divider } from "@mui/material"
+import { useSelector } from 'react-redux'
 
 const sxProjects = {
   pageTitle: {
     width: '100%',
     textAlign: 'right',
   },
-};
+}
 
 const Projects = () => {
-  const projects = useSelector((state) => state.projects.items);
+  const projects = useSelector((state) => state.projects.items)
 
   if (projects.length === 0) {
     return <Typography variant="h5">No projects yet! time to get busy!</Typography>;
@@ -34,7 +34,7 @@ const Projects = () => {
           />
         ))}
     </Box>
-  );
-};
+  )
+}
 
-export { Projects };
+export { Projects }

@@ -10,16 +10,15 @@ import {
   Select,
   styled,
 } from '@mui/material'
-import { useNotification } from '../../contexts/NotificationContext'
-import { GetIcon } from '../Icon'
-import { IconResultBox } from './IconResultBox'
-import { CurrentTechStack } from './CurrentTechStack'
+import { GetIcon } from 'components/Icon'
+import { IconResultBox } from 'components/forms/IconResultBox'
+import { CurrentTechStack } from 'components/forms/CurrentTechStack'
 import { useSelector } from 'react-redux'
 import * as utils from 'utils'
 import * as hooks from 'hooks'
 
 const TechForm = () => {
-  const { showFormNotification } = useNotification()
+  const { showFormNotification } = hooks.useNotification()
   const loading = useSelector(state => state.techs.loading)
 
   const {

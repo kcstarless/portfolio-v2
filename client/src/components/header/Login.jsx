@@ -1,10 +1,10 @@
 // src/components/Login.jsx
 import { Box, Slide } from '@mui/material'
-import { GetIconButton } from '../Icon'
-import { AddDialog } from '../AddDialog'
-import { ProjectForm } from '../forms/_ProjectForm'
-import { TechForm } from '../forms/_TechForm'
-import { LoginForm } from '../forms/_LoginForm'
+import { GetIconButton } from 'components/Icon'
+import { AddDialog } from 'components/AddDialog'
+import { ProjectForm } from 'components/forms/_ProjectForm'
+import { TechForm } from 'components/forms/_TechForm'
+import { LoginForm } from 'components/forms/_LoginForm'
 import * as hooks from 'hooks'
 
 export const Login = () => {

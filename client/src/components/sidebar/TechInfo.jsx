@@ -1,6 +1,6 @@
 import { Stack, Typography, Box } from "@mui/material"
 import { useSelector } from 'react-redux'
-import { GetTechIcon } from "../Icon"
+import { GetTechIcon } from "components/Icon"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from "react"
 

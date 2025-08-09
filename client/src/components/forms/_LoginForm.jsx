@@ -1,6 +1,6 @@
 // src/components/forms/LoginForm.jsx
 import { Box, TextField } from '@mui/material'
-import { GetIconButton } from '../Icon'
+import { GetIconButton } from 'components/Icon'
 
 export const LoginForm = ({
   handleLogin,

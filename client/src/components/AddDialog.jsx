@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { useNotification } from '../contexts/NotificationContext'
 import { Alert, Box, Typography } from '@mui/material'
-import { GetIconButton } from './Icon'
-
+import { GetIconButton } from 'components/Icon'
+import * as hooks from 'hooks'
 import {
   Button,
   Dialog,
@@ -33,7 +32,7 @@ const sxAddDialog = {
 }
 
 const AddDialog = ({ addType, children }) => {
-  const { formNotification } = useNotification()
+  const { formNotification } = hooks.useNotification()
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => setOpen(true)

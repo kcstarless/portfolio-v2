@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import * as stores from 'stores'
-import { useNotification } from '../contexts/NotificationContext'
+import * as hooks from 'hooks'
 
 export const useProjectActions = () => {
   const dispatch = useDispatch()
-  const { showNotification } = useNotification()
+  const { showNotification } = hooks.useNotification()
   const user = useSelector(state => state.auth.user)
 
   const handleDelete = async (project) => {

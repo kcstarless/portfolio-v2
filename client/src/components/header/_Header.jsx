@@ -1,7 +1,7 @@
-import { Box, Alert } from '@mui/material';
-import { Login } from './Login';
-import { useNotification } from '../../contexts/NotificationContext';
-import { LocalInfo } from './LocalInfo';
+import { Box, Alert } from '@mui/material'
+import { Login } from 'components/header/Login'
+import { LocalInfo } from 'components/header/LocalInfo'
+import * as hooks from 'hooks'
 
 const sxHeader = {
   container: {
@@ -22,10 +22,10 @@ const sxHeader = {
     p: 0,
     backgroundColor: 'transparent',
   },
-};
+}
 
 const Header = () => {
-  const { notification } = useNotification();
+  const { notification } = hooks.useNotification()
 
   return (
     <Box component="header" sx={sxHeader.container}>
@@ -38,7 +38,7 @@ const Header = () => {
       )}
       <Login />
     </Box>
-  );
-};
+  )
+}
 
-export { Header };
+export { Header }

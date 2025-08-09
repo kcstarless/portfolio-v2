@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNotification } from '../contexts/NotificationContext'
 import * as utils from 'utils'
 import * as stores from 'stores'
+import * as hooks from 'hooks'
 
 export const useProjectForm = ({ project }) => {
   const [formData, setFormData] = useState(utils.projectFormData)
   const [editingProject, setEditingProject] = useState(null)
   const [errors, setErrors] = useState({})
-  const { showFormNotification } = useNotification()
+  const { showFormNotification } = hooks.useNotification()
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
 

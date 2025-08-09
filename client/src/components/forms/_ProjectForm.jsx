@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Box, TextField, Button, FormHelperText } from '@mui/material'
-import { ImageUploadField } from './ImageUploadField'
-import { TechToggleGroup } from './TechToggleGroup'
+import { ImageUploadField } from 'components/forms/ImageUploadField'
+import { TechToggleGroup } from 'components/forms/TechToggleGroup'
 import * as hooks from 'hooks'
 
 const sxProjectForm = {

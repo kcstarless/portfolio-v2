@@ -8,8 +8,11 @@
       "services/*": ["services/*"],
       "hooks": ["hooks/index"],
       "hooks/*": ["hooks/*"],
-      "store": ["store/index"],
-      "store/*": ["store/*"]
+      "stores": ["stores/index"],
+      "stores/*": ["stores/*"],
+      "tests/*": ["tests/*"],
+      "components/*": ["components/*"],
+      "contexts/*": ["contexts/*"]
     }
   }
 }

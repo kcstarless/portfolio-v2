@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { useNotification } from '../contexts/NotificationContext'
 import * as stores from 'stores'
 import * as service from 'services'
+import * as hooks from 'hooks'
 
 export const useLocalInfo = () => {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export const useLocalInfo = () => {
   const [index, setIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
 
-  const { showNotification } = useNotification()
+  const { showNotification } = hooks.useNotification()
   const currentUser = useSelector((state) => state.auth.user) || null
 
   const handleDemoLogin = async () => {

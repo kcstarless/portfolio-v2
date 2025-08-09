@@ -1,5 +1,5 @@
 import { Stack, Typography, Box } from "@mui/material"
-import { GetIcon } from "../Icon"
+import { GetIcon } from "components/Icon"
 
 const sxFocus = {
     stack: {

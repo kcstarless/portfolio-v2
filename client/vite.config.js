@@ -29,11 +29,12 @@ export default defineConfig({
       services: path.resolve(__dirname, 'src/services'),
       hooks: path.resolve(__dirname, 'src/hooks'),
       stores: path.resolve(__dirname, 'src/stores'),
+      components: path.resolve(__dirname, 'src/components'),
+      tests: path.resolve(__dirname, 'src/tests'),
+      contexts: path.resolve(__dirname, 'src/contexts'),
     },
   },
-
   
-
   test: {
     environment: 'jsdom',
     globals: true,
