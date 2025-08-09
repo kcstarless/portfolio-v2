@@ -14,9 +14,9 @@ import { useNotification } from '../../contexts/NotificationContext'
 import { GetIcon } from '../Icon'
 import { IconResultBox } from './IconResultBox'
 import { CurrentTechStack } from './CurrentTechStack'
-import { useTechForm } from '../../hooks/useTechForm'
 import { useSelector } from 'react-redux'
-import * as UT from '../../utils/techUtils'
+import * as utils from 'utils'
+import * as hooks from 'hooks'
 
 const TechForm = () => {
   const { showFormNotification } = useNotification()
@@ -32,7 +32,7 @@ const TechForm = () => {
     editingTech,
     handleEdit,
     handleDelete,
-  } = useTechForm(showFormNotification)
+  } = hooks.useTechForm(showFormNotification)
 
   const TechFormButtons = ({ isEditing, onDelete }) => (
     !isEditing ? (
@@ -59,7 +59,7 @@ const TechForm = () => {
         label="Level"
         onChange={onChange}
       >
-        {UT.levels.map(option => (
+        {utils.techLevels.map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>

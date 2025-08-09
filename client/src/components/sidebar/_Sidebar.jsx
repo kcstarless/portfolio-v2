@@ -1,7 +1,7 @@
 import { Paper, Divider } from '@mui/material'
 import { UserInfo } from './UserInfo'
 import { TechInfo } from './TechInfo'
-import { Focus } from './Focus';
+import { FocusInfo } from './FocusInfo'
 
 const sxSidebar = {
   paper: {
@@ -24,7 +24,7 @@ const Sidebar = () => (
     <Divider flexItem />
     <TechInfo />
     <Divider flexItem />
-    <Focus />
+    <FocusInfo />
   </Paper>
 );
 

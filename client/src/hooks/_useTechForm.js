@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createTech, deleteTech, updateTech } from '../store/techSlice'
-import { deviconList } from '../utils/deviconList'
-import * as ut from '../utils/techUtils'
+import * as utils from 'utils'
+import * as stores from 'stores'
 
 export const useTechForm = (showFormNotification) => {
   const dispatch = useDispatch()
-  const [formData, setFormData] = useState(ut.initialFormData)
+  const [formData, setFormData] = useState(utils.techFormData)
   const [iconResults, setIconResults] = useState([])
   const [hoveredTech, setHoveredTech] = useState(null)
   const [editingTech, setEditingTech] = useState(null)
@@ -25,7 +24,7 @@ export const useTechForm = (showFormNotification) => {
         comments: editingTech.comments || '',
       })
     } else {
-      setFormData(ut.initialFormData)
+      setFormData(utils.techFormData)
     }
   }, [editingTech])
 
@@ -35,7 +34,7 @@ export const useTechForm = (showFormNotification) => {
       setFormData(prev => ({ ...prev, name: value, icon: '' }))
       const search = value.trim().toLowerCase()
       setIconResults(
-        deviconList.filter(icon =>
+        utils.deviconList.filter(icon =>
           icon.name.toLowerCase().includes(search) ||
           icon.class.toLowerCase().includes(search)
         )
@@ -57,13 +56,13 @@ export const useTechForm = (showFormNotification) => {
       return
     }
     
-    const action = formData.id ? updateTech : createTech
+    const action = formData.id ? stores.updateTech : stores.createTech
     const actionLabel = formData.id ? 'updated' : 'added'
 
     try {
       await dispatch(action(formData)).unwrap()
       if (!formData.id) {
-        setFormData(ut.initialFormData)
+        setFormData(utils.techFormData)
         setIconResults([])
       }
       showFormNotification('info', `${formData.name} ${actionLabel}`)
@@ -95,9 +94,9 @@ export const useTechForm = (showFormNotification) => {
     if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return
 
     try {
-      await dispatch(deleteTech(id)).unwrap()
+      await dispatch(stores.deleteTech(id)).unwrap()
       showFormNotification('info', `${name} deleted`)
-      setFormData(ut.initialFormData)
+      setFormData(utils.techFormData)
       setEditingTech(null)
     } catch (error) {
       showFormNotification('error', `Failed to delete: ${error.data.error}`)

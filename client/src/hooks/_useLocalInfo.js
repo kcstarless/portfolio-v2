@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNotification } from '../contexts/NotificationContext'
-import { loginUser } from '../store/authSlice'
-import weatherService from "../services/weatherService"
-import locationService from "../services/locationService"
-import ticketmasterService from "../services/ticketmasterService"
+import * as stores from 'stores'
+import * as service from 'services'
 
 export const useLocalInfo = () => {
   const dispatch = useDispatch()
@@ -20,7 +18,7 @@ export const useLocalInfo = () => {
 
   const handleDemoLogin = async () => {
     try {
-      const loggedInUser = await dispatch(loginUser({ 
+      const loggedInUser = await dispatch(stores.loginUser({ 
         username: 'demo', 
         password: 'DemoDemo8!' 
       })).unwrap()
@@ -34,12 +32,12 @@ export const useLocalInfo = () => {
     if (location) return 
     const loadData = async () => {
       try {
-        const loc = await locationService.getUserLocation()
+        const loc = await service.location.getUserLocation()
         setLocation(loc)
 
         const [weatherData, eventsData] = await Promise.all([
-          weatherService.getWeather(loc.latitude, loc.longitude),
-          ticketmasterService.getLocalEvents(loc.latitude, loc.longitude),
+          service.weather.getWeather(loc.latitude, loc.longitude),
+          service.ticketmaster.getLocalEvents(loc.latitude, loc.longitude),
         ])
         // console.log(weatherData)
         setWeather(weatherData)

@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import techService from '../services/techService'
+import * as services from 'services'
 
 export const fetchTechs = createAsyncThunk('techs/fetchAll', async () => {
     await new Promise((res) => setTimeout(res, 1500))  
-    return await techService.getAll()
+    return await services.tech.getAll()
 })
 
 export const createTech = createAsyncThunk('techs/create',  async (newTech, { dispatch, rejectWithValue }) => {
   await new Promise((res) => setTimeout(res, 1500))  
   try {
-      const created = await techService.create(newTech)
+      const created = await services.tech.create(newTech)
       dispatch(fetchTechs())
       return created
     } catch (error) {
@@ -25,7 +25,7 @@ export const createTech = createAsyncThunk('techs/create',  async (newTech, { di
 export const deleteTech = createAsyncThunk('techs/delete', async (id, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))
     try {
-      await techService.remove(id)
+      await services.tech.remove(id)
       dispatch(fetchTechs())
       return id
     } catch (error) {
@@ -41,7 +41,7 @@ export const deleteTech = createAsyncThunk('techs/delete', async (id, { dispatch
 export const updateTech = createAsyncThunk('techs/update', async (existingTech, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))
     try {
-      const updated = await techService.update(existingTech)
+      const updated = await services.tech.update(existingTech)
       dispatch(fetchTechs())
       return updated
     } catch(error) {

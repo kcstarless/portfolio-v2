@@ -29,7 +29,7 @@ const focusList = [
 ]
 
 
-const Focus = () => {
+const FocusInfo = () => {
     return (
         <Stack sx={sxFocus.stack}>
             <Box sx={sxFocus.title}>
@@ -50,4 +50,4 @@ const Focus = () => {
     )
 }
 
-export { Focus }
+export { FocusInfo }

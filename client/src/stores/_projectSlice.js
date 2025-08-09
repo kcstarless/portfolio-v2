@@ -1,20 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import projectService from '../services/projectService'
+import * as services from 'services'
 
 export const fetchAllProjects = createAsyncThunk('projects/all', async () => {
     await new Promise((res) => setTimeout(res, 1500))  
-    return await projectService.getAll()
+    return await services.project.getAll()
 })
 
 export const fetchProjects = createAsyncThunk('projects', async () => {
     await new Promise((res) => setTimeout(res, 1500))  
-    return await projectService.getUsersProjects()
+    return await services.project.getUsersProjects()
 })
 
 export const createProject = createAsyncThunk('projects/create', async (newProject, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))  
     try {
-        const created = await projectService.create(newProject)
+        const created = await services.project.create(newProject)
         dispatch(fetchProjects())
         return created
     } catch (error) {
@@ -29,7 +29,7 @@ export const createProject = createAsyncThunk('projects/create', async (newProje
 export const updateProject = createAsyncThunk('techs/update', async (projectToUpdate, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))
     try {
-      const updated = await projectService.update(projectToUpdate)
+      const updated = await services.project.update(projectToUpdate)
       dispatch(fetchProjects())
       return updated
     } catch(error) {
@@ -43,7 +43,7 @@ export const updateProject = createAsyncThunk('techs/update', async (projectToUp
 export const deleteProject = createAsyncThunk('projects/delete', async (id, { dispatch, rejectWithValue}) => {
     await new Promise((res) => setTimeout(res, 1500))  
     try {
-      await projectService.remove(id)
+      await services.project.remove(id)
       dispatch(fetchProjects())
       return id
     } catch (error) {

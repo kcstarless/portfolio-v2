@@ -5,7 +5,7 @@ import { AddDialog } from '../AddDialog'
 import { ProjectForm } from '../forms/_ProjectForm'
 import { TechForm } from '../forms/_TechForm'
 import { LoginForm } from '../forms/_LoginForm'
-import { useLogin } from '../../hooks/useLogin'
+import * as hooks from 'hooks'
 
 export const Login = () => {
   const {
@@ -19,7 +19,7 @@ export const Login = () => {
     setShowLogin,
     handleLogin,
     handleLogout,
-  } = useLogin()
+  } = hooks.useLogin()
 
   if (user) {
     return (

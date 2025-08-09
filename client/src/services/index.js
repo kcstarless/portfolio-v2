@@ -1,0 +1,6 @@
+export { default as auth } from './_authService'
+export { default as location } from './_locationService'
+export { default as project } from './_projectService'
+export { default as tech } from './_techService'
+export { default as ticketmaster } from './_ticketmasterService'
+export { default as weather } from './_weatherService'

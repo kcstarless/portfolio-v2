@@ -1,9 +1,8 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { fetchProjects, fetchAllProjects } from "../store/projectSlice"
-import { fetchTechs } from "../store/techSlice"
-import { preloadImages } from "../utils/loadImages"
+import * as stores from 'stores'
+import * as utils from "utils"
 // import { useLocalInfo } from "./useLocalInfo"
 
 export const useAppLoader = () => {
@@ -26,14 +25,14 @@ export const useAppLoader = () => {
         // }
 
         setStep("s3")
-        const projects = await dispatch(fetchProjects()).unwrap()
-        await dispatch(fetchAllProjects()).unwrap()
-        await dispatch(fetchTechs()).unwrap()
+        const projects = await dispatch(stores.fetchProjects()).unwrap()
+        await dispatch(stores.fetchAllProjects()).unwrap()
+        await dispatch(stores.fetchTechs()).unwrap()
         await new Promise((res) => setTimeout(res, 1000))  
 
         setStep("s4")
         const imageUrls = projects.map((p) => p.imagePath).filter(Boolean)
-        await preloadImages(imageUrls, (i, url, status) => {
+        await utils.preloadImages(imageUrls, (i, url, status) => {
           console.log(`Image [${i + 1}/${imageUrls.length}] ${status}:`, url)
         })
         setStep("ready")

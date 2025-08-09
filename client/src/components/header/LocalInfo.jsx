@@ -1,11 +1,11 @@
 import { Box, CircularProgress, Link, Typography } from "@mui/material"
 import { GetWeatherIcon } from "../Icon"
 import { motion, AnimatePresence } from "framer-motion"
-import { useLocalInfo } from "../../hooks/useLocalInfo"
 import { useSelector } from 'react-redux'
+import * as hooks from 'hooks'
 
 const LocalInfo = () => {
-  const { setHovered, currentItem } = useLocalInfo()
+  const { setHovered, currentItem } = hooks.useLocalInfo()
   const loading = useSelector(state => state.auth.loading)
   // console.log(currentItem)
   if (loading || !currentItem) {

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "utils": ["utils/index"],
+      "utils/*": ["utils/*"],
+      "services": ["services/index"],
+      "services/*": ["services/*"],
+      "hooks": ["hooks/index"],
+      "hooks/*": ["hooks/*"],
+      "store": ["store/index"],
+      "store/*": ["store/*"]
+    }
+  }
+}

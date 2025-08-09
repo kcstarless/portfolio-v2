@@ -1,7 +1,7 @@
 // src/hooks/useLogin.js
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loginUser, logoutUser } from '../store/authSlice'
+import * as stores from 'stores'
 import { useNotification } from '../contexts/NotificationContext'
 
 export const useLogin = () => {
@@ -19,7 +19,7 @@ export const useLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const loggedInUser = await dispatch(loginUser({ username, password })).unwrap()
+      const loggedInUser = await dispatch(stores.loginUser({ username, password })).unwrap()
       setUsername('')
       setPassword('')
       setShowLogin(false)
@@ -32,7 +32,7 @@ export const useLogin = () => {
   const handleLogout = async (e) => {
     e.preventDefault()
     try {
-      await dispatch(logoutUser()).unwrap()
+      await dispatch(stores.logoutUser()).unwrap()
       showNotification('info', 'You have successfully logged out')
     } catch (err) {
       showNotification('error', err)

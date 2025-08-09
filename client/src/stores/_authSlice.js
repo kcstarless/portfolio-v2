@@ -1,26 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { fetchProjects }from "./projectSlice"
-import authService from "../services/authService"
-import projectService from "../services/projectService"
-import techService from "../services/techService"
+import * as services from 'services'
+import * as stores from 'stores'
 
 const savedUserJSON = window.localStorage.getItem('currentUser')
 const savedUser = savedUserJSON ? JSON.parse(savedUserJSON) : null
 
 if (savedUser) {
-  projectService.setToken(savedUser.token)
-  techService.setToken(savedUser.token)
+  services.project.setToken(savedUser.token)
+  services.tech.setToken(savedUser.token)
 }
 
 export const loginUser = createAsyncThunk('users/login', async ({ username, password }, { rejectWithValue, dispatch }) => {
     await new Promise((res) => setTimeout(res, 1500))
 
     try {
-        const user = await authService.login({ username, password })
+        const user = await services.auth.login({ username, password })
         window.localStorage.setItem('currentUser', JSON.stringify(user))
-        projectService.setToken(user.token)
-        techService.setToken(user.token)
-        dispatch(fetchProjects())
+        services.project.setToken(user.token)
+        services.tech.setToken(user.token)
+        dispatch(stores.fetchProjects())
         return user
     } catch (error) {
         let message = 'network error or server not responding'
@@ -38,9 +36,9 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, { dispatch }
     await new Promise((res) => setTimeout(res, 1500))
     
     window.localStorage.removeItem('currentUser')
-    projectService.setToken(null)
-    techService.setToken(null)
-    dispatch(fetchProjects())
+    services.project.setToken(null)
+    services.tech.setToken(null)
+    dispatch(stores.fetchProjects())
   }
 )
 

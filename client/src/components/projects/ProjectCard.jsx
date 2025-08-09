@@ -1,11 +1,10 @@
 import { useState } from "react"
 import { GetIcon, GetTechIcon, GetIconButton } from "../Icon"
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteProject } from "../../store/projectSlice"
-import { useNotification } from '../../contexts/NotificationContext'
-import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box } from "@mui/material"
+import { useSelector } from 'react-redux'
+import * as hooks from 'hooks'
 import { AddDialog } from "../AddDialog"
 import { ProjectForm } from "../forms/_ProjectForm"
+import { Typography, Card, Accordion, AccordionSummary, AccordionDetails, CardMedia, Box } from "@mui/material"
 
 
 const sxProjectCard = {
@@ -71,21 +70,9 @@ const sxProjectCard = {
 }
 
 const ProjectCard = ({ project, index, last }) => {
-    const dispatch = useDispatch()
-    const { showNotification } = useNotification()
-    const user = useSelector(state => state.auth.user)
+    const { handleDelete } = hooks.useProjectActions()
     const [expanded, setExpanded] = useState(last)
-
-    const handleDelete = async () => {
-      if (!user) return
-      if (!window.confirm(`Are you sure you want to delete "${project.title}"?`)) return
-      try {
-        await dispatch(deleteProject(project.id)).unwrap()
-        showNotification('info', `${project.title.charAt(0).toUpperCase() + project.title.slice(1)} deleted`)
-      } catch (error) {
-        showNotification('error', `Failed to delete: ${error.data.error}`)
-      }
-    }
+    const user = useSelector(state => state.auth.user)
 
     return (
         <Card sx={sxProjectCard.card}>
@@ -93,7 +80,7 @@ const ProjectCard = ({ project, index, last }) => {
             <Box sx={sxProjectCard.projectNo}>
                 {user &&
                   <Box> 
-                    <GetIconButton title={`delete ${project.title}`} iconName='delete' onClick={handleDelete} />
+                    <GetIconButton title={`delete ${project.title}`} iconName='delete' onClick={() => handleDelete(project)} />
                     <AddDialog addType="update">
                       <ProjectForm project={project} />
                     </AddDialog>

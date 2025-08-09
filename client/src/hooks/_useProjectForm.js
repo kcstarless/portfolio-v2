@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createProject, updateProject } from '../store/projectSlice'
 import { useNotification } from '../contexts/NotificationContext'
-import * as UT from '../utils/projectUtils'
-
+import * as utils from 'utils'
+import * as stores from 'stores'
 
 export const useProjectForm = ({ project }) => {
-  const [formData, setFormData] = useState(UT.initialFormData)
+  const [formData, setFormData] = useState(utils.projectFormData)
   const [editingProject, setEditingProject] = useState(null)
   const [errors, setErrors] = useState({})
   const { showFormNotification } = useNotification()
@@ -28,7 +27,7 @@ export const useProjectForm = ({ project }) => {
         image: editingProject.image,
       })
     } else {
-      setFormData(UT.initialFormData)
+      setFormData(utils.projectFormData)
     }
   }, [editingProject])
 
@@ -53,17 +52,17 @@ export const useProjectForm = ({ project }) => {
   }
 
   const resetForm = () => {
-    setFormData(UT.initialFormData)
+    setFormData(utils.projectFormData)
     setErrors({})
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!UT.validate(formData, setErrors)) return
+    if (!utils.validateProject(formData, setErrors)) return
 
-    const data = UT.prepData(formData, user)
+    const data = utils.prepareProjectData(formData, user)
 
-    const action = formData.id ? updateProject : createProject
+    const action = formData.id ? stores.updateProject : stores.createProject
     const actionLabel = formData.id ? 'updated' : 'added'
 
     try {
