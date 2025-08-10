@@ -1,3 +1,3 @@
-export { Project } from './_project.js'
-export { Tech } from './_tech.js'
-export { User } from './_user.js'
+export { Project } from './_projectModel.js'
+export { Tech } from './_techModel.js'
+export { User } from './_userModel.js'
