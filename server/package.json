@@ -17,6 +17,18 @@
   "author": "David Gim",
   "license": "ISC",
   "type": "module",
+  "imports": {
+    "#services": "./services/index.js",
+    "#services/*": "./services/*",
+    "#utils": "./utils/index.js",
+    "#utils/*": "./utils/*",
+    "#controllers": "./controllers/index.js",
+    "#controllers/*": "./controllers/*",
+    "#middlewares": "./middlewares/index.js",
+    "#middlewares/*": "./middlewares/*",
+    "#models": "./models/index.js",
+    "#models/*": "./models/*.js"
+  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.856.0",
     "axios": "^1.11.0",

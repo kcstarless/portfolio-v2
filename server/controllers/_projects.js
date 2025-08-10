@@ -1,18 +1,11 @@
 import express from 'express'
-
-import { Project } from '../models/project.js'
-import { User } from '../models/user.js'
-import { authMiddleware, optionalAuthMiddleware } from '../middleware/authMiddleware.js'
-import { validateProject } from '../middleware/validations.js'
-import { uploadSingleImage } from '../middleware/uploadMiddleware.js'
-import { uploadToS3 } from '../utils/uploadToS3.js'
-import { error_log, info_log } from '../utils/logger.js'
+import { Project, User } from '#models'
+import { error_log, info_log, uploadToS3 } from '#utils'
+import * as mids from '#middlewares'
 
 const projectsRouter = express.Router()
 
-
-
-projectsRouter.get('/', optionalAuthMiddleware, async (req, res) => {
+projectsRouter.get('/', mids.optionalAuthMiddleware, async (req, res) => {
     let projects
     info_log(req.user)
     if (req.user) {
@@ -48,7 +41,7 @@ projectsRouter.get('/:id', async (req, res) => {
     }
 })
 
-projectsRouter.post('/', authMiddleware, uploadSingleImage, validateProject, async (req, res) => {
+projectsRouter.post('/', mids.authMiddleware, mids.uploadSingleImage, mids.validateProject, async (req, res) => {
   const body = req.body
   const user = req.user 
 
@@ -72,7 +65,7 @@ projectsRouter.post('/', authMiddleware, uploadSingleImage, validateProject, asy
   res.status(201).json(saved)
 })
 
-projectsRouter.put('/:id', authMiddleware, uploadSingleImage, validateProject, async (req, res) => {
+projectsRouter.put('/:id', mids.authMiddleware, mids.uploadSingleImage, mids.validateProject, async (req, res) => {
   const { id: projectId } = req.params
   const user = req.user
   const body = req.body
@@ -102,7 +95,7 @@ projectsRouter.put('/:id', authMiddleware, uploadSingleImage, validateProject, a
   return res.status(200).json(updatedProject)
 })
 
-projectsRouter.delete('/:id', authMiddleware, async (req, res) => {
+projectsRouter.delete('/:id', mids.authMiddleware, async (req, res) => {
     const currentUserId = req.user.id
     const project = await Project.findById(req.params.id)
 

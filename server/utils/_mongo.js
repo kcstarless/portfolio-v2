@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
-import { getMongoUri} from './config.js'
-import { info_log, error_log } from './logger.js'
+import { info_log, error_log, getMongoUri } from '#utils'
 
 // info_log("connecting to mongo...")
 

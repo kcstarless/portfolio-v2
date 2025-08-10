@@ -2,14 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-import { requestLogger } from './middleware/morgan.js'
-import { projectsRouter } from './controllers/projects.js'
-import { initRouter } from './controllers/init.js'
-import { techsRouter } from './controllers/techs.js'
-import { usersRouter } from './controllers/users.js'
-import { loginRouter } from './controllers/login.js'
-import { errorHandler, unknownEndpoint } from './middleware/errors.js'
-import './utils/mongo.js'
+import * as middlewares from '#middlewares'
+import * as controllers from '#controllers'
+import './utils/_mongo.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -19,19 +14,15 @@ const app = express()
 app.use(express.static(join(__dirname, 'dist')))
 app.use(express.json())
 app.use(cors())
-app.use(requestLogger)
+app.use(middlewares.requestLogger)
 
-app.use('/api/init', initRouter)
-app.use('/api/login', loginRouter)
-app.use('/api/projects', projectsRouter)
-app.use('/api/users', usersRouter)
-app.use('/api/techs', techsRouter)
-console.log('Access Key:', process.env.AWS_ACCESS_KEY_ID);
-console.log('Secret Key:', process.env.AWS_SECRET_ACCESS_KEY);
-console.log('Region:', process.env.AWS_REGION);
-console.log('Endpoint:', process.env.AWS_ENDPOINT_URL_S3);
+app.use('/api/init', controllers.initRouter)
+app.use('/api/login', controllers.loginRouter)
+app.use('/api/projects', controllers.projectsRouter)
+app.use('/api/users', controllers.usersRouter)
+app.use('/api/techs', controllers.techsRouter)
 
-app.use(unknownEndpoint)
-app.use(errorHandler)
+app.use(middlewares.unknownEndpoint)
+app.use(middlewares.errorHandler)
 
 export { app }

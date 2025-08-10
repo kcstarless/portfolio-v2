@@ -1,4 +1,4 @@
-import { info_log, test_log } from "../utils/logger.js"
+import { info_log, test_log } from "#utils"
 
 const validateProject = (req, res, next) => {
   const { body } = req

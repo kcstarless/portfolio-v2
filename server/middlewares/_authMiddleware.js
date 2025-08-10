@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import { User } from '../models/user.js'
-import { info_log, error_log } from '../utils/logger.js'
+import { User } from '#models'
+import { info_log, error_log } from '#utils'
 
 const authMiddleware = async (req, res, next) => {
   const authorization = req.get('authorization')

@@ -39,7 +39,7 @@ export const useLocalInfo = () => {
           service.weather.getWeather(loc.latitude, loc.longitude),
           service.ticketmaster.getLocalEvents(loc.latitude, loc.longitude),
         ])
-        // console.log(weatherData)
+        console.log(eventsData)
         setWeather(weatherData)
         setEvents(eventsData)
       } catch (err) {
@@ -80,7 +80,7 @@ export const useLocalInfo = () => {
     }
 
     // Add all events
-    // items.push(...events)
+    items.push(...events)
 
     return items
   }
@@ -100,7 +100,7 @@ export const useLocalInfo = () => {
       if (!hovered) {
         setIndex((prev) => (prev + 1) % combinedItems.length)
       }
-    }, 3000)
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [combinedItems.length, hovered, currentUser])

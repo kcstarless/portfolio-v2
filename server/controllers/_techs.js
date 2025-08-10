@@ -1,8 +1,6 @@
 import express from 'express'
-import { Tech } from '../models/tech.js'
-import { validateTech } from '../middleware/validations.js'
-import { User } from '../models/user.js'
-import { authMiddleware } from '../middleware/authMiddleware.js'
+import * as mids from '#middlewares'
+import { Tech, User } from '#models'
 
 const techsRouter = express.Router()
 
@@ -20,7 +18,7 @@ techsRouter.get('/:id', async (req, res) => {
     }
 })
 
-techsRouter.post('/', authMiddleware, validateTech, async (req, res) => {
+techsRouter.post('/', mids.authMiddleware, mids.validateTech, async (req, res) => {
     const { name, icon, level, comments } = req.body
     const user = await User.findById(req.user.id)
 
@@ -39,7 +37,7 @@ techsRouter.post('/', authMiddleware, validateTech, async (req, res) => {
     res.status(201).json(savedTech)
 })
 
-techsRouter.put('/:id', authMiddleware, validateTech, async (req, res) => {
+techsRouter.put('/:id', mids.authMiddleware, mids.validateTech, async (req, res) => {
     const { name, icon, level, comments } = req.body
 
     const updatedTech = await Tech.findByIdAndUpdate(
@@ -55,7 +53,7 @@ techsRouter.put('/:id', authMiddleware, validateTech, async (req, res) => {
     res.status(200).json(updatedTech)
 })
 
-techsRouter.delete('/:id', authMiddleware, async (req, res) => {
+techsRouter.delete('/:id', mids.authMiddleware, async (req, res) => {
     const tech = await Tech.findById(req.params.id)
 
     if (!tech) {

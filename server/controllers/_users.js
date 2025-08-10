@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import express from  'express'
-import { User } from '../models/user.js'
-import { validateUser } from '../middleware/validations.js'
+import { User } from '#models'
+import * as mids from '#middlewares'
 
 const usersRouter = express.Router()
 
@@ -10,7 +10,7 @@ usersRouter.get('/', async (req, res) => {
   res.json(users)
 })
 
-usersRouter.post('/', validateUser, async (req, res) => {
+usersRouter.post('/', mids.validateUser, async (req, res) => {
     const { username, name, password } = req.body
     
     const saltRounds = 10

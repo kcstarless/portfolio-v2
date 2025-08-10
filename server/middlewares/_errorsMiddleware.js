@@ -1,4 +1,4 @@
-import { error_log } from '../utils/logger.js'
+import { error_log } from '#utils'
 
 const errorHandler = (err, req, res, next) => {
     error_log(err, 'utils/logger.js')

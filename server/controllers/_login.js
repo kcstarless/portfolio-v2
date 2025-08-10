@@ -1,15 +1,15 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { User } from '../models/user.js'
-import { validateLogin } from '../middleware/validations.js'
+import * as mids from '#middlewares'
+import * as model from '#models'
 
 const loginRouter = express.Router()
 
-loginRouter.post('/', validateLogin, async (req, res) => {
+loginRouter.post('/', mids.validateLogin, async (req, res) => {
     const { username, password } = req.body
 
-    const user = await User.findOne({ username })
+    const user = await model.User.findOne({ username })
     const passwordCorrect = user === null
         ? false
         : await bcrypt.compare(password, user.passwordHash)

@@ -1,7 +1,7 @@
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import path from 'path'
-import { s3 } from '../utils/s3.js'
-import { error_log } from './logger.js'
+import { s3 } from './_s3.js'
+import { error_log } from './_logger.js'
 
 const sanitizeFilename = (name) =>
   name.toLowerCase()
