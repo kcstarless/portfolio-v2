@@ -1,9 +1,9 @@
+/** server/tests/_helper.js */
+
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
-import { Project } from "../models/project.js"
-import { Tech } from '../models/tech.js'
-import { User } from "../models/user.js"
-import { getMongoUri } from '../utils/config.js'
+import { Project, Tech, User } from "../models/index.js"
+import { getMongoUri } from '#utils'
 import { getSeedProjects, seedTechs, seedUsers, getValidProject } from "./_data.js"
 import path from 'path'
 import { fileURLToPath } from 'url';

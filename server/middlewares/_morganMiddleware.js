@@ -1,3 +1,5 @@
+/** server/middleware/_morganMiddleware.js */
+
 import morgan from 'morgan'
 
 morgan.token('body', (req) => {

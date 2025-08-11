@@ -1,3 +1,4 @@
+/** _Projects.jsx */
 import { ProjectCard } from "components/projects/ProjectCard"
 import { Box, Typography, Divider } from "@mui/material"
 import { useSelector } from 'react-redux'
@@ -17,7 +18,7 @@ const Projects = () => {
   }
 
   return (
-    <Box>
+    <Box data-testid='project-box'>
       <Typography variant="h3" gutterBottom sx={sxProjects.pageTitle}>
         portfolio
       </Typography>

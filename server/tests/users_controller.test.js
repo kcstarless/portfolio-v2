@@ -1,10 +1,12 @@
+/** server/tests/users_controller.test.js */
+
 import './_setup.js'
 import assert from 'node:assert'
 import * as testData from './_data.js'
 import * as helper from './_helper.js'
 import supertest from 'supertest'
 import { test, describe } from 'node:test'
-import { test_log } from '../utils/logger.js'
+import { test_log } from '#utils'
 import { app } from '../app.js'
 
 //// Setup

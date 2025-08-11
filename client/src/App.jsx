@@ -1,15 +1,16 @@
+/** /client/src/App.jsx */
 import { useEffect, useState } from 'react'
 import { Header } from './components/header/_Header'
 import { Sidebar } from './components/sidebar/_Sidebar'
 import { Projects } from './components/projects/_Projects'
 import { LoadingScreen } from './components/LoadingScreen'
-import { useAppLoader } from './hooks/_useAppLoader'
+import * as hooks from 'hooks'
 import { Box, Typography, Stack } from '@mui/material'
 import { SmoothScroll } from './components/SmoothScroll'
 import { motion, AnimatePresence } from 'framer-motion'
 
 function App() {
-  const step = useAppLoader()
+  const step = hooks.useAppLoader()
 
   const [showLoader, setShowLoader] = useState(true)
   const fadeDuration = 1 // seconds
@@ -21,15 +22,14 @@ function App() {
     }
   }, [step])
 
-  return (
-    <>
-              <SmoothScroll>
+  if(showLoader) return (
       <AnimatePresence>
-        {showLoader && <LoadingScreen step={step} />}
+        <LoadingScreen step={step} />
       </AnimatePresence>
+  )
 
-
-      {!showLoader && (
+  return (
+      <SmoothScroll>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -58,9 +58,7 @@ function App() {
             </Box>
 
         </motion.div>
-      )}
-                </SmoothScroll>
-    </>
+      </SmoothScroll>
   )
 }
 

@@ -1,8 +1,9 @@
+/** server/tests/init_controller.test.js */
 import './_setup.js'
 import * as helper from './_helper.js'
 import * as testData from './_data.js'
 import * as axios from 'axios'
-import { test_log } from '../utils/logger.js'
+import { test_log } from '#utils'
 import { describe, test, before } from 'node:test'
 import assert from 'node:assert'
 import supertest from 'supertest'

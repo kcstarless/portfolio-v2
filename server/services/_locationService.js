@@ -1,3 +1,5 @@
+/** server/services/_locationService.js */
+
 import axios from 'axios'
 
 const getLocationByIP = async (ip, token) => {

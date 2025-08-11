@@ -1,10 +1,12 @@
+/** server/tests/user_model.test.js */
+
 import './_setup.js'
 import * as helper from './_helper.js'
 import * as testData from './_data.js'
 import assert from 'node:assert'
 import { test, describe } from 'node:test'
-import { User } from '../models/user.js'
-import { test_log } from '../utils/logger.js'
+import { User } from '../models/index.js'
+import { test_log } from '#utils'
 
 //// Test
 describe('User model: ', () => {

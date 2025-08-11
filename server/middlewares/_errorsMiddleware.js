@@ -1,3 +1,5 @@
+/** server/middleware/_errorsMiddleware.js */
+
 import { error_log } from '#utils'
 
 const errorHandler = (err, req, res, next) => {

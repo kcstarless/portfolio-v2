@@ -1,3 +1,5 @@
+/** server/controllers/_techsController.js */
+
 import express from 'express'
 import * as mids from '#middlewares'
 import { Tech, User } from '#models'

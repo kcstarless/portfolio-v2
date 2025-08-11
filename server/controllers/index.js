@@ -1,3 +1,7 @@
+/** server/controllers/_initController.js 
+ *  barrel file
+*/
+
 export { initRouter } from './_initController.js'
 export { loginRouter } from './_loginController.js'
 export { projectsRouter } from './_projectsController.js'

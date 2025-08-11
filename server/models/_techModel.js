@@ -1,3 +1,5 @@
+/** server/models/_techModel.js */
+
 import mongoose from "mongoose"
 
 const techSchema = new mongoose.Schema({

@@ -1,3 +1,5 @@
+/** server/utils/_uploadToS3.js */
+
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import path from 'path'
 import { s3 } from './_s3.js'

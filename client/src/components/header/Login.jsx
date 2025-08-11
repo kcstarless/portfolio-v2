@@ -38,7 +38,7 @@ export const Login = () => {
   }
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
+    <Box display="flex" alignItems="center" gap={1} >
       <Slide direction="top" in={showLogin} mountOnEnter unmountOnExit>
         <Box>
           <LoginForm
@@ -59,6 +59,7 @@ export const Login = () => {
         aria-expanded={showLogin}
         aria-controls="login-form"
         size='large'
+        data-testid='login-toggle-button'
         iconName={showLogin ? 'arrowUp' : 'arrowDown'} 
         colorSelect='white'
       />

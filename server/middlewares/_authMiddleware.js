@@ -1,3 +1,5 @@
+/** server/middleware/_authMiddleware.js */
+
 import jwt from 'jsonwebtoken'
 import { User } from '#models'
 import { info_log, error_log } from '#utils'

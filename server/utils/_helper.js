@@ -1,4 +1,5 @@
-//// init.js helpers
+/** server/utils/_helper.js */
+
 // Extract a non private IP from possible headers
 export const getClientIP = (req) => {
   const possibleHeaders = [

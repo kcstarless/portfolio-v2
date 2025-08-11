@@ -1,3 +1,5 @@
+/** server/tests/_setup.js */
+
 import * as helper from './_helper.js'
 import { before, beforeEach, after } from 'node:test'
 

@@ -1,8 +1,10 @@
+/** server/tests/projects_controller.test.js */
+
 import './_setup.js'
 import * as helper from './_helper.js'
 import assert from 'node:assert'
 import supertest from 'supertest'
-import { test_log } from '../utils/logger.js'
+import { test_log } from '#utils'
 import { test, describe } from 'node:test'
 import { app } from '../app.js'
 
@@ -206,7 +208,7 @@ describe('PUT /api/projects/:id', () => {
 
     test('TEST3: fails when user does not own the project', async () => {
         // Create a project owned by a different user
-        const User = (await import('../models/user.js')).User
+        const User = (await import('../models/index.js')).User
         const bcrypt = (await import('bcrypt')).default
         const jwt = (await import('jsonwebtoken')).default
         

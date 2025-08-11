@@ -1,3 +1,5 @@
+/** server/controllers/_projectsController.js */
+
 import express from 'express'
 import { Project, User } from '#models'
 import { error_log, info_log, uploadToS3 } from '#utils'

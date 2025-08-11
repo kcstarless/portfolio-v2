@@ -1,8 +1,10 @@
+/** server/tests/validations.test.js */
+
 import httpMocks from 'node-mocks-http'
 import assert from 'node:assert'
 import * as testData from './_data.js'
-import { test_log } from '../utils/logger.js';
-import { validateProject, validateUser, validateTech } from "../middleware/validations.js";
+import { test_log } from '#utils';
+import { validateProject, validateUser, validateTech } from "../middlewares/_validationsMiddleware.js";
 import { test, describe } from 'node:test'
 
 //// Setup

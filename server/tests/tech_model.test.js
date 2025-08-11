@@ -1,10 +1,12 @@
+/** server/tests/tech_model.test.js */
+
 import './_setup.js'
 import * as helper from './_helper.js'
 import * as testData from './_data.js'
 import assert from 'node:assert'
 import { describe, test } from 'node:test'
-import { Tech } from '../models/tech.js'
-import { test_log, error_log } from '../utils/logger.js'
+import { Tech } from '../models/index.js'
+import { test_log, error_log } from '#utils'
 
 //// Test
 describe('Tech model: ', () => {

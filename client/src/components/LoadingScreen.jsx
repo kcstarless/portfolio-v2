@@ -23,7 +23,7 @@ const sxLoadingScreen = {
 
 const  LoadingScreen = ({ step }) => {
   return (
-    <Box sx={sxLoadingScreen} display="flex" flexDirection="column">
+    <Box data-testid="loading-box" sx={sxLoadingScreen} display="flex" flexDirection="column">
       <Typography fontSize={20}>Standby</Typography>
 
 
